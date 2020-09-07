@@ -1,0 +1,33 @@
+In robotics, performing tasks with complete knowledge of the environment is 
+relatively easy but not always feasible. A more challenging situation arises 
+when the environment can be observed only partially with the robot's sensors. 
+Imitation learning approaches address/face/deal with this problem and provide 
+new insights and interesting / promising solutions to the problem of coordinating 
+multiple agents, (where communication between them becomes essential).
+
+In this thesis, end-to-end neural networks are trained to perform specific tasks for 
+multiple coordinating agents. The experiments are run in Enki, a 
+high-performance open-source simulator for planar robots, which provides 
+collision detection and limited physics support for robots evolving on a flat 
+surface. Moreover, it can simulate groups of robots hundreds of times faster than 
+real-time.
+
+Two different approaches are proposed, both based on the use of a distributed 
+controller which employs different local controllers for each of the agents in order 
+to decide the actions to perform. 
+
+It is proven that coordinating the agents to reach a common goal is not easy and 
+neither sufficient using a distributed approach alone. Instead, the interactions 
+among the agents can be inferred by a model that in addition to the action to 
+perform learns the coordination, in the form of communication. 
+
+The models are first trained following the example of an expert controller that 
+exploits its complete knowledge of the environment to solve different tasks and 
+then tested in the simulator by comparing them to a manual controller.
+
+It will later be shown how the application of a communication strategy improve 
+the performance of the distributed model and how the exchange of messages 
+between the agents, together with the agents' local observations, let the 
+communication controller decides which actions to take almost as precisely and 
+quickly as the expert does.
+ 
