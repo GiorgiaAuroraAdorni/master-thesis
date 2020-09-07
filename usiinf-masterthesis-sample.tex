@@ -16,8 +16,8 @@ morecomment=[l]{//s},
 %\subtitle{Subtitle: Reinventing the World} %optional 
 \author{Giorgia Adorni} %compulsory
 \begin{committee}
-\advisor{Prof.}{Alessandro}{Giusti} %compulsory
-%\coadvisor{Prof.}{Student's}{Co-Advisor}{} %optional
+\advisor{Dr.}{Alessandro}{Giusti} %compulsory
+\coadvisor{Dr.}{Jerome}{Guzzi}{} %optional
 \end{committee}
 \Day{25} %compulsory
 \Month{October} %compulsory
@@ -36,7 +36,10 @@ morecomment=[l]{//s},
 \frontmatter %generates the frontmatter, this is FIXED
 
 \begin{abstract}
-%
+\begingroup
+\let\clearpage\relax
+\include{contents/abstract}
+\endgroup
 \end{abstract}
 %
 %\begin{abstract}[Zusammenfassung]
@@ -57,14 +60,17 @@ morecomment=[l]{//s},
 
 \mainmatter
 
-\chapter{Introduction}
+\include{contents/introduction}
+
 
 %\lipsum
 
+\include{contents/imitation-learning}
 
 
 \chapter[Short title]{A chapter title which will run over two lines --- it's for
   testing purpose}
+
 
 %\lipsum[1-2]
 
