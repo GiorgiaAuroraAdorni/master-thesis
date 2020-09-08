@@ -3,14 +3,14 @@
 \usepackage[utf8]{inputenc} 
 
 \usepackage{listings}
-
 % Load the package with the acronym option
-\usepackage[acronym,automake,toc]{glossaries}
+\usepackage[titletoc,page]{appendix}
+\usepackage[acronym,toc,automake,makeindex]{glossaries}
 
 % Generate the glossary
-\makeglossaries
+\makeglossary
 \renewcommand*\glspostdescription{\dotfill}
-\renewcommand*\acronymname{List of abbreviations}
+\renewcommand*\acronymname{ }
 
 
 \lstdefinelanguage{algebra}
@@ -64,23 +64,35 @@ morecomment=[l]{//s},
 \listoffigures %optional
 \listoftables %optional
 
-\include{abbreviations}
 
 \mainmatter
 
+\include{abbreviations}
 \include{contents/introduction}
 \include{contents/literature}
 \include{contents/model}
 \include{contents/implementation}
-\include{contents/task1}
-\include{contents/task2}
+\include{contents/experiments}
 \include{contents/conclusion}
-\appendix %optional, use only if you have an appendix
+
+
+\appendix%optional, use only if you have an appendix
+	
+\chapter{List of abbreviations}
+\label{chp:abbreviations}
+\begingroup
+\let\clearpage\relax
+\glsaddall  % comment to hide unused abbreviations
+\vspace*{-120pt}
+\printglossary[type=acronym]
+\endgroup
+
 
 \backmatter
 
 %\bibliographystyle{alpha}
 %\bibliographystyle{dcu}
+\nocite{*}
 \bibliographystyle{plainnat}
 \bibliography{biblio}
 
