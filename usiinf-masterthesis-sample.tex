@@ -1,5 +1,7 @@
 \documentclass[mscthesis, 11pt]{usiinfthesis}
 
+\usepackage[utf8]{inputenc} 
+
 \usepackage{listings}
 
 % Load the package with the acronym option
@@ -24,7 +26,7 @@ morecomment=[l]{//s},
 \author{Giorgia Adorni} %compulsory
 \begin{committee}
 \advisor{Dr.}{Alessandro}{Giusti} %compulsory
-\coadvisor{Dr.}{Jerome}{Guzzi}{} %optional
+\coadvisor{Dr.}{Jèrôme}{Guzzi}{} %optional
 \end{committee}
 \Day{25} %compulsory
 \Month{October} %compulsory
@@ -51,7 +53,11 @@ morecomment=[l]{//s},
 
 
 \begin{acknowledgements}
-\addcontentsline{toc}{chapter}{Acknowledgements} % added 
+\addcontentsline{toc}{chapter}{Acknowledgements}  % added 
+\begingroup
+\let\clearpage\relax
+\include{contents/acknowledgements}
+\endgroup
 \end{acknowledgements}
 
 \tableofcontents 
