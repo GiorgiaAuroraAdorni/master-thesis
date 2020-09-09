@@ -1,0 +1,36 @@
+\chapter{Experiments}
+\label{chap:experiments}
+
+\section{Overview}
+\label{sec:overview}
+
+In this work we investigate collaborative multi-agent problems in a \gls{1d} 
+simulated environment.
+
+The environment is represent by a Cartesian plane, a system of coordinates
+defined by two perpendicular axis, $x$ and $y$. 
+
+In this scenario, $N$ robots are initially randomly placed along the x-axis, 
+avoiding collisions, all oriented in the same direction. All the agents act in 
+collaboration to achieve a common goal, however the first and last robot in the 
+row behave like walls. \text{FIXME}
+
+The location of each agent in the plane is given by its coordinates $(x, y)$, while 
+the orientation by the angle $\theta$, both expressed with respect to the world 
+reference frame, with origin in $(0, 0)$.
+
+The relative pose of each agent is formally described by a 3x3 homogeneous 
+transformation matrix containing the position $(x, y)$ and the orientation angle 
+$\theta$. 
+
+However, since we are in a \gls{1d} environment, the $y$ coordinate will be equal 
+to $0$ and because all the agents are oriented as the world frame, also $\theta$ 
+must be zero. 
+For these reasons, we will 'informally' use only the $x$ coordinate. 
+Moreover, we can consider the agents as holonomic, since their movements are 
+limited in only one dimension. This premise simplifies our system, in which 
+consequently we have to keep into account only geometric constraints and not
+kinematic.
+
+\input{contents/task1}
+\input{contents/task2}

@@ -12,9 +12,6 @@
 \renewcommand*\glspostdescription{\dotfill}
 \renewcommand*\acronymname{ }
 
-%\usepackage[]{nomencl}
-%\makenomenclature
-%\renewcommand*\nomname{List of Abbreviations}
 \newcommand{\nomNoPrint}[3]{\newglossaryentry{#1}{
 		name={#2},
 		symbol={#2},
@@ -80,8 +77,6 @@ morecomment=[l]{//s},
 
 \mainmatter
 
-\include{abbreviations}
-\include{acronyms}
 \include{contents/introduction}
 \include{contents/literature}
 \include{contents/model}
@@ -91,7 +86,9 @@ morecomment=[l]{//s},
 
 
 \appendix%optional, use only if you have an appendix
-	
+\include{abbreviations}
+\include{acronyms}
+
 \chapter{List of abbreviations}
 \label{chp:abbreviations}
 \let\clearpage\relax
