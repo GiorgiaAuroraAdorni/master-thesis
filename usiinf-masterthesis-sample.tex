@@ -1,8 +1,16 @@
-\documentclass[mscthesis, 11pt,oneside]{usiinfthesis}
+\documentclass[mscthesis, 11pt, oneside]{usiinfthesis}
 
 \usepackage[utf8]{inputenc} 
 
+\usepackage{amsmath}
+\usepackage{caption}
+\usepackage{float}
+
+\newfloat{Equation}{htbp}{equ}[chapter]
+\newcommand{\listequationsname}{Equations}
+
 \usepackage{listings}
+
 % Load the package with the acronym option
 \usepackage[titletoc,page]{appendix}
 \usepackage[acronym,automake,makeindex]{glossaries}
@@ -21,7 +29,6 @@
 \makeatother
 
 \newcommand{\nom}[3]{\nomNoPrint{#1}{#2}{#3}#2}
-
 
 \lstdefinelanguage{algebra}
 {morekeywords={import,sort,constructors,observers,transformers,axioms,if,
@@ -54,38 +61,38 @@ morecomment=[l]{//s},
 \frontmatter %generates the frontmatter, this is FIXED
 
 \begin{abstract}
-\addcontentsline{toc}{chapter}{Abstract}  % added 
-\begingroup
-\let\clearpage\relax
-\include{contents/abstract}
-\endgroup
+%\addcontentsline{toc}{chapter}{Abstract}  % added 
+\input{contents/abstract.tex}
 \end{abstract}
-
+\let\cleardoublepage\clearpage
 
 \begin{acknowledgements}
-\addcontentsline{toc}{chapter}{Acknowledgements}  % added 
-\begingroup
-\let\clearpage\relax
-\include{contents/acknowledgements}
-\endgroup
+%\addcontentsline{toc}{chapter}{Acknowledgements}  % added 
+\input{contents/acknowledgements.tex}
 \end{acknowledgements}
 
+
 \tableofcontents 
+\newpage
+
 \listoffigures %optional
+\cleardoublepage
 \listoftables %optional
+\cleardoublepage
+\listof{Equation}{\listequationsname}
+\addcontentsline{toc}{chapter}{List of \listequationsname}
 
 
 \mainmatter
 
-\include{contents/introduction}
-\include{contents/literature}
-\include{contents/model}
-\include{contents/implementation}
-\include{contents/experiments}
-\include{contents/conclusion}
+\input{contents/introduction}
+\input{contents/literature}
+\input{contents/model}
+\input{contents/implementation}
+\input{contents/experiments}
+\input{contents/conclusion}
 
-
-\appendix%optional, use only if you have an appendix
+\appendix %optional, use only if you have an appendix
 \include{abbreviations}
 \include{acronyms}
 
@@ -95,7 +102,6 @@ morecomment=[l]{//s},
 \vspace*{-90pt}
 \printglossary[title= ]
 
-\newpage
 \let\cleardoublepage\clearpage
 
 \chapter{List of acronyms}
