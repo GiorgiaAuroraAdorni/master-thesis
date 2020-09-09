@@ -1,16 +1,29 @@
-\documentclass[mscthesis, 11pt]{usiinfthesis}
+\documentclass[mscthesis, 11pt,oneside]{usiinfthesis}
 
 \usepackage[utf8]{inputenc} 
 
 \usepackage{listings}
 % Load the package with the acronym option
 \usepackage[titletoc,page]{appendix}
-\usepackage[acronym,toc,automake,makeindex]{glossaries}
+\usepackage[acronym,automake,makeindex]{glossaries}
 
 % Generate the glossary
 \makeglossary
 \renewcommand*\glspostdescription{\dotfill}
 \renewcommand*\acronymname{ }
+
+%\usepackage[]{nomencl}
+%\makenomenclature
+%\renewcommand*\nomname{List of Abbreviations}
+\newcommand{\nomNoPrint}[3]{\newglossaryentry{#1}{
+		name={#2},
+		symbol={#2},
+		description={#3},
+		sort={A\three@digits{\value{page}}}
+	}\glsadd[format=hyperbf]{#1}}   
+\makeatother
+
+\newcommand{\nom}[3]{\nomNoPrint{#1}{#2}{#3}#2}
 
 
 \lstdefinelanguage{algebra}
@@ -68,6 +81,7 @@ morecomment=[l]{//s},
 \mainmatter
 
 \include{abbreviations}
+\include{acronyms}
 \include{contents/introduction}
 \include{contents/literature}
 \include{contents/model}
@@ -80,13 +94,18 @@ morecomment=[l]{//s},
 	
 \chapter{List of abbreviations}
 \label{chp:abbreviations}
-\begingroup
 \let\clearpage\relax
-\glsaddall  % comment to hide unused abbreviations
+\vspace*{-90pt}
+\printglossary[title= ]
+
+\newpage
+\let\cleardoublepage\clearpage
+
+\chapter{List of acronyms}
+\label{chp:acronyms}
+\glsaddall  % comment to hide unused acronyms
 \vspace*{-120pt}
 \printglossary[type=acronym]
-\endgroup
-
 
 \backmatter
 
