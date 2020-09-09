@@ -1,8 +1,8 @@
 \chapter{Experiments}
 \label{chap:experiments}
 
-\section{Overview}
-\label{sec:overview}
+%\section{Overview}
+%\label{sec:overview}
 
 In this work we investigate collaborative multi-agent problems in a \gls{1d} 
 simulated environment.
@@ -13,20 +13,44 @@ defined by two perpendicular axis, $x$ and $y$.
 In this scenario, $N$ robots are initially randomly placed along the x-axis, 
 avoiding collisions, all oriented in the same direction. All the agents act in 
 collaboration to achieve a common goal, however the first and last robot in the 
-row behave like walls. \text{FIXME}
+row behave like walls. %% FIXME
 
-The location of each agent in the plane is given by its coordinates $(x, y)$, while 
-the orientation by the angle $\theta$, both expressed with respect to the world 
-reference frame, with origin in $(0, 0)$.
+The agent is a point in the plane, formally described by an homogeneous vector 
+with respect to the world coordinate frame $W$, obtained multiplying the 
+homogeneous vector of the point, with respect to the robot coordinate frame 
+$A$, by an homogeneous transformation. 
 
-The relative pose of each agent is formally described by a 3x3 homogeneous 
-transformation matrix containing the position $(x, y)$ and the orientation angle 
-$\theta$. 
+The relative pose $A$ of each agent is identified by a $3 \times 3$ matrix 
+$\mathbf{T}$, with respect to the world reference frame $W$. 
 
-However, since we are in a \gls{1d} environment, the $y$ coordinate will be equal 
-to $0$ and because all the agents are oriented as the world frame, also $\theta$ 
-must be zero. 
-For these reasons, we will 'informally' use only the $x$ coordinate. 
+\begin{Equation}[!htb]
+	\centering
+	\begin{equation}
+	\label{eq:homogeneous transformation matrix}
+	{^W\!\xi_A} = {^W\!\mathbf{T}_A} 
+	=
+	\begin{pmatrix}
+	^W\!\mathbf{R}_A & ^W\!\mathbf{t}_A\\
+	0, 0 & 1
+	\end{pmatrix}
+	=
+	\begin{pmatrix}
+	\cos \theta & - \sin \theta & t_x\\
+	\sin \theta & \cos \theta & t_y\\
+	0 & 0 & 1
+	\end{pmatrix}
+	\end{equation}
+	\caption[Homogeneous Transformation Matrix]{The homogeneous 
+	transformation matrix, 	$^W\!\mathbf{T}_A$, includes $^W\!\mathbf{R}_A$, a 
+	$2 \times 2$ rotation matrix and $^W\!\mathbf{t}_A$, a $2 \times 1$ 
+	translation vector.}
+	\label{eq:hommatrix}
+\end{Equation}
+
+However, since we are in a \gls{1d} environment, the $y$ coordinate is equal 
+to $0$ and also the orientation angle $\theta$ must be zero as all the agents are 
+oriented as the world frame. 
+
 Moreover, we can consider the agents as holonomic, since their movements are 
 limited in only one dimension. This premise simplifies our system, in which 
 consequently we have to keep into account only geometric constraints and not
