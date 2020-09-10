@@ -1,11 +1,21 @@
 \documentclass[mscthesis, 11pt, oneside, openany]{usiinfthesis}
 
 \usepackage[utf8]{inputenc} 
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
 
 \usepackage{amsmath}
-\usepackage{caption}
+\usepackage[font=small,labelfont=bf]{caption}
 \usepackage{float}
 \usepackage{blindtext}
+
+%Import the natbib package and sets a bibliography  and citation styles
+\usepackage{natbib}
+\bibliographystyle{dinat}
+%\bibliographystyle{alpha}
+%\bibliographystyle{dcu}
+%\bibliographystyle{plainnat}
+\setcitestyle{authoryear,open={[},close={]}}
 
 \newfloat{Equation}{htbp}{equ}[chapter]
 \newcommand{\listequationsname}{Equations}
@@ -131,10 +141,7 @@ morecomment=[l]{//s},
 
 \backmatter
 
-%\bibliographystyle{alpha}
-%\bibliographystyle{dcu}
 \nocite{*}
-\bibliographystyle{plainnat}
 \bibliography{biblio}
 %\cleardoublepage
 %\theindex %optional, use only if you have an index, must use
