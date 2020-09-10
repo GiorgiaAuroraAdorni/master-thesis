@@ -1,0 +1,29 @@
+\chapter{Implementation and tools}
+\label{chap:impl}
+
+\section{Thymio II}
+\label{sec:thymio}
+
+The target platform chosen is Thymio II, a small differential drive mobile robot 
+developed in the context of a collaboration between the MOBOTS group of the 
+\gls{epfl} and the \gls{ecal}. 
+
+Thymio runs the Aseba open-source programming environment 
+\cite[see][]{magnenat2010aseba}, an event-based modular architecture for 
+distributed control of mobile robots, designed to enable beginners to program 
+easily and efficiently \cite[][]{mondada2017bringing}, making it well-suited for 
+robotic education and research.
+
+Another particularity of this tool is the integration with the open-source 
+\gls{ros} \cite[][]{quigley2009ros}, through asebaros bridge \cite[][]{asebaros}. 
+
+The Thymio II includes sensors that can measure light, sound and distance. It can 
+perform actions such as move using two wheels, each powered by its own motor, 
+but also turning lights on and off.
+
+\subsection{Motors}
+\label{subsection: motors}
+The robot is equipped with two motors, each connected to one of the two 
+wheels, which allow the robot to move forward, backward but also turn by setting 
+the velocity of the wheels at different speeds. The maximum speed allowed to the 
+agent is $16.6$ \gls{cm/s}.
