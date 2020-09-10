@@ -1,10 +1,11 @@
-\documentclass[mscthesis, 11pt, oneside]{usiinfthesis}
+\documentclass[mscthesis, 11pt, oneside, openany]{usiinfthesis}
 
 \usepackage[utf8]{inputenc} 
 
 \usepackage{amsmath}
 \usepackage{caption}
 \usepackage{float}
+\usepackage{blindtext}
 
 \newfloat{Equation}{htbp}{equ}[chapter]
 \newcommand{\listequationsname}{Equations}
@@ -13,6 +14,8 @@
 
 % Load the package with the acronym option
 \usepackage[titletoc,page]{appendix}
+\makeatletter\@openrightfalse\makeatother
+
 \usepackage[acronym,automake,makeindex]{glossaries}
 
 % Generate the glossary
@@ -29,6 +32,9 @@
 \makeatother
 
 \newcommand{\nom}[3]{\nomNoPrint{#1}{#2}{#3}#2}
+
+\input{abbreviations}
+\input{acronyms}
 
 \lstdefinelanguage{algebra}
 {morekeywords={import,sort,constructors,observers,transformers,axioms,if,
@@ -60,55 +66,68 @@ morecomment=[l]{//s},
 
 \frontmatter %generates the frontmatter, this is FIXED
 
+\begingroup
+\let\cleardoublepage\clearpage
 \begin{abstract}
 %\addcontentsline{toc}{chapter}{Abstract}  % added 
 \input{contents/abstract.tex}
 \end{abstract}
-\let\cleardoublepage\clearpage
+
 
 \begin{acknowledgements}
 %\addcontentsline{toc}{chapter}{Acknowledgements}  % added 
 \input{contents/acknowledgements.tex}
 \end{acknowledgements}
-
+\endgroup
 
 \tableofcontents 
 \newpage
 
+\begingroup
+\let\cleardoublepage\clearpage
 \listoffigures %optional
-\cleardoublepage
+%\cleardoublepage
 \listoftables %optional
-\cleardoublepage
+%\cleardoublepage
 \listof{Equation}{\listequationsname}
 \addcontentsline{toc}{chapter}{List of \listequationsname}
+\endgroup
+%\let\cleardoublepage\relax
 
+\makeatletter
+\renewcommand\mainmatter{\clearpage\@mainmattertrue\pagenumbering{arabic}}
+\makeatother
 
 \mainmatter
 
+\begingroup
+\let\cleardoublepage\clearpage
 \input{contents/introduction}
 \input{contents/literature}
 \input{contents/model}
 \input{contents/implementation}
 \input{contents/experiments}
 \input{contents/conclusion}
+\endgroup
 
 \appendix %optional, use only if you have an appendix
-\include{abbreviations}
-\include{acronyms}
 
+\begingroup
 \chapter{List of abbreviations}
 \label{chp:abbreviations}
 \let\clearpage\relax
 \vspace*{-90pt}
 \printglossary[title= ]
+\endgroup
 
-\let\cleardoublepage\clearpage
-
+\begingroup
 \chapter{List of acronyms}
 \label{chp:acronyms}
+\let\clearpage\relax
 \glsaddall  % comment to hide unused acronyms
 \vspace*{-120pt}
 \printglossary[type=acronym]
+\endgroup
 
 \backmatter
 
@@ -117,7 +136,6 @@ morecomment=[l]{//s},
 \nocite{*}
 \bibliographystyle{plainnat}
 \bibliography{biblio}
-
 %\cleardoublepage
 %\theindex %optional, use only if you have an index, must use
 %\makeindex in the preamble
