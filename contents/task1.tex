@@ -4,42 +4,61 @@
 \subsection{Description}
 \label{subsec:desc1}
 
-The first scenario tackle an interesting/newsworthy multi-agent coordination task.
-As described in the overview of Chapter \ref{chap:experiments}, in which are 
-provided additional details, in a \gls{1d} environment are spawn N robots in 
-random positions in a "single file". %% FIXME within the proximity sensors range 
+The first scenario tackles an interesting multi-agent coordination task, the 
+distribution of robots in space.
 
-Each agent can update its state – its absolute position – by performing actions – 
+As described in the overview of Chapter \ref{chap:experiments}, in which are 
+provided additional details, in a \gls{1d} environment are spawn in a ``single 
+file'' 
+N robots in random positions. %% FIXME within the proximity sensors range 
+Each agent can update its state – its absolute position – by performing 
+actions – 
 moving forward and backward along the x-axis – based on the observations 
 received from the environment – the distances from neighbours – using their 
-sensors.
+sensors.  They are also able to transmit and receive a communication value to 
+peer 
+robots within a range of about 48\gls{cm}. 
+A full explanation of how works communication for Thymio II is covered in 
+Section 
+\ref{subsec:thymiocomm}.
 
-As a consequence of a \gls{1d}, the agents movement are limited to two 
-directions: moving towards the x-axis when the velocity is positive, instead a 
-negative one indicates a movement backward. 
-The maximum speed allowed to the agent is 16.6 \gls{cm/s}.
+As a consequence of a \gls{1d} environment, the agents movement are 
+limited to 
+two directions: moving towards the x-axis when the velocity is positive, 
+while 
+moving backward when the speed is negative. 
 
-The robots share a common goal: arrange themselves uniformly along the line 
-between the two "dead" robots, in such a way they stand at equal distances from 
+The robots share a common goal: arrange themselves uniformly along the 
+line 
+between the two ``dead'' robots, in such a way they stand at equal distances 
+from 
 each other.
 
-%% FIXME The problem presents a collaborative goal given the fact that the single 
-%%agent can’t sense all the environment and the final configuration depends on 
-%%the 
-%%position of all of them.
+%% FIXME The problem presents a collaborative goal given the fact that the 
+%%single 
+%% agent can’t sense all the environment and the final configuration depends 
+%%on 
+%% the position of all of them.
 
-The problem represent a cooperative goal that can be reached performing 
-Imitation Learning, by following the example of an omniscient controller, 
-introduced in Subsection \ref{subsec:omniscient}, through the training of an 
-end-to-end neural network, that receives sensor inputs and produces 
-commands for the motors.
+This problem represent a cooperative goal that can be reached performing 
+Imitation Learning, that means training an end-to-end \gls{nn} by following 
+the 
+example of an omniscient controller, introduced in Subsection 
+\ref{subsec:omniscient}. 
+Exploiting its complete knowledge of the environment, % FIXME state of the 
+%system 
+the expert is then able to decide the best action to perform.
 
-The expert controller exploits its complete knowledge of the environment % FIXME 
-%state of the system 
-to decide the best action to perform.
-
-In the course of this study, we tried to understand if its possible to use a controller 
-learned by imitating an expert one, instead of using a manual controller.
+In the course of this study, we tried to understand if its possible to use a 
+controller 
+learned by imitation, instead of using a manual one. In particular we 
+concentrate on two approaches, presented in Sections \ref{subsec:dist} and 
+\ref{subsec:comm}.
+In both cases we train \glspl{dnn} that receive sensor inputs and produce 
+commands for the motors, but for the second alternative the 
+network has an addition input – the received communication transmitted by 
+the nearest agents in the previous timestep – and an extra output – the message 
+to be sent.
 
 \subsection{Experiments}
 \label{subsec:ex1}
