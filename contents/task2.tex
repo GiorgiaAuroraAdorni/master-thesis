@@ -15,7 +15,7 @@ top \gls{rgb} \gls{led}, depending on their membership group.
 Initially, for the sake of simplicity, we decided to divide the robots into two 
 groups. In particular, in case of an even number of agents, the robots in the first 
 half of the row belong to the first group and the remaining to the second, while in 
-the case of a odd number robots, the agent located in the central position is 
+the case of an odd number robots, the agent located in the central position is 
 assigned to the first set.
 
 As for the previous task, the problem can be solved performing Imitation 
@@ -24,7 +24,7 @@ makes the difference are not the distances perceived by the robot sensors but th
 messages exchanged between the agents, that are of primal importance in order 
 to determine their ordinal position. 
 
-In this scenario the two ``dead'' robots play an important role: they always 
+In this scenario, the two ``dead'' robots play an important role: they always 
 communicate a message that indicates that they are the only two agents that 
 receive communication just from one side.
 
@@ -37,7 +37,6 @@ Following the example of an omniscient controller, train an end-to-end \gls{nn}
 that takes as input only the communication – transmitted by the nearest 
 neighbours in the previous timestep – and produces the colour of the robot 
 together with the message to be sent.
-
 
 \subsection{Experiments}
 \label{subsec:ex2}

@@ -4,11 +4,11 @@
 %\section{Overview}
 %\label{sec:overview}
 
-In this work we investigate collaborative multi-agent problems in a \gls{1d} 
+In this work, we investigate collaborative multi-agent problems in a \gls{1d} 
 simulated environment.
 
-The environment is represent by a Cartesian plane, a system of coordinates
-defined by two perpendicular axis, $x$ and $y$. 
+The environment is represented by a Cartesian plane, a system of coordinates
+defined by two perpendicular axes, $x$ and $y$. 
 
 In this scenario, $N$ robots, all oriented in the same direction, are initially 
 randomly placed along the x-axis, avoiding collisions and in such a way the 
@@ -16,13 +16,13 @@ average gap among the agents is included in the proximity sensors' ranges.
 All the robots act in collaboration to achieve a common goal, however the first 
 and last in the row behave like walls. %% FIXME
 
-The agent is a point in the plane, formally described by an homogeneous vector 
+The agent is a point in the plane, formally described by a homogeneous vector 
 with respect to the world coordinate frame $W$, obtained multiplying the 
-homogeneous vector of the point, with respect to the robot coordinate frame 
-$A$, by an homogeneous transformation. 
+homogeneous vector of the point, \gls{wrt}  the robot coordinate frame 
+$A$, by a homogeneous transformation. 
 
 The relative pose $A$ of each agent is identified by a $3 \times 3$ matrix 
-$\mathbf{T}$, with respect to the world reference frame $W$. 
+$\mathbf{T}$, \gls{wrt} the world reference frame $W$. 
 
 \begin{Equation}[!htb]
 	\centering
