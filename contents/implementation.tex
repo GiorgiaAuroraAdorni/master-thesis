@@ -145,7 +145,6 @@ rightmargin=\parindent]
 	\texttt{frr} (front right), \texttt{bl} (back left), \texttt{br} (back right)]. 
 	These values can vary from $0$ – when the robot does not see anything – up to 
 	$4505$ – when the robot is very close to an obstacle. 
-	
 	Thymio II updates this array at a frequency of $10$ \gls{Hz}, generating the 
 	\texttt{prox event} after every update. 
 	The maximum range of these sensors is $14$ \gls{cm}.
@@ -164,7 +163,6 @@ rightmargin=\parindent]
 	sensor and a list of  $7$ intensities  [\texttt{fll}, \texttt{fll}, \texttt{fc}, \texttt{fr}, 
 	\texttt{frr}, \texttt{bl}, \texttt{br}], saved in the variable 
 	\texttt{prox\_comm\_events.intensities}.
-	
 	The readings of the latter array, together with those contained in 
 	\texttt{prox\_values}, are those that will be used in the course of this study.
 \end{enumerate}
@@ -172,16 +170,12 @@ rightmargin=\parindent]
 \begin{figure}[h!tb]
 	\centering
 	\includegraphics[width=.6\textwidth]{contents/images/thymio-comm}
-	\caption{Example of communication in PyEnki simulator: the second 
-		Thymio is 
-		receiving messages from the nearest agents.}
+	\caption{The PyEnki simulator viewer showing an example of communication, 
+	where the second Thymio is receiving messages from the nearest agents.}
 	\label{fig:thymio comm}
 \end{figure}
-
-%\subsection{Learned controller}
-%\label{subsec:learned}
-
 
 \section{Learning framework}
 \label{sec:learning}
 
+pytorch and models

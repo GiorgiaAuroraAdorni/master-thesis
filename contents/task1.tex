@@ -35,7 +35,7 @@ from each other.
 This problem represents a cooperative goal that can be reached performing 
 Imitation Learning, that means training an end-to-end \gls{nn} by following 
 the example of an omniscient controller, introduced in Subsection 
-\ref{subsec:omniscient}. 
+\ref{subsec:omniscient}.
 Exploiting its complete knowledge of the environment, % FIXME state of the 
 %system 
 the expert is then able to decide the best action to perform.
@@ -48,6 +48,51 @@ In both cases, we train \glspl{dnn} that receive sensor inputs and produce
 commands for the motors, but for the second alternative, the network has an 
 addition input – the received communication transmitted by the nearest agents in 
 the previous timestep – and an extra output – the message to be sent.
+
+
+\subsection{Expert controller}
+\label{subsec:omniscient}
+
+As disclosed in Section \ref{sec:controllers}, the first element involved in an 
+Imitation Learning problem is an omniscient controller, also called expert.
+
+This controller perceive the environment and the observation of all the agents, 
+obtaining a global knowledge of the state of the system. In this way it can use all 
+the available information that owns to decide the best action to perform for all 
+the agents. 
+
+In this first scenario, the omniscient controller, based on the actual poses of the 
+robots, moves the agents at a constant speed to reach the target positions. In 
+particular, the linear velocity of each agent is computer as a ``signed distance`` 
+between the current and the goal position of the robot, along its theta. 
+
+Formally, given the actual pose, defined by the triple $(x, y, \theta)$ and the 
+target pose $(\overline x, \overline y, \overline \theta)$, the signed distance $d$ 
+is computed as follow:
+
+\begin{Equation}[!htb]
+	\centering
+	\begin{equation}
+	d = \left(\overline x * \cos (\theta) + \overline y * \sin (\theta)\right) -
+	\left( x * \cos (\theta) + y * \sin (\theta)\right)
+	\end{equation}
+	\caption[Signed distance.]{Signed distance function.}
+	\label{eq:signeddist}
+\end{Equation}
+
+To obtain the final velocity of the agent, this quantity is multiplied by a constant, 
+we choose $10$ to keep the controller as fast as possible, and then clipped to its 
+maximum value.
+
+This controller can be informally considered as a simple Bang Bang controller 
+since the optimal controller move at maximum speed the robot towards the target 
+unless the target is closer than %%FIXME è control step o control step duration?
+\texttt{control\_step\_duration} $\times$ \texttt{maximum\_speed}. In this case, 
+the agent is moved lower then the maximum allowed speed so that at the end of 
+the timestep it is located exactly at the target.
+
+Unfortunately, using an omniscient controller to solve this kind of problems is not 
+realistic nor feasible in a real environment.
 
 \subsection{Experiments}
 \label{subsec:ex1}
