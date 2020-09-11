@@ -27,7 +27,6 @@ $\mathbf{T}$, \gls{wrt} the world reference frame $W$.
 \begin{Equation}[!htb]
 	\centering
 	\begin{equation}
-	\label{eq:homogeneous transformation matrix}
 	{^W\!\xi_A} = {^W\!\mathbf{T}_A} 
 	=
 	\begin{pmatrix}
@@ -41,7 +40,7 @@ $\mathbf{T}$, \gls{wrt} the world reference frame $W$.
 	0 & 0 & 1
 	\end{pmatrix}
 	\end{equation}
-	\caption[Homogeneous Transformation Matrix]{The homogeneous 
+	\caption[Homogeneous transformation matrix.]{The homogeneous 
 	transformation matrix, 	$^W\!\mathbf{T}_A$, includes $^W\!\mathbf{R}_A$, a 
 	$2 \times 2$ rotation matrix and $^W\!\mathbf{t}_A$, a $2 \times 1$ 
 	translation vector.}
@@ -56,6 +55,37 @@ Moreover, we can consider the agents as holonomic, since their movements are
 limited in only one dimension. This premise simplifies our system, in which 
 consequently we have to keep into account only geometric constraints and not
 kinematic.
+
+\section{Assumptions}
+\label{sec:assum}
+%%FIXME synonim
+Before embarking/undertaking/enterprise a detailed explanation of the 
+experiments, it is necessary to formulate some assumptions.
+
+Of fundamental importance is the approach adopted for the generation of the 
+initial positions of the robots.
+The initial configurations need to be randomly generated, verifying that there is 
+no bias towards those close to the target.
+In particular, once established the number of agents to spawn and the average 
+gap between them, a vector containing samples, each representing a real random 
+gap, is drawn from a uniform distribution in the interval $[0, 
+2*\mathtt{avg\_gap})$. 
+At each gap is add the value that corresponds to the length of the Thymio, that is 
+$10.9$ \gls{cm}, and finally, the final positions are obtained return the cumulative 
+sum of the elements in the generated vector. 
+
+Another premise regards the sensors of the Thymio. 
+As introduced in Section \ref{subsec:enkisensors}, we have available 
+\texttt{prox\_values} and \texttt{prox\_comm\_events.intensities}. In order to be 
+used, the \texttt{prox\_comm\_events.intensities} should be flatten in order to 
+obtain a single array enclosing the intensities recorded by the possible events. 
+To do so, we decided to create a new array, called \texttt{prox\_comm}, by 
+keeping for each element of it only the value that has the maximum intensity 
+chose among all the possible values in the corresponding position, (in our case 
+maximum $2$).
+In addition, we define another variable, name \texttt{all\_sensors}, that is an array 
+of $14$ intensities result of the combination of the \texttt{prox\_values} and 
+\texttt{prox\_comm} vectors.
 
 \section{Controllers}
 \label{sec:controllers}
@@ -79,5 +109,36 @@ These controllers will be described in detail later in the sections dedicated to
 task.
 
 \section{Datasets generation}
+\label{sec:dataset}
+
+Relying on the simulator Enki, introduced in Section \ref{sec:enki}, two datasets 
+containing $1000$ simulation runs each, are generated for the omniscient and 
+the manual controllers. 
+
+Each run, that differs from the others for the initial positions where are spawn the 
+agents, sets up a world containing $N$ Thymio. 
+In particular, for all the simulations are chosen randomly the number of agents 
+$N$, within the range $[5, 10]$, and the \texttt{avg\_gap}, that is the average 
+distance among the robot in the final configuration of the run, that can be in the 
+range $[5, 24]$, which means that the robots can sense each other using 
+\texttt{prox\_values} and \texttt{prox\_comm} together.
+
+A simulation run is stopped either immediately after all the robots reach the 
+target pose, with a certain tolerance, or after $4$ \gls{s} ($40$ timesteps).
+
+At each timestep, all the useful information regarding the agents are stored in the 
+dataset, such as the index of the timestep, the sensor readings, the pose of the 
+robot, the motors target, the communication transmitted and received and finally 
+its colour.
+
+The dataset generated using the expert controller is the one used to train the 
+models, while the one generated with the manual controller is used as a baseline 
+for the comparison with the learned model.
+
+Through the experiments we trained different models varying the input of the 
+network, that can be \texttt{prox\_values}, \texttt{prox\_comm} or 
+\texttt{all\_sensors}, the number of agents and the average gap distance between 
+them, that can both be fixed to a certain value or being variable.
+
 \input{contents/task1}
 \input{contents/task2}
