@@ -16,13 +16,13 @@ average gap among the agents is included in the proximity sensors' ranges.
 All the robots act in collaboration to achieve a common goal, however the first 
 and last in the row behave like walls. %% FIXME
 
-The agent is a point in the plane, formally described by a homogeneous vector 
+The agent is a point on the plane, formally described by a homogeneous vector 
 with respect to the world coordinate frame $W$, obtained multiplying the 
-homogeneous vector of the point, \gls{wrt}  the robot coordinate frame 
+homogeneous vector of the point, with respect to the robot coordinate frame 
 $A$, by a homogeneous transformation. 
 
 The relative pose $A$ of each agent is identified by a $3 \times 3$ matrix 
-$\mathbf{T}$, \gls{wrt} the world reference frame $W$. 
+$\mathbf{T}$, with respect to the world reference frame $W$. 
 
 \begin{Equation}[!htb]
 	\centering
@@ -59,8 +59,8 @@ kinematic.
 \section{Assumptions}
 \label{sec:assum}
 %%FIXME synonim
-Before embarking/undertaking/enterprise a detailed explanation of the 
-experiments, it is necessary to formulate some assumptions.
+Before diving in a detailed explanation of the experiments, it is necessary to 
+formulate some assumptions.
 
 Of fundamental importance is the approach adopted for the generation of the 
 initial positions of the robots.
@@ -70,7 +70,7 @@ In particular, once established the number of agents to spawn and the average
 gap between them, a vector containing samples, each representing a real random 
 gap, is drawn from a uniform distribution in the interval $[0, 
 2*\mathtt{avg\_gap})$. 
-At each gap is add the value that corresponds to the length of the Thymio, that is 
+At each gap is adde the value that corresponds to the length of the Thymio, that is 
 $10.9$ \gls{cm}, and finally, the final positions are obtained return the cumulative 
 sum of the elements in the generated vector. 
 
@@ -120,8 +120,9 @@ agents, sets up a world containing $N$ Thymio.
 In particular, for all the simulations are chosen randomly the number of agents 
 $N$, within the range $[5, 10]$, and the \texttt{avg\_gap}, that is the average 
 distance among the robot in the final configuration of the run, that can be in the 
-range $[5, 24]$, which means that the robots can sense each other using 
-\texttt{prox\_values} and \texttt{prox\_comm} together.
+range $[5, 24]$.
+%, which means that the robots can sense each other using \texttt{prox\_values} 
+%and \texttt{prox\_comm} together.
 
 A simulation run is stopped either immediately after all the robots reach the 
 target pose, with a certain tolerance, or after $4$ \gls{s} ($40$ timesteps).

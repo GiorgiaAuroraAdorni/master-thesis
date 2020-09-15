@@ -15,7 +15,7 @@ moving forward and backwards along the x-axis – based on the observations
 received from the environment – the distances from neighbours – using their 
 sensors.  They are also able to transmit and receive a communication value to 
 peer robots within a range of about $48$\gls{cm}. 
-A full explanation of how works communication for Thymio II is covered in 
+A full explanation of how communication works for Thymio II is covered in 
 Section \ref{subsec:thymiocomm}.
 
 As a consequence of a \gls{1d} environment, the agents' movement are 
@@ -35,7 +35,7 @@ from each other.
 This problem represents a cooperative goal that can be reached performing 
 imitation learning, that means training an end-to-end \gls{nn} by following 
 the example of an omniscient controller, introduced in Section 
-\ref{subsec:omniscient}.
+\ref{subsubsec:omniscient}.
 Exploiting its complete knowledge of the environment, % FIXME state of the 
 %system 
 the expert is then able to decide the best action to perform.
@@ -49,6 +49,16 @@ commands for the motors, but for the second alternative, the network has an
 addition input – the received communication transmitted by the nearest agents in 
 the previous timestep – and an extra output – the message to be sent.
 
+
+%%FIXME
+%In this work, we decided to define and implement two multi-agent scenarios in 
+%which N agents have a common goal and that requires them to coordinate 
+%themselves to achieve it. Besides being an excellent example of distributed tasks, 
+%the two problems present an important difference. The first is possible to solve 
+%without communication, that can help to reach a more efficient solution but it is 
+%not strictly necessary. The second, instead, is impossible to solve without explicit 
+%communication between the agents.
+
 \subsection{Controllers}
 \label{subsec:controllers}
 
@@ -58,20 +68,20 @@ the previous timestep – and an extra output – the message to be sent.
 As disclosed in Section \ref{sec:controllers}, the first element involved in an 
 imitation learning problem is an omniscient controller, also called expert.
 
-This controller perceive the environment and the observation of all the agents, 
+%fixme frase poco chiara alla fine
+This controller perceives the environment and the observation of all the agents, 
 obtaining a global knowledge of the state of the system. In this way it can use all 
-the available information that owns to decide the best action to perform for all 
+the available information that it owns to decide the best action to perform for all 
 the agents. 
 
-In this first scenario, the omniscient controller, based on the actual poses of the 
-robots, moves the agents at a constant speed to reach the target positions. In 
+In this first scenario, the omniscient controller, based on the current poses of the 
+robots, moves the agents at a certain speed to reach the target positions. In 
 particular, the linear velocity of each agent is computer as a ``signed distance`` 
 between the current and the goal position of the robot, along its theta. 
 
-Formally, given the actual pose, defined by the triple $(x, y, \theta)$ and the 
+Formally, given the current pose, defined by the triple $(x, y, \theta)$ and the 
 target pose $(\overline x, \overline y, \overline \theta)$, the signed distance $d$ 
 is computed as follow:
-
 \begin{Equation}[!htb]
 	\centering
 	\begin{equation}
@@ -82,6 +92,7 @@ is computed as follow:
 	\label{eq:signeddist}
 \end{Equation}
 
+\noindent
 To obtain the final velocity of the agent, this quantity is multiplied by a constant, 
 we choose $10$ to keep the controller as fast as possible, and then clipped to its 
 maximum value.
@@ -105,7 +116,7 @@ main purpose is to draw conclusions about the quality of the controller learned.
 The main difference between this and the previous controller is that, the manual 
 one can be consider a local distributed controller, that has only a partial 
 knowledge of the environment since knows only the state of the current agent 
-and his observations.
+and its observations.
 
 This controller moves the robots towards the target by minimising the difference 
 between the values recorded by the front and rear sensors, trying to maintain the 
@@ -116,7 +127,7 @@ as input the output will be the same.
 
 The one implemented is a proportional controller, a particular variant of \gls{pid}, 
 with only the $K_p$ term. 
-The closed-loop control use a feedback to adjust the control while the action 
+The closed-loop control uses a feedback to adjust the control while the action 
 takes place in proportion to the existing error. This function given a desired 
 output $x(t)$, or set point, produces an output $y(t)$, or process variable, such 
 that the error $e(t)$ is obtained as the difference between the value of the set 
@@ -132,7 +143,7 @@ output of the \gls{pid} controller and is computed as follows:
 	\label{eq:pid}
 \end{Equation}
 
-The value of the proportional gain has been tuned to yields satisfactory 
+The value of the proportional gain has been tuned to yield satisfactory 
 performance so that the system is stable, as shown in Figure \ref{fig:pid}. 
 Moreover, since the value of the error is computed using the Equation 
 \ref{eq:systemerror}, then $K_p$ should be positive.
@@ -165,17 +176,12 @@ from the front, never move.
 See \url{https://youtu.be/jNkt7xf6pUU} for a short video that shows the 
 simulation of this task \cite[][]{task1manual}.
 
-
 \subsection{Distributed approach experiments}
 \label{subsec:ex1distr}
-
-
 \subsubsection{Learned controller}
 \label{subsubsec:learneddist}
 
-
-
-Once, through the simulator enough data are collected by using the optimal 
+Once, enough data are collected through the simulator by using the optimal 
 controller, it is possible to train a very simplified ``distributed network'' 
 that takes as input an array containing the response values of the sensors – 
 which can be either \texttt{prox\_values}, \texttt{prox\_comm} or 
@@ -218,14 +224,14 @@ shape of the sensing, that can be $7$ or $14$.
 	\begin{subfigure}[h]{0.495\textwidth}
 		\centering
 		\includegraphics[width=.3\textwidth]{contents/images/task1distributed@4x}%
-		\caption{Single network with $7$ input sensing.}
+		\caption{Structure of a network with $7$ input sensing.}
 		\label{fig:singlenet7distributed1}
 	\end{subfigure}
 	\hfill
 	\begin{subfigure}[h]{0.495\textwidth}
 		\centering
 		\includegraphics[width=.3\textwidth]{contents/images/task1distributed_all@4x}
-		\caption{Single network with $14$ input sensing.}
+		\caption{Structure of a network with $14$ input sensing.}
 		\label{fig:singlenet14distributed1}
 	\end{subfigure}
 	\caption{Visualisation of the network architectures for the distributed 
@@ -266,12 +272,15 @@ lower-order moments}, \cite[see][]{kingma2014adam,
 loshchilov2017decoupled}, 
 implemented in the \texttt{torch.optim} package, with a learning rate of $0.01$. 
 
-Since gradient descent algorithms are susceptible to ``get stuck'' in local minima,
-mini-batch methods can avoid this problem exploiting randomness to find a 
-better minimum.
-In particular, we generate the training mini-batches of size $100$, and then we 
-shuffle them makes the gradients more variable and able to ``bounce'' out of 
-local minimum, thereby helping convergence.
+Instead of computing the gradient descent on the entire dataset, the training set is 
+split in mini-batches of size $100$ and an approximation of the gradient is 
+produced, which makes the algorithm faster and at the same time, for sufficiently 
+large numbers, the result is indistinguishable.
+
+Gradient descent algorithms are susceptible to ``get stuck'' in local minima.
+Mini-batches shuffle facilitate to avoid this problem by enabling the gradient to 
+``bounce'' out of eventual local minimum, making it more variable by exploiting 
+randomness, thereby helping convergence.
 
 All the models are trained for $50$ epochs and evaluated using the \gls{mse} loss 
 function, often used in regression problems. 
