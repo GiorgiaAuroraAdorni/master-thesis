@@ -87,27 +87,6 @@ In addition, we define another variable, name \texttt{all\_sensors}, that is an 
 of $14$ intensities result of the combination of the \texttt{prox\_values} and 
 \texttt{prox\_comm} vectors.
 
-\section{Controllers}
-\label{sec:controllers}
-
-In a \gls{mas}, each agent can perceive the environment through sensors 
-acquiring a total or partial knowledge of it. The observations extracted can be 
-used by a controller, together with the current state of the agent, to determine 
-actions, draw inferences and finally solve tasks. 
-
-In an imitation learning setting, there are two controllers involved: an expert 
-controller, which performs the desired task with perfect knowledge of the 
-environment, and a learned controller, which is trained to imitate the behaviour 
-of the omniscient controller.
-
-For each of the task that we are going to face, we introduce three controllers: the 
-expert controller, that exploits its complete knowledge of the state of the system 
-to decide the best action to perform, the manual controller, that has only a partial 
-knowledge of it, and a controller learned by imitating the expert one.
-
-These controllers will be described in detail later in the sections dedicated to each 
-task.
-
 \section{Datasets generation}
 \label{sec:dataset}
 
