@@ -176,9 +176,10 @@ from the front, never move.
 See \url{https://youtu.be/jNkt7xf6pUU} for a short video that shows the 
 simulation of this task \cite[][]{task1manual}.
 
-\subsection{Distributed approach experiments}
+\subsection{Distributed approach}
 \label{subsec:ex1distr}
-\subsubsection{Learned controller}
+
+\subsubsection{Model training}
 \label{subsubsec:learneddist}
 
 Once, enough data are collected through the simulator by using the optimal 
@@ -234,8 +235,8 @@ shape of the sensing, that can be $7$ or $14$.
 		\caption{Structure of a network with $14$ input sensing.}
 		\label{fig:singlenet14distributed1}
 	\end{subfigure}
-	\caption{Visualisation of the network architectures for the distributed 
-		approach.}
+	\caption[Network architectures for the distributed approach.]{Visualisation of 
+	the network architectures for the distributed approach.}
 	\label{fig:singlenetdistributed1}
 \end{figure}
 
@@ -297,15 +298,15 @@ by penalising big errors in the model predictions.
 	\label{eq:mse}
 \end{Equation}
 	
-\subsubsection{...}
-\label{subsubsec:....}
 
+\subsubsection{Experiments}
+\label{subsubsec:expdist}
 
-\subsection{Distributed approach experiments with communication}
+\subsection{Distributed approach with communication}
 \label{subsec:ex1comm}
 
 
-\subsubsection{Learned controller}
+\subsubsection{Model training}
 \label{subsubsec:learnedcomm}
 
 Using the same dataset collected using the expert controller to perform the task 
@@ -337,7 +338,9 @@ can be $7$ or $14$.
 \begin{figure}[htb]
 	\centering
 	\includegraphics[width=\textwidth]{contents/images/commnet}
-	\caption[Communication network.]{Communication network.}
+	\caption[Communication network.]{Visualisation of the forward pass of the 
+	communication network with three agents and a sequence composed by two 
+	timesteps.}
 	\label{fig:commnet1}
 \end{figure}
 
@@ -380,8 +383,9 @@ the left and one from the right.
 		input sensing.}
 		\label{fig:singlenet14comm1}
 	\end{subfigure}
-	\caption{Visualisation of the network architectures for the distributed 
-		approach with communication.}
+	\caption[Network architectures for the distributed approach with 
+	communication.]{Visualisation of the network architectures for the distributed 
+	approach with communication.}
 	\label{fig:singlenetcomm1}
 \end{figure}
 
@@ -424,6 +428,8 @@ variable: since the error is propagated through the internal network, in order t
 update the weight during the back-propagation step, that affects the 
 communication.
 
-\subsection{Results}
-\label{subsec:results1}
+\subsubsection{Experiments}
+\label{subsubsec:expcomm}
 
+\subsection{Comparison of results}
+\label{subsec:results1}
