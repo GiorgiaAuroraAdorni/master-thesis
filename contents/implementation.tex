@@ -68,7 +68,7 @@ obstacle, such as its colour and reflectivity, but also by the presence of
 external light sources and the temperature of the environment (e.g. white is 
 more intense than black that is perceived only while close).
 
-\subsubsection{Communication}
+\subsection{Communication}
 \label{subsec:thymiocomm}
 
 Thymio II can employ its horizontal \gls{ir} sensors to communicate a value 
@@ -83,7 +83,7 @@ communication.
 Every time that a message is received by some robot, an event is 
 created containing the message, payload data and intensities data.
 
-\subsubsection{\glspl{led}}
+\subsection{\glspl{led}}
 \label{subsec:thymioled}
 
 Thymio II holds many \glspl{led} scattered around its body, most of them are 
@@ -134,38 +134,37 @@ wheel speed at each control step.
 
 \subsection{Sensors}
 \label{subsec:enkisensors}
-In Enki, it is possible to access the Thymio sensor readings in two different ways:
+In Enki, it is possible to access the Thymio sensor readings in two different ways, 
+by using \texttt{prox\_values} and \texttt{prox\_comm\_events}.
 
-\begin{enumerate}[resume, wide=\parindent, leftmargin=\parindent, 
-rightmargin=\parindent]
-	
-	\item[\textbf{\texttt{prox\_values}}] an array of floats that holds the values of 
-	$7$ horizontal distance sensors around its periphery [\texttt{fll} (front left left), 
-	\texttt{fll} (front left), \texttt{fc} (front centre), \texttt{fr} (front right right), 
-	\texttt{frr} (front right), \texttt{bl} (back left), \texttt{br} (back right)]. 
-	These values can vary from $0$ – when the robot does not see anything – up to 
-	$4505$ – when the robot is very close to an obstacle. 
-	Thymio II updates this array at a frequency of $10$ \gls{Hz}, generating the 
-	\texttt{prox event} after every update. 
-	The maximum range of these sensors is $14$ \gls{cm}.
+\paragraph{\texttt{prox\_values}}
+ an array of floats that holds the values of $7$ horizontal distance sensors around 
+ its periphery [\texttt{fll} (front left left), \texttt{fll} (front left), \texttt{fc} (front 
+ centre), \texttt{fr} (front right right), \texttt{frr} (front right), \texttt{bl} (back left), 
+ \texttt{br} (back right)]. 
+These values can vary from $0$ – when the robot does not see anything – up to 
+$4505$ – when the robot is very close to an obstacle. 
+Thymio II updates this array at a frequency of $10$ \gls{Hz}, generating the 
+\texttt{prox event} after every update. 
+The maximum range of these sensors is $14$ \gls{cm}.
 
-	\item[\textbf{\texttt{prox\_comm\_events}}] a list of events, one for every 
-	received message collected during the last control step of the simulation. 
-	After enabling the proximity communication, using 
-	\texttt{prox\_comm\_enable} command, the robot can use the horizontal 
-	\gls{ir} distance sensors to communicate a value to peer robots within a range 
-	of about $48$ \gls{cm}. 
-	The integer payload to be sent is contained in the variable 
-	\texttt{prox\_comm\_tx}, while the value received is contained in the variable 
-	\texttt{prox\_comm\_events.rx} of the fired event.
-	In addition, the IRCommEvent stores, in the variable 
-	\texttt{prox\_comm\_events.payloads}, a list of $7$ payloads, one for each 
-	sensor and a list of  $7$ intensities  [\texttt{fll}, \texttt{fll}, \texttt{fc}, \texttt{fr}, 
-	\texttt{frr}, \texttt{bl}, \texttt{br}], saved in the variable 
-	\texttt{prox\_comm\_events.intensities}.
-	The readings of the latter array, together with those contained in 
-	\texttt{prox\_values}, are those that will be used in the course of this study.
-\end{enumerate}
+\paragraph{\texttt{prox\_comm\_events}}
+
+a list of events, one for every received message collected during the last control 
+step of the simulation. 
+After enabling the proximity communication, using \texttt{prox\_comm\_enable} 
+command, the robot can use the horizontal \gls{ir} distance sensors to 
+communicate a value to peer robots within a range of about $48$ \gls{cm}. 
+The integer payload to be sent is contained in the variable 
+\texttt{prox\_comm\_tx}, while the value received is contained in the variable 
+\texttt{prox\_comm\_events.rx} of the fired event.
+In addition, the IRCommEvent stores, in the variable 
+\texttt{prox\_comm\_events.payloads}, a list of $7$ payloads, one for each sensor 
+and a list of  $7$ intensities  [\texttt{fll}, \texttt{fll}, \texttt{fc}, \texttt{fr}, 
+\texttt{frr}, \texttt{bl}, \texttt{br}], saved in the variable 
+\texttt{prox\_comm\_events.intensities}.
+The readings of the latter array, together with those contained in 
+\texttt{prox\_values}, are those that will be used in the course of this study.
 
 \begin{figure}[h!tb]
 	\centering
