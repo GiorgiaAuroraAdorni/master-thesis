@@ -81,7 +81,7 @@ In particular, we chose the hyperbolic tangent (Tanh)
 This type of activation function is often used in deep learning and one of is 
 advantages is that negative inputs are mapped to strongly negative values.
 
-\begin{figure}[htb]
+\begin{figure}[!htb]
 	\centering
 	\includegraphics[width=.5\textwidth]{contents/images/tanh2}%
 	\caption{Trend of the Tanh activation function.}
@@ -111,7 +111,7 @@ This criterion, implemented in the \texttt{torch.nn} package, measures the
 average of squared error between predictions and targets and learns to reduce it 
 by penalising big errors in the model predictions.
 
-\begin{Equation}[H]
+\begin{Equation}[!htb]
 	\centering
 	\begin{equation}
 	\mathtt{MSE} = \frac{\sum_{i=1}^n (y_i-\hat y_i)^2}{n}
@@ -123,4 +123,272 @@ by penalising big errors in the model predictions.
 
 \subsubsection{Experiments}
 \label{subsubsec:expdist}
+
+The first group of experiments carried out, summarised in Table 
+\ref{tab:modeln5dist}, examines the behaviour of the control learned in the case 
+of the three different inputs, \texttt{prox\_values}, \texttt{prox\_comm} or 
+\texttt{all\_sensors}, for a number of robots $N$ and an \texttt{avg\_gap} both 
+fixed respectively at $5$ and the second chosen between $8$, $13$ and $24$.
+\begin{figure}[H]
+	\centering
+	\begin{tabular}{llrr}
+		\toprule
+		\textbf{Model} \quad & \textbf{\texttt{network\_input}} & 
+		\textbf{\texttt{input\_size}} &
+		\textbf{\texttt{avg\_gap}} \\
+		\midrule
+		\texttt{net1} 				 & \texttt{prox\_values}	&  $  7$  &  $  8$  \\
+		\texttt{net1b} 				& \texttt{prox\_values}	   &  $  7$  &  $13$ \\
+		\texttt{net1c} 				& \texttt{prox\_values}	   &  $  7$  &  $24$  \\
+		\texttt{net2} 				 & \texttt{prox\_comm}	  &  $  7$  &  $  8$  \\
+		\texttt{net3} 				 & \texttt{prox\_comm}	  &  $  7$  &  $13$  \\
+		\texttt{net4} 				 & \texttt{prox\_comm}	  &  $  7$  &  $24$  \\
+		\texttt{net5} 				 & \texttt{all\_sensors}	  &  $14$  &  $  8$  \\
+		\texttt{net6} 				 & \texttt{all\_sensors}	  &  $14$  &  $13$ 	\\
+		\texttt{net7} 				 & \texttt{all\_sensors}	  &  $14$  &  $24$ 	\\
+		\bottomrule
+	\end{tabular}
+	\captionof{table}{List of the experiments carried out with $5$ agents.}
+	\label{tab:modeln5dist}
+\end{figure}
+
+First of all we start by showing in Figure \ref{fig:distloss} an overview of the 
+models performance in terms of train and validation losses. 
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=.7\textwidth]{contents/images/task1/loss-distributed-all}%
+	\caption{Comparison of the losses of the models carried out with $5$ agents.}
+	\label{fig:distloss}
+\end{figure}
+
+It is immediately evident that in case of \texttt{prox\_values} inputs the 
+experiment performed with an \texttt{avg\_gap} of $24$ is not 
+%FIXME synonim
+significant/meaningful since this value exceeds the maximal range of the sensor.
+In fact, from this analysis we generally expect a more stable behaviour using both 
+types of input together, i.e. \texttt{all\_sensors}. 
+
+For this reason, we start by exploring the results of the experiment obtained 
+using 
+the \texttt{prox\_values} readings alone as input of the network, continuing the 
+with \texttt{prox\_comm} and concluding with \texttt{all\_sensors}.
+
+The performance of \texttt{net1} are shown in the following images. In particular, 
+we first visualise in Figure \ref{fig:net1r2} a comparison of the \gls{r2}, or 
+coefficient of determination, of the manual and the learned controllers, on the 
+validation set.
+This score function evidences how well the regression predictions approximate 
+the real data points (groundtruth). Since a model that perfectly predicts the data 
+has a score of $1$, we assume that a higher score corresponds to a model that 
+performs better.
+\begin{figure}[!htb]
+	\centering
+	\begin{subfigure}[h]{0.49\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{contents/images/distr-net1/regression-manualvsomniscient}%
+		%\caption{Expert controller output velocity.}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[h]{0.49\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{contents/images/distr-net1/regression-net1-vs-omniscient}
+		%\caption{Distributed controller output velocity.}
+	\end{subfigure}
+
+	\caption[Evaluation of the \gls{r2} coefficient of \texttt{net1} .]{Comparison of 
+	the \gls{r2} coefficient of the manual and the controller learned from 
+	\texttt{net1} with respect to the omniscient one.}
+	\label{fig:net1r2}
+\end{figure}
+
+From these figures we expect that the robots' behaviour using the learned 
+controller instead of the manual one is a bit better, even if far from the 
+omniscient 
+controller.
+
+In Figure \ref{fig:net1traj} we show first a comparison of the expert and the 
+learned trajectories, and then between the manual and the learned ones. In 
+particular, on the y-axis is visualised the position of each agent over time, while 
+on the x-axis the simulation timesteps. It is important to notice that the plots 
+summarise all the runs: at each timestep, the position of each agent is presented 
+as an average over all the simulation runs, and in addition is  shown this average 
+minus and plus the standard deviation.
+\begin{figure}[!htb]
+	\centering
+	\begin{subfigure}[h]{0.49\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{contents/images/distr-net1/position-overtime-omniscient}%
+		\caption{Expert controller trajectories.}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[h]{0.49\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{contents/images/distr-net1/position-overtime-distributed}
+		\caption{Distributed controller trajectories.}
+	\end{subfigure}
+	\hspace*{\fill}%          % empty line absolutely necessary!
+	
+	\vspace*{8pt}%  
+	
+	\hspace*{\fill}%  
+	\begin{subfigure}[h]{0.49\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{contents/images/distr-net1/position-overtime-manual}%
+		\caption{Manual controller trajectories.}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[h]{0.49\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{contents/images/distr-net1/position-overtime-distributed}
+		\caption{Distributed controller trajectories.}
+	\end{subfigure}
+	\caption[Evaluation of the trajectories learned by \texttt{net1}.]{Comparison 
+		of trajectories generated using three controllers: the expert, the manual and 
+		the one learned from \texttt{net1}.}
+	\label{fig:net1traj}
+\end{figure}
+
+The robots convergence to the target using the omniscient controller is much 
+faster than that with the manual or the learned one.
+In particular, the learned trajectories, even if converge to the correct 
+configuration they require a higher number of timesteps compared to the two 
+others controllers. 
+
+\begin{figure}[!htb]
+	\centering
+	\begin{subfigure}[h]{0.49\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{contents/images/distr-net1/control-overtime-omniscient}%
+		\caption{Expert controller output velocity.}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[h]{0.49\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{contents/images/distr-net1/control-overtime-distributed}
+		\caption{Distributed controller output velocity.}
+	\end{subfigure}
+	
+	\hspace*{\fill}%          % empty line absolutely necessary!
+	
+	\vspace*{8pt}%  
+	
+	\hspace*{\fill}%  
+	\begin{subfigure}[h]{0.49\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{contents/images/distr-net1/control-overtime-manual}%
+		\caption{Manual controller output velocity.}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[h]{0.49\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{contents/images/distr-net1/control-overtime-distributed}
+		\caption{Distributed controller output velocity.}
+	\end{subfigure}
+	\caption[Evaluation of the control learned by \texttt{net1}.]{Comparison 
+		of output control generated using three controllers: the expert, the manual 
+		and the one learned from \texttt{net1}.}
+	\label{fig:net1control}
+\end{figure}
+
+In fact, analysing in Figure \ref{fig:net1control} the evolution of the control over 
+time, it is possible to note that the omniscient and the manual controllers in the 
+first timesteps have a higher speed than that predicted by the network. After 
+about $15$ timesteps they both reach the target, with a certain tolerance, 
+maintaining then the speed constant at $0$. Instead, the distributed controller 
+decreases the speed of the agents as the timesteps pass, reaching zero speed but 
+with a certain variance.
+
+A couple of useful plots are shown below.
+In Figure \ref{fig:net1responsesensors} is visualised the response of the learned 
+controller as the input sensing changes. In particular we analyse two cases. The 
+first one shows the control predicted by the network when the robot sees nothing 
+behind but only in front, more specifically when the given input is  $([0, 0, x, 0, 0, 
+0, 0])$, with $x$ varying in the range $[0, 4500]$.
+The second shows the control predicted by the network when the robot instead 
+sees nothing in front but only behind, more specifically when the given input is  
+$([0, 0, 0, 0, 0,x , x])$, with $x$ varying in the range $[0, 4500]$.
+
+\begin{figure}[!htb]
+	\centering
+	\begin{subfigure}[h]{0.49\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{contents/images/distr-net1/response-net1-front}%
+		%\caption{response-net1-net([0, 0, x, 0, 0, 0, 0]).}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[h]{0.49\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{contents/images/distr-net1/response-net1-rear}
+		%\caption{response-net1-net([0, 0, 0, 0, 0, x, x]).}
+	\end{subfigure}
+	\caption[Response of \texttt{net1} by varying the input sensing.]{Response of 
+	\texttt{net1} by varying the input sensing.}
+	\label{fig:net1responsesensors}
+\end{figure}
+
+The behaviour is almost as expected. When the robot sees nothing behind but 
+something in front, the model returns a negative speed, since the robot has to 
+move backwards. 
+The absolute value of control increases as the proximity to the obstacle increases.
+The same behaviour is obtained when the robot sees only behind but nothing in 
+front. In this case the speed has the opposite sign.
+
+Another informative plot is shown in Figure \ref{fig:net1responseposition}. It 
+visualise the response of the learned controller to the variation of the distance 
+between two stationary agents and a robot located halfway between them.
+In particular, on the x-axis is visualised the position of the moving robot, while on 
+the y-axis the output control.
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=.6\textwidth]{contents/images/distr-net1/response-varying_init_position-net1}%
+	\caption{Response of \texttt{net1} by varying the initial position.}
+	\label{fig:net1responseposition}
+\end{figure}
+
+Each control is obtained as an average over $100$ measures in which the pose of 
+the agent $(x, y, \theta)$ is variated/varied by a certain epsilon uniformly 
+distributed in the range $[-0.5\gls{cm}, 0.5cm\gls{cm}]$. In this way, the output 
+obtained avoids the effects of noise that would be obtained on a single 
+measurement and unrealistic artefacts in which the sensors are not continuous, 
+compared to the pose, in simulation. In addition are also shown the bands that 
+represents plus and minus standard deviation.
+
+This test shows us the behaviour of a robot located between two that are already 
+in their place.
+
+As expected, the output control is a high positive values when the robot is close to 
+an obstacle on the left, it decreases and reaches $0$ when the distance from right 
+and left is equal, and finally becomes negative when the obstacle in front is closer 
+than the one on behind.
+
+Finally, in Figure \ref{fig:net1distance} is presented another useful metric that 
+measures the absolute distance of each robot from the target, visualised on the 
+y-axis, over time. This value is averaged on all robots among all the simulation 
+runs. The median value is shown as well as the interquartile and interdecile ranges.
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=.8\textwidth]{contents/images/distr-net1/distances-from-goal-compressed-distributed}%
+	\caption{Comparison of the losses of the models carried out with $5$ agents.}
+	\label{fig:net1distance}
+\end{figure}
+
+The plot shows that on average the distance from goal of the learned controller is 
+is lower than the one obtained with the manual controller.
+
+As mentioned before, in case of \texttt{prox\_values} inputs the 
+experiment performed with an \texttt{avg\_gap} of $24$ is not meaningful since 
+this value exceeds the maximal range of the sensor. Similarly, since $14$ is the 
+maximum range, it is difficult to use this type of input when the \texttt{avg\_gap}  
+is $13$, as shown by the losses in Figure \ref{fig:distlossprox_values}.
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=.7\textwidth]{contents/images/task1/loss-distributed-prox_values}%
+	\caption{Comparison of the losses of the models carried out with $5$ agents.}
+	\label{fig:distlossprox_values}
+\end{figure}
+
+
+
 
