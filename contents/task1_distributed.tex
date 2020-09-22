@@ -565,47 +565,192 @@ robots from the target among all the simulations.
 \end{figure}
 The performance of the learned and the manual controllers are similar: in the 
 final configuration they both are at about $5$ \gls{cm} from the target. 
+
+We conclude the first group of experiments presenting the results obtained using 
+both types of input together from which we expect a more stable and robust 
+behaviour. 
+In Figure \ref{fig:distlossall}, are analysed the losses by varying the average gap. 
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=.7\textwidth]{contents/images/task1/loss-distributed-all_sensors@x10}%
+	\caption{Comparison of the losses of the models that use \texttt{all\_sensors} 
+		readings.}
+	\label{fig:distlossall}
+\end{figure}
+Using \texttt{all\_sensors} inputs the network is able to work well with all the 
+gaps. Examining the \gls{r2} coefficients in Figure \ref{fig:net789r2}, the 
+behaviour obtained with \texttt{net7} and \texttt{net9} are the more promising. 
+\begin{figure}[H]
+	\begin{center}
+		\begin{subfigure}[h]{0.47\textwidth}
+ 			\includegraphics[width=\textwidth]{contents/images/distr-net7/regression-net7-vs-omniscient}%
+			%\caption{Expert controller.}
+		\end{subfigure}
+		\hfill
+		\begin{subfigure}[h]{0.47\textwidth}
+			\includegraphics[width=\textwidth]{contents/images/distr-net8/regression-net8-vs-omniscient}%
+			%\caption{\texttt{avg\_gap} 8 \gls{cm}.}
+		\end{subfigure}
+	\end{center}
+	\vspace{-1.3\baselineskip}
+	\begin{center}
+		\begin{subfigure}[h]{0.47\textwidth}
+			\includegraphics[width=\textwidth]{contents/images/distr-net9/regression-net9-vs-omniscient}
+			%\caption{Distributed controller.}
+		\end{subfigure}
+	\end{center}
+	\caption[Comparison of the \gls{r2} coefficient for \texttt{prox\_comm} 
+	readings.]{Comparison of the \gls{r2} coefficients of the models that use 
+		\texttt{prox\_comm} readings.}
+	\label{fig:net789r2}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}[h]{0.49\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{contents/images/distr-net7/regression-manualvsomniscient}%
+		%\caption{Expert controller output velocity.}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[h]{0.49\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{contents/images/distr-net7/regression-net7-vs-omniscient}
+		%\caption{Distributed controller output velocity.}
+	\end{subfigure}
+	\caption[Evaluation of the \gls{r2} coefficient of \texttt{net7} .]{Comparison of 
+		the \gls{r2} coefficient of the manual and the controller 
+		learned from \texttt{net7} with respect to the omniscient one.}
+	\label{fig:net7r2}
+\end{figure}
+
+\begin{figure}[!htb]
+	\centering
+	\begin{subfigure}[h]{0.49\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{contents/images/distr-net9/regression-manualvsomniscient}%
+		%\caption{Expert controller output velocity.}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[h]{0.49\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{contents/images/distr-net9/regression-net9-vs-omniscient}
+		%\caption{Distributed controller output velocity.}
+	\end{subfigure}
+	\caption[Evaluation of the \gls{r2} coefficient of \texttt{net9} .]{Comparison of 
+		the \gls{r2} coefficient of the manual and the controller 
+		learned from \texttt{net9} with respect to the omniscient one.}
+	\label{fig:net9r2}
+\end{figure}
+This is further supported by the comparisons in Figures \ref{fig:net7r2} and 
+\ref{fig:net9r2}, which prove the superiority of these controllers.
+
+Taking into consideration once again the more complex case, that is the one in 
+which the average gap is greater, we show in Figure \ref{fig:net9traj} trajectories 
+obtained employing the three controllers. 
+As before, the convergence to the target is slow, even if this time the expert need 
+less timesteps to reach the target.
+
+\begin{figure}[!htb]
+	\begin{center}
+		\begin{subfigure}[h]{0.49\textwidth}
+			\centering
+			\includegraphics[width=\textwidth]{contents/images/distr-net9/position-overtime-omniscient}%
+			\caption{Expert controller trajectories.}
+		\end{subfigure}
+		\hfill
+		\begin{subfigure}[h]{0.49\textwidth}
+			\centering
+			\includegraphics[width=\textwidth]{contents/images/distr-net9/position-overtime-distributed}
+			\caption{Distributed controller trajectories.}
+		\end{subfigure}
+	\end{center}
+	\caption[Evaluation of the trajectories learned by 
+	\texttt{net9}.]{Comparison of trajectories generated using three 
+		controllers: the expert, the manual and the one learned from \texttt{net9}.}
+\end{figure}
+\medskip
+\begin{figure}[!htb]\ContinuedFloat
+	\centering
+	\begin{subfigure}[h]{0.49\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{contents/images/distr-net9/position-overtime-manual}%
 		\caption{Manual controller trajectories.}
 	\end{subfigure}
 	\hfill
 	\begin{subfigure}[h]{0.49\textwidth}
 		\centering
-		\includegraphics[width=\textwidth]{contents/images/distr-net6/position-overtime-distributed}
+		\includegraphics[width=\textwidth]{contents/images/distr-net9/position-overtime-distributed}
 		\caption{Distributed controller trajectories.}
 	\end{subfigure}
-	\caption[Evaluation of the trajectories learned by \texttt{net6}.]{Comparison 
-		of trajectories generated using three controllers: the expert, the manual and 
-		the one learned from \texttt{net6}.}
-	\label{fig:net6traj}
+	\caption[]{Comparison 
+		of trajectories generated using three controllers: the expert, the manual 
+		and the one learned from \texttt{net9} (cont.).}
+	\label{fig:net9traj}
 \end{figure}
 
-The robots convergence to the target using the omniscient controller is much 
-faster than that with the manual or the learned one. In particular, the learned 
-trajectories, even if converge to the correct configuration they require a higher 
-number of timesteps compared to the two others controllers.
+\noindent
+The manual controller does not shows the same problem has before, while the 
+learned controller is still the slowest to end up in the correct configuration.
 
+Examining the evolution of the output control, in Figure \ref{fig:net9control}, 
+the two plots of the expert and the learned control are similar, even if, as 
+expected, the speed set using the distributed controller are much lower.
 \begin{figure}[!htb]
 	\centering
 	\begin{subfigure}[h]{0.3\textwidth}
 		\centering
-		\includegraphics[width=\textwidth]{contents/images/distr-net6/control-overtime-omniscient}%
+		\includegraphics[width=\textwidth]{contents/images/distr-net9/control-overtime-omniscient}%
 		\caption{Expert controller.}
 	\end{subfigure}
 	\hfill
 	\begin{subfigure}[h]{0.3\textwidth}
 		\centering
-		\includegraphics[width=\textwidth]{contents/images/distr-net6/control-overtime-manual}%
+		\includegraphics[width=\textwidth]{contents/images/distr-net9/control-overtime-manual}%
 		\caption{Manual controller.}
 	\end{subfigure}
 	\hfill
 	\begin{subfigure}[h]{0.3\textwidth}
 		\centering
-		\includegraphics[width=\textwidth]{contents/images/distr-net6/control-overtime-distributed}
+		\includegraphics[width=\textwidth]{contents/images/distr-net9/control-overtime-distributed}
 		\caption{Distributed controller.}
 	\end{subfigure}
-	\caption[Evaluation of the control learned by \texttt{net6}.]{Comparison 
+	\caption[Evaluation of the control learned by \texttt{net9}.]{Comparison 
 		of output control generated using three controllers: the expert, the manual 
-		and the one learned from \texttt{net6}.}
-	\label{fig:net6control}
+		and the one learned from \texttt{net9}.}
+	\label{fig:net9control}
 \end{figure}
+
+In Figure \ref{fig:net9responseposition} is displayed the behaviour of a robot 
+located between two that are already in their place.
+\begin{figure}[!htb]
+	\centering
+\includegraphics[width=.5\textwidth]{contents/images/distr-net9/response-varying_init_position-net9}%
+	\caption{Response of \texttt{net6} by varying the initial position.}
+	\label{fig:net9responseposition}
+\end{figure}
+It visualises the response of the learned controller to the variation of the 
+distance between two stationary agents and a robot located halfway between 
+them.
+As expected, the output is a high positive value when the robot is close to an 
+obstacle on the left, it decreases and reaches $0$ when the distance from 
+right and left is equal, and finally becomes negative when there is an obstacle in 
+front and not behind. 
+
+Finally, in Figure \ref{fig:net9distance} is presented the absolute distance of each 
+robot from the target, averaged on all robots among all the simulation runs.  The 
+median value is shown as well as the interquartile and interdecile 
+ranges.
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=.7\textwidth]{contents/images/distr-net9/distances-from-goal-compressed-distributed}%
+	\caption[Evaluation of \texttt{net9} distances from goal.]{Comparison of 
+		performance in terms of distances from goal obtained using three 
+		controllers: the expert, the manual and the one learned from \texttt{net9}.}
+	\label{fig:net9distance}
+\end{figure}
+
+The plot shows that on average the distance from goal of the learned controller is 
+similar than that obtained with the manual one. In the final configuration, the 
+robots moved following these controllers are at a distance of about $5$ \gls{cm} 
+from the goal position. 
 
