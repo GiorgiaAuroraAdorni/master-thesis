@@ -478,10 +478,7 @@ date of the approved research program.\\[18mm]
 %%% other useful packages
 
 \RequirePackage{booktabs}
-\RequirePackage{graphicx}
 \RequirePackage{textcomp}
-\RequirePackage{url}
-\RequirePackage{amsmath}
 \RequirePackage[square]{natbib}
 %%% lowercase header for bibliography and corresponding entry in the
 %%% ToC. \bibsection is provided by the natbib package
