@@ -26,7 +26,7 @@ different but fixed value of $N$ and then on simulations composed by a
 variable $N$.
 It is easy to show that although the value of $N$ changes the network 
 structure does not, as it is sufficient during the input preprocessing to 
-change the dimension of the input in such a way that all the tensors have a 
+change the dimension of the input in such a way that all the tensors have 
 the same length, fixed at the maximum possible value of $N$, padding 
 those tensors with a lower number of agents.
 
@@ -76,7 +76,7 @@ In particular, we chose the hyperbolic tangent (Tanh)
 	\label{eq:tanh}
 \end{Equation}
 
-This type of activation function is often used in deep learning and one of is 
+This type of activation function is often used in deep learning and one of its 
 advantages is that negative inputs are mapped to strongly negative values.
 
 \begin{figure}[!htb]
@@ -87,7 +87,7 @@ advantages is that negative inputs are mapped to strongly negative values.
 \end{figure}
 
 %fixme citation
-As optimiser we chose Adam, {an algorithm for first-order gradient-based 
+As optimiser, we chose Adam, {an algorithm for first-order gradient-based 
 optimisation of stochastic objective functions, based on adaptive estimates of 
 lower-order moments}, \cite[see][]{kingma2014adam, 
 loshchilov2017decoupled}, 
@@ -155,14 +155,15 @@ models performance in terms of train and validation losses.
 \begin{figure}[!htb]
 	\centering
 	\includegraphics[width=.75\textwidth]{contents/images/task1/pdf/loss-distributed-all@}%
-	\caption{Comparison of the losses of the models carried out with $5$ agents.}
+	\caption[Comparison of losses of the first set of experiments.]{Comparison of 
+	the losses of the models carried out with $5$ agents.}
 	\label{fig:distloss}
 \end{figure}
 It is immediately evident that, in case of \texttt{prox\_values} inputs, the 
 experiment performed with an \texttt{avg\_gap} of $24$ is not remarkable since 
 this value exceeds the maximal range of the sensor.
 
-We start the analysis by exploring the results of the experiment obtained 
+We start the analysis by exploring the results of the experiments obtained 
 using the \texttt{prox\_values} readings alone as input of the network, continuing 
 the with \texttt{prox\_comm} and concluding with \texttt{all\_sensors}.
 The performance of \texttt{net1} are shown in the following images. In particular,  
@@ -197,7 +198,7 @@ learned trajectories, and then between the manual and the learned ones. In
 particular, on the y-axis is visualised the position of each agent over time, while 
 on the x-axis the simulation timesteps. It is important to notice that the plots 
 summarise all the runs: at each timestep, the position of each agent is presented 
-as an average over all the simulation runs, and in addition is  shown this average 
+as an average over all the simulation runs, and besides is  shown this average 
 minus and plus the standard deviation.
 \begin{figure}[!htb]
 	\centering
@@ -707,7 +708,7 @@ located between two that are already in their place.
 \begin{figure}[!htb]
 	\centering
 	%FIXME change image and put .75 
-	\includegraphics[width=.6\textwidth]{contents/images/distr-net9/pdf/response-varying_init_position-net9}%
+	\includegraphics[width=.75\textwidth]{contents/images/distr-net9/pdf/response-varying_init_position-net9}%
 	\caption{Response of \texttt{net6} by varying the initial position.}
 	\label{fig:net9responseposition}
 \end{figure}
@@ -795,9 +796,9 @@ that use a variable number of agents.
 		\textbf{Model} \quad & \textbf{\texttt{network\_input}} & 
 		\textbf{\texttt{input\_size}} & \textbf{\texttt{avg\_gap}} & \textbf{\texttt{N}}\\
 		\midrule
-		\texttt{net-01} 	& \texttt{all\_sensors}		&  $14$  &  $8$		 &	 $5$ \\
+		\texttt{net-01} 	& \texttt{all\_sensors}		&  $14$  &  $8$		 	 &	 $5$ \\
 		\texttt{net-02} 	& \texttt{all\_sensors}		&  $14$  &  $20$		&	$5$ \\
-		\texttt{net-03} 	& \texttt{all\_sensors}		&  $14$  &  variable	&	$5$ \\
+		\texttt{net-03} 	& \texttt{all\_sensors}		&  $14$  &  variable   &	$5$ \\
 		\texttt{net-04} 	& \texttt{all\_sensors}	  	&  $14$  &  $8$			 &	  $8$ \\
 		\texttt{net-05} 	& \texttt{all\_sensors}	  	&  $14$  &  $20$   		&	 $8$ \\
 		\texttt{net-06} 	& \texttt{all\_sensors}	  	&  $14$  &  variable	&	 $8$ \\
@@ -806,7 +807,8 @@ that use a variable number of agents.
 		\texttt{net-09} 	& \texttt{all\_sensors}	  	&  $14$  &  variable	 &	variable\\
 		\bottomrule
 	\end{tabular}
-	\captionof{table}{List of the experiments carried out with $5$ agents.}
+	\captionof{table}{List of the experiments carried out using a variable number of 
+	agents and of average gap.}
 	\label{tab:modeldist}
 \end{figure}
 
