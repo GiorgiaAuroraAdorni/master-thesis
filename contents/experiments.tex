@@ -1,4 +1,4 @@
-\chapter{Experiments and results}
+\chapter{Evaluation}
 \label{chap:experiments}
 
 %\section{Overview}
@@ -18,8 +18,8 @@ and last in the row behave like walls. %% FIXME
 
 The agent is a point on the plane, formally described by a homogeneous vector 
 with respect to the world coordinate frame $W$, obtained multiplying the 
-homogeneous vector of the point, with respect to the robot coordinate frame 
-$A$, by a homogeneous transformation. 
+homogeneous vector of the point, respect the robot coordinate frame $A$, by a 
+homogeneous transformation. 
 
 The relative pose $A$ of each agent is identified by a $3 \times 3$ matrix 
 $\mathbf{T}$, with respect to the world reference frame $W$. 
@@ -58,7 +58,6 @@ kinematic.
 
 \section{Assumptions}
 \label{sec:assum}
-%%FIXME synonim
 Before diving in a detailed explanation of the experiments, it is necessary to 
 formulate some assumptions.
 
@@ -70,19 +69,19 @@ In particular, once established the number of agents to spawn and the average
 gap between them, a vector containing samples, each representing a real random 
 gap, is drawn from a uniform distribution in the interval $[0, 
 2*\mathtt{avg\_gap})$. 
-At each gap is adde the value that corresponds to the length of the Thymio, that is 
-$10.9$ \gls{cm}, and finally, the final positions are obtained return the cumulative 
-sum of the elements in the generated vector. 
+At each gap is added the value that corresponds to the length of the Thymio, that 
+is $10.9$ \gls{cm}, then the final positions are obtained returning the 
+cumulative sum of the elements in the generated vector. 
 
 Another premise regards the sensors of the Thymio. 
 As introduced in Section \ref{subsec:enkisensors}, we have available 
-\texttt{prox\_values} and \texttt{prox\_comm\_events.intensities}. In order to be 
-used, the \texttt{prox\_comm\_events.intensities} should be flatten in order to 
+\texttt{prox\_values} and \texttt{prox\_comm\_events.intensities}. In preparation 
+for being used, the \texttt{prox\_comm\_events.intensities} should be flatten to 
 obtain a single array enclosing the intensities recorded by the possible events. 
 To do so, we decided to create a new array, called \texttt{prox\_comm}, by 
 keeping for each element of it only the value that has the maximum intensity 
-chose among all the possible values in the corresponding position, (in our case 
-maximum $2$).
+chose among all the possible values in the corresponding position, – for this 
+purpose maximum $2$.
 In addition, we define another variable, name \texttt{all\_sensors}, that is an array 
 of $14$ intensities result of the combination of the \texttt{prox\_values} and 
 \texttt{prox\_comm} vectors.
@@ -96,10 +95,10 @@ the manual controllers.
 
 Each run, that differs from the others for the initial positions where are spawn the 
 agents, sets up a world containing $N$ Thymio. 
-In particular, for all the simulations are chosen randomly the number of agents 
-$N$, within the range $[5, 10]$, and the \texttt{avg\_gap}, that is the average 
-distance among the robot in the final configuration of the run, that can be in the 
-range $[5, 24]$.
+In particular, for all the simulations the number of agents $N$ is chosen randomly 
+within the range $[5, 10]$, and the \texttt{avg\_gap}, that is the average distance 
+among the robot in the final configuration of the run, that can be in the range 
+$[5, 24]$.
 %, which means that the robots can sense each other using \texttt{prox\_values} 
 %and \texttt{prox\_comm} together.
 
@@ -108,8 +107,8 @@ target pose, with a certain tolerance, or after $4$ \gls{s} ($40$ timesteps).
 
 At each timestep, all the useful information regarding the agents are stored in the 
 dataset, such as the index of the timestep, the sensor readings, the pose of the 
-robot, the motors target, the communication transmitted and received and finally 
-its colour.
+robot, the motors target, the communication, transmitted and received, and 
+finally its colour.
 
 The dataset generated using the expert controller is the one used to train the 
 models, while the one generated with the manual controller is used as a baseline 
