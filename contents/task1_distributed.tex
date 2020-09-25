@@ -57,13 +57,14 @@ shape of the sensing, that can be $7$ or $14$.
 		\label{fig:singlenet14distributed1}
 	\end{subfigure}
 	\caption[Network architectures for the distributed approach.]{Visualisation of 
-	the network architectures for the distributed approach.}
+	the network architecture chosen for the distributed approach in case of 7 or 14 
+	inputs.}
 	\label{fig:singlenetdistributed1}
 \end{figure}
 To the first and second layer is applied a non-linear activation function, 
 useful to make the model generalise. 
 In particular, we chose the hyperbolic tangent (Tanh) 
-\cite[see][]{kalman1992tanh}, a zero-centred function, shown in Figure 
+\cite[see][]{kalman1992}, a zero-centred function, shown in Figure 
 \ref{fig:tanh}, whose range lies between $[-1, 1]$ and its output is given by
 
 \begin{Equation}[H]
@@ -82,7 +83,9 @@ advantages is that negative inputs are mapped to strongly negative values.
 \begin{figure}[!htb]
 	\centering
 	\includegraphics[width=.5\textwidth]{contents/images/tanh2}%
-	\caption{Trend of the Tanh activation function.}
+	\caption[Trend of the Tanh activation function.]{Trend of the Hyperbolic 
+	Tangent Function (Tanh ) applied as non-linear activation to the first and the 
+	second layer of the network.}
 	\label{fig:tanh}
 \end{figure}
 
@@ -171,7 +174,7 @@ The performance of \texttt{net1} are shown in the following images. In particula
 in Figure \ref{fig:net1r2} is visualised a comparison of the \gls{r2}, or coefficient 
 of determination, of the manual and the learned controllers, on the validation set.
 This score function evidences how well the regression predictions approximate 
-the real data points (groundtruth). Since a model that perfectly predicts the data 
+the real data points (groundtruth). Since a model which perfectly predicts the data 
 has a score of $1$, we assume that a higher score corresponds to a model that 
 performs better.
 \begin{figure}[!htb]
@@ -200,7 +203,7 @@ learned trajectories, and then between the manual and the learned ones. In
 particular, on the y-axis is visualised the position of each agent over time, while 
 on the x-axis the simulation timesteps. It is important to notice that the plots 
 summarise all the runs: at each timestep, the position of each agent is presented 
-as an average over all the simulation runs, and besides is  shown this average 
+as an average over all the simulation runs, and besides is shown this average 
 minus and plus the standard deviation.
 \begin{figure}[!htb]
 	\centering
@@ -238,7 +241,7 @@ minus and plus the standard deviation.
 \end{figure}
 
 The convergence of the robots to the target using the omniscient controller is 
-much faster than that with the manual or the learned one. In particular, the 
+much faster that with the manual or the learned one. In particular, the 
 learned trajectories, even if converge to the correct configuration they require a 
 higher number of timesteps, sometimes even 40 timesteps may be necessary, 
 compared to the two others controllers, where less than 10 timesteps are 
@@ -313,7 +316,7 @@ The same behaviour is obtained when the robot sees only behind but nothing in
 front. In this case the speed has the opposite sign.
 
 In Figure \ref{fig:net1responseposition} another informative plot displays the 
-behaviour of a robot located between two that are already in their place.
+behaviour of a robot located between two which are already in their place.
 It visualises the response of the learned controller by varying the distance 
 between two stationary agents and a robot located halfway between them.
 On the x-axis is visualised the position of the moving robot, while on the y-axis 
@@ -322,7 +325,7 @@ pose of the agent $(x, y, \theta)$ differs by a certain epsilon uniformly distri
 in the range $[-0.5, 0.5]$. In this way, the result obtained avoids the effects of 
 noise that would be obtained on a single measurement and unrealistic artefacts in 
 which the sensors are not continuous, compared to the pose, in simulation. In 
-addition are also shown the bands that represent plus and minus standard 
+addition are also shown the bands which represent plus and minus standard 
 deviation.
 \begin{figure}[!htb]
 	\centering
@@ -350,7 +353,7 @@ runs. The median value is shown as well as the interquartile and interdecile ran
 \end{figure}
 
 On average, the distance from goal of the learned controller is lower than the one 
-obtained with the manual controller, that means that in the final configuration 
+obtained with the manual controller, meaning that in the final configuration 
 the robots moved following the learned controller are closer to the target than 
 those moved with the manual one, which are on average at a distance of about 
 $1$ \gls{cm} from the goal position. 
@@ -387,7 +390,7 @@ Then we move on to examine the \gls{r2} coefficients, visualised in Figure
 		\begin{subfigure}[h]{0.47\textwidth}
 			\includegraphics[width=\textwidth]{contents/images/distr-net4/pdf/regression-net4-vs-omniscient}%
 		\end{subfigure}
-		\hfill
+		\hfill\vspace{-0.5cm}
 		\begin{subfigure}[h]{0.47\textwidth}
 			\includegraphics[width=\textwidth]{contents/images/distr-net5/pdf/regression-net5-vs-omniscient}%
 		\end{subfigure}
@@ -402,7 +405,6 @@ Then we move on to examine the \gls{r2} coefficients, visualised in Figure
 	\texttt{prox\_comm} readings.}
 	\label{fig:net456r2}
 \end{figure}
-
 The coefficient obtained with \texttt{net6} is higher than the others. For the 
 assumptions made before we believe that the behaviour of this model is more 
 promising. Moreover, as shown in Figure \ref{fig:net6r2}, we expect that the 
@@ -433,7 +435,6 @@ As before, the robot positions are averaged over all the runs.
 Even for the expert, the convergence to the target is slower than before, 
 as expected since the distance between the robots is greater, but it is much faster 
 than with the other two controllers.
-The manual controller has serious problems in reaching the goal: even if the 
 \begin{figure}[!htb]
 	\begin{center}
 		\begin{subfigure}[h]{0.49\textwidth}
@@ -472,6 +473,7 @@ The manual controller has serious problems in reaching the goal: even if the
 	\label{fig:net6traj}
 \end{figure}
 \noindent
+The manual controller has serious problems in reaching the goal: even if the 
 agents try to position themselves at equal distances, they tend to increase the 
 average gap between them, creating situations in which the last robot in motion 
 hits the fixed one. Surprisingly, the learned controller allows the agents to 
@@ -586,6 +588,7 @@ obtained with \texttt{net7} and \texttt{net9} are the more promising.
 			\includegraphics[width=\textwidth]{contents/images/distr-net8/pdf/regression-net8-vs-omniscient}%
 		\end{subfigure}
 	\end{center}
+	\hfil\vspace{-0.5cm}
 	\begin{center}
 		\begin{subfigure}[h]{0.49\textwidth}
 			\includegraphics[width=\textwidth]{contents/images/distr-net9/pdf/regression-net9-vs-omniscient}
@@ -596,7 +599,6 @@ obtained with \texttt{net7} and \texttt{net9} are the more promising.
 		\texttt{prox\_comm} readings.}
 	\label{fig:net789r2}
 \end{figure}
-
 This is further supported by the comparisons in Figures \ref{fig:net7r2} and 
 \ref{fig:net9r2}, which prove the superiority of these controllers.
 \begin{figure}[!htb]
@@ -759,6 +761,11 @@ It is quite obvious that the performance obtained using as inputs
 data coming from \texttt{prox\_comm}, that is not able to work well with small 
 gaps, contains in the second half of the array unusable values.
 
+In a complementary way, by increasing the gap to $13$ \gls{cm},  
+\texttt{prox\_values} alone is not able to achieve satisfactory results, while used 
+together with \texttt{prox\_comm}, \texttt{all\_sensors} reaches good 
+performances that on the validation set are comparable to those obtained using 
+\texttt{prox\_comm} alone.
 \begin{figure}[!htb]
 	\centering
 	\includegraphics[width=.7\textwidth]{contents/images/task1/pdf/loss-distributed-avg13@}%
@@ -766,11 +773,6 @@ gaps, contains in the second half of the array unusable values.
 		of $13$ \gls{cm}.}
 	\label{fig:distloss13}
 \end{figure}
-In a complementary way, by increasing the gap to $13$ \gls{cm},  
-\texttt{prox\_values} alone is not able to achieve satisfactory results, while used 
-together with \texttt{prox\_comm}, \texttt{all\_sensors} reaches good 
-performances that on the validation set are comparable to those obtained using 
-\texttt{prox\_comm} alone.
 
 Finally, by increasing the gap even more, up to $24$ \gls{cm}, 
 \texttt{prox\_values} becomes completely unusable, while \texttt{prox\_comm} 
@@ -785,8 +787,8 @@ and \texttt{all\_sensors} still have excellent performances.
 
 The last group of experiments we carried out using a distributed approach, 
 examines the behaviour of the control learned just in case of \texttt{all\_sensors} 
-inputs. This time the simulation runs use a different number of robots $N$, that 
-can be fixed at $5$ or $8$ for the entire simulation, or even vary in the range 
+inputs. On this occasion the simulation runs use a different number of robots $N$, 
+that can be fixed at $5$ or $8$ for the entire simulation, or even vary in the range 
 $[5, 10]$. The same reasoning is applied for the choice of the \texttt{avg\_gap}, 
 that can be a fixed value in all the runs, chosen between $8$ or $20$, but also 
 vary in the range $[5, 24]$. 
@@ -834,13 +836,10 @@ models performance in terms of train and validation losses.
 \end{figure}
 
 In Figure \ref{fig:distlossn5} we analyse the results of the experiments 
-obtained 
-using a number of agents fixed at $5$, the same used for the group of 
+obtained using a number of agents fixed at $5$, the same used for the group of 
 experiments presented above, again in terms of losses. In particular we want 
-to 
-show the difference of performance using a gap that is first small, then large 
-and 
-finally variable.
+to show the difference of performance using a gap that is first small, then large 
+and finally variable.
 As expected, for the network it is easier to perform a task using a smaller 
 gap.
 \begin{figure}[!htb]
@@ -995,19 +994,17 @@ each robot from the target,
 \noindent
  averaged on all robots among all the simulation runs, over time. 
 Despite we expected performances similar to those presented in the Figure 
-\ref{fig:net9distance}, in this case the agents moved following the distributed 
-controller are closer to the target, in particular in the final configuration they 
-are 
-on average $2$ \gls{cm} away from the goal position. 
+\ref{fig:net9distance}, in this circumstance the agents moved following the 
+distributed controller are closer to the target, in particular in the final 
+configuration they are on average $2$ \gls{cm} away from the goal position. 
 Furthermore, it is shown that there are far fewer cases far from average 
 behaviour.
 
 Following are shown the results, in terms of the losses, of the experiments 
-performed using an higher number of agents, in this case 8, by varying the 
+performed using an higher number of agents, i.e. 8, by varying the 
 average gap.
 In Figure \ref{fig:distlossprox_comm}, are analysed  . From a first observation 
-the 
-network seems to be able to work with all the gaps.
+the network seems to be able to work with all the gaps.
 \begin{figure}[!htb]
 	\centering
 	\includegraphics[width=.7\textwidth]{contents/images/task1-extension/pdf/loss-distributed-n8@}%
@@ -1386,3 +1383,12 @@ While again, the results obtained using fewer agents are the best.
 	variable.}
 	\label{fig:distlossvar}
 \end{figure}
+
+\subsubsection{Summary}
+\label{subsubsec:summary}
+In this section we have shown that using a distributed controller learned by 
+imitating an expert it is possible to obtain results more or less comparable to 
+those reached employing a manual controller.
+However, this approach is not enough to achieve satisfactory performance. In the 
+following section we are going to describe a second approach that solve the 
+problem by exploiting a communication protocol between agents.
