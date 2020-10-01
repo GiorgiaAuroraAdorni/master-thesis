@@ -149,3 +149,38 @@ communication.
 
 \subsubsection{Experiments}
 \label{subsubsec:expcomm}
+
+In this section we explore the same experiments carried out for the distributed 
+approach without communication, paying more attention to the cases with 
+variable gaps and robots. 
+The first analysis, summarised in Table \ref{tab:modeln5comm}, also in this case  
+concerns the behaviour of the learned controllers in case of the three different 
+inputs, \texttt{prox\_values}, \texttt{prox\_comm} or 
+\texttt{all\_sensors}, for a number of robots $N$ and an \texttt{avg\_gap} both 
+fixed respectively at $5$ and the second chosen between $8$, $13$ and $24$.
+\begin{figure}[!htb]
+	\centering
+	\begin{tabular}{cccc}
+		\toprule
+		\textbf{Model} \quad & \textbf{\texttt{network\_input}} & 
+		\textbf{\texttt{input\_size}} &
+		\textbf{\texttt{avg\_gap}} \\
+		\midrule
+		\texttt{net-c1} 				 & \texttt{prox\_values}	&  $  7$  &  $  8$  \\
+		\texttt{net-c2} 			 	 & \texttt{prox\_values}	&  $  7$  &  $13$ \\
+		\texttt{net-c3} 				 & \texttt{prox\_values}	&  $  7$  &  $24$  \\
+		\texttt{net-c4} 				 & \texttt{prox\_comm}	  &  $  7$  &  $  8$  \\
+		\texttt{net-c5} 				 & \texttt{prox\_comm}	  &  $  7$  &  $13$  \\
+		\texttt{net-c6} 				 & \texttt{prox\_comm}	  &  $  7$  &  $24$  \\
+		\texttt{net-c7} 				 & \texttt{all\_sensors}	  &  $14$  &  $  8$  \\
+		\texttt{net-c8} 				 & \texttt{all\_sensors}	  &  $14$  &  $13$ 	\\
+		\texttt{net-c9} 				 & \texttt{all\_sensors}	  &  $14$  &  $24$ 	\\
+		\bottomrule
+	\end{tabular}
+	\captionof{table}[Experiments with $5$ agents (communication).]{List of the 
+	experiments carried out with $5$ agents using communication.}
+	\label{tab:modeln5comm}
+\end{figure}
+
+
+
