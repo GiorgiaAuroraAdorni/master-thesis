@@ -174,7 +174,7 @@ We start the analysis by exploring the results of the experiments obtained
 using the \texttt{prox\_values} readings alone as input of the network, continuing 
 the with \texttt{prox\_comm} and concluding with \texttt{all\_sensors}.
 The performance of \texttt{net-d1} are shown in the following images. In 
-particular,  in Figure \ref{fig:net-d1r2} is visualised a comparison of the \gls{r2}, 
+particular, in Figure \ref{fig:net-d1r2} is visualised a comparison of the \gls{r2}, 
 or coefficient of determination, of the manual and the learned controllers, on the 
 validation set.
 This score function evidences how well the regression predictions approximate 
@@ -271,14 +271,15 @@ the network.
 		\caption{Distributed controller.}
 	\end{subfigure}
 	\caption[Evaluation of the control learned by \texttt{net-d1}.]{Comparison 
-		of output control generated using three controllers: the expert, the manual 
+		of output control decided using three controllers: the expert, the manual 
 		and the one learned from \texttt{net-d1}.}
 	\label{fig:net-d1control}
 \end{figure}
-After about $10$ time steps they both reach the target, with a 
-certain tolerance, maintaining then the speed constant at $0$. Instead, the 
-distributed controller decreases the speed of the agents as the time steps pass, 
-reaching zero speed but with a certain variance.
+After about $10$ time steps the expert reaches the target while the manual need 
+about $15$ time steps to arrive to the goal with a certain tolerance, maintaining 
+then the speed constant at $0$. Instead, the distributed controller decreases the 
+speed of the agents as the time steps pass, reaching zero speed but with a certain 
+variance.
 
 A couple of useful plots are shown below. In Figure 
 \ref{fig:net-d1responsesensors} is visualised the response of the learned 
@@ -351,7 +352,6 @@ obtained with the manual controller, meaning that in the final configuration
 the robots moved following the learned controller are closer to the target than 
 those moved with the manual one, which are on average at a distance of about 
 $1$\gls{cm} from the goal position. 
-
 
 As mentioned before, in case of \texttt{prox\_values} inputs the 
 experiment performed with an \texttt{avg\_gap} of $24$ is not meaningful since 
@@ -468,10 +468,9 @@ hits the fixed one.
 Surprisingly, the learned controller allows the agents to converge to the correct 
 configuration by taking more time than the expert does.
 
-As before, an immediate examination of the evolution of the control over 
-time, in Figure \ref{fig:net-d6control}, highlights the speed of the expert 
-controller, which in all the simulation runs after $25$ time steps has reached the 
-goal. 
+An immediate examination of the evolution of the control over time, in Figure 
+\ref{fig:net-d6control}, highlights the speed of the expert controller, which in all 
+the simulation runs after $25$ time steps has reached the goal. 
 In addition, the manual controller always sets a positive speed, which leads to the 
 wrong behaviour mentioned earlier, while the slowness of the distributed 
 control is explained by the use of a low speed.
@@ -494,8 +493,8 @@ control is explained by the use of a low speed.
 		\includegraphics[width=\textwidth]{contents/images/net-d6/control-overtime-learned_distributed}
 		\caption{Distributed controller.}
 	\end{subfigure}
-	\caption[Evaluation of the control learned by \texttt{net-d6}.]{Comparison 
-		of output control generated using three controllers: the expert, the manual 
+	\caption[Evaluation of the control decided by \texttt{net-d6}.]{Comparison 
+		of output control decided using three controllers: the expert, the manual 
 		and the one learned from \texttt{net-d6}.}
 	\label{fig:net-d6control}
 \end{figure}
@@ -671,8 +670,8 @@ in the second is much lower.
 		\includegraphics[width=\textwidth]{contents/images/net-d9/control-overtime-learned_distributed}
 		\caption{Distributed controller.}
 	\end{subfigure}
-	\caption[Evaluation of the control learned by \texttt{net-d9}.]{Comparison 
-		of output control generated using three controllers: the expert, the manual 
+	\caption[Evaluation of the control decided by \texttt{net-d9}.]{Comparison 
+		of output control decided using three controllers: the expert, the manual 
 		and the one learned from \texttt{net-d9}.}
 	\label{fig:net-d9control}
 \end{figure}
@@ -734,17 +733,10 @@ each gap, we show once again in the figures below the losses of the trained
 models. In all the figures the blue line represents the loss using 
 \texttt{prox\_values} as input, in orange \texttt{prox\_comm} and finally in green 
 \texttt{all\_sensors}.
-
 In case of an \texttt{avg\_gap} of $8$\gls{cm}, the model trained using 
 \texttt{prox\_values} as input has a lower loss, following is the network that 
 employ \texttt{all\_sensors}, with a very similar value, and at the end the model 
 that works with \texttt{prox\_comm}.
-%\begin{figure}[!htb]
-%	\centering
-%\includegraphics[width=.8\textwidth]{contents/images/task1/loss-distributed-gap_8@}%
-%	\caption{Comparison of the losses of the .}
-%	\label{fig:distloss8}
-%\end{figure}
 It is quite obvious that the performance obtained using as inputs 
 \texttt{prox\_values} and \texttt{all\_sensors} are the best, as well as the fact that 
 \texttt{all\_sensors} cannot perform better than the other since using also the 
@@ -755,24 +747,9 @@ In a complementary way, by increasing the gap to $13$\gls{cm},
 together with \texttt{prox\_comm}, \texttt{all\_sensors} reaches good 
 performances that on the validation set are comparable to those obtained using 
 \texttt{prox\_comm} alone.
-%\begin{figure}[!htb]
-%	\centering
-%\includegraphics[width=.8\textwidth]{contents/images/task1/loss-distributed-gap_13@}%
-%	\caption{Comparison of the losses of the models that use an \texttt{avg\_gap} 
-%		of $13$\gls{cm}.}
-%	\label{fig:distloss13}
-%\end{figure}
 Finally, by increasing the gap even more, up to $24$\gls{cm}, 
 \texttt{prox\_values} becomes completely unusable, while \texttt{prox\_comm} 
-and \texttt{all\_sensors} still have excellent performances and very similar to each 
-other.
-%\begin{figure}[!htb]
-%	\centering
-%\includegraphics[width=.8\textwidth]{contents/images/task1/loss-distributed-gap_24@}%
-%	\caption{Comparison of the losses of the models that use an \texttt{avg\_gap} 
-%	of $24$\gls{cm}.}
-%	\label{fig:distloss24}
-%\end{figure}
+and \texttt{all\_sensors} still have excellent performances similar to each other.
 
 The last group of experiments we carried out using a distributed approach, 
 examines the behaviour of the control learned just in case of \texttt{all\_sensors} 
@@ -791,11 +768,9 @@ that use a variable number of agents.
 		\textbf{Model} \quad & \textbf{\texttt{network\_input}} & 
 		\textbf{\texttt{input\_size}} & \textbf{\texttt{avg\_gap}} & \textbf{\texttt{N}}\\
 		\midrule
-		\texttt{net-d10} 	& \texttt{all\_sensors}		&  $14$  &  $8$		 	 &	 
-		$5$ \\
+		\texttt{net-d10} 	& \texttt{all\_sensors}		&  $14$  &  $8$		 	 &	$5$ \\
 		\texttt{net-d11} 	& \texttt{all\_sensors}		&  $14$  &  $20$		&	$5$ \\
-		\texttt{net-d12} 	& \texttt{all\_sensors}		&  $14$  &  variable   &	
-		$5$ \\
+		\texttt{net-d12} 	& \texttt{all\_sensors}		&  $14$  &  variable   &	$5$ \\
 		\texttt{net-d13} 	& \texttt{all\_sensors}	  	&  $14$  &  $8$			 &	  $8$ \\
 		\texttt{net-d14} 	& \texttt{all\_sensors}	  	&  $14$  &  $20$   		&	 $8$ \\
 		\texttt{net-d15} 	& \texttt{all\_sensors}	  	&  $14$  &  variable	&	 $8$ \\
@@ -828,8 +803,7 @@ small, then large and finally variable.
 \begin{figure}[!htb]
 	\centering
 	\includegraphics[width=.8\textwidth]{contents/images/task1-extension/loss-distributed-N5@}%
-	\caption{Comparison of the losses of the models that use $5$ agents as 
-	the gap 
+	\caption{Comparison of the losses of the models that use $5$ agents as the gap 
 	varies.}
 	\label{fig:distlossn5}
 \end{figure}
@@ -932,10 +906,9 @@ not allow to reach the target in a satisfactory time.
 		\includegraphics[width=\textwidth]{contents/images/net-d12/control-overtime-learned_distributed}
 		\caption{Distributed controller.}
 	\end{subfigure}
-	\caption[Evaluation of the control learned by \texttt{net-d12}.]{Comparison 
-		of output control generated using three controllers: the expert, the 
-		manual 
-		and the one learned from \texttt{net-d12}.}
+	\caption[Evaluation of the control decided by \texttt{net-d12}.]{Comparison 
+		of output control decided using three controllers: the expert, the 
+		manual and the one learned from \texttt{net-d12}.}
 	\label{fig:net-d12control}
 \end{figure}
 
@@ -1076,9 +1049,8 @@ the simulation.
 		\includegraphics[width=\textwidth]{contents/images/net-d15/control-overtime-learned_distributed}
 		\caption{Distributed controller.}
 	\end{subfigure}
-	\caption[Evaluation of the control learned by \texttt{net-d15}.]{Comparison 
-		of output control generated using three controllers: the expert, the 
-		manual 
+	\caption[Evaluation of the control decided by \texttt{net-d15}.]{Comparison 
+		of output control decided using three controllers: the expert, the manual 
 		and the one learned from \texttt{net-d15}.}
 	\label{fig:net-d15control}
 \end{figure}
@@ -1107,10 +1079,10 @@ the robots from the target among all the simulations. The performance of the
 learned and the manual controllers 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=.67\textwidth]{contents/images/net-d15/distances-from-goal-compressed-distributed}%
+	\includegraphics[width=.65\textwidth]{contents/images/net-d15/distances-from-goal-compressed-distributed}%
 	\caption[Evaluation of \texttt{net-d15} distances from goal.]{Comparison 
 	of performance in terms of distances from goal obtained using three 
-	controllers: the expert, the manual and the one learned from \texttt{net-0}.}
+	controllers: the expert, the manual and the one learned from \texttt{net-d15}.}
 	\label{fig:net-d15distance}
 \end{figure}
 
@@ -1276,9 +1248,9 @@ simulation.
 		\includegraphics[width=\textwidth]{contents/images/net-d18/control-overtime-learned_distributed}
 		\caption{Distributed controller.}
 	\end{subfigure}
-	\caption[Evaluation of the control learned by \texttt{net-d18}.]{Comparison 
-		of output control generated using three controllers: the expert, the 
-		manual and the one learned from \texttt{net-d18}.}
+	\caption[Evaluation of the control decided by \texttt{net-d18}.]{Comparison 
+		of output control decided using three controllers: the expert, the manual and 
+		the one learned from \texttt{net-d18}.}
 	\label{fig:net-d18control}
 \end{figure}
 
@@ -1307,6 +1279,7 @@ than those moved with the learned one.
 	\label{fig:net-d18distance}
 \end{figure}
 
+\vspace{-1cm}
 To summarise the performance, as the different inputs of the network 
 vary, for each gap, we show once again in the figures below the losses of the 
 trained models.
