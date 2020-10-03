@@ -18,8 +18,8 @@ half of the row belong to the first group and the remaining to the second, while
 the case of an odd number robots, the agent located in the central position is 
 assigned to the first set.
 
-As for the previous task, the problem can be solved performing Imitation 
-Learning, but in this case, the role of communication is fundamental. In fact, what 
+As for the previous task, the problem can be solved performing imitation 
+learning, but in this case, the role of communication is fundamental. In fact, what 
 makes the difference are not the distances perceived by the robot sensors but the 
 messages exchanged between the agents, that are of primal importance in order 
 to determine their ordinal position. 
@@ -38,8 +38,19 @@ that takes as input only the communication – transmitted by the nearest
 neighbours in the previous timestep – and produces the colour of the robot 
 together with the message to be sent.
 
-\subsection{Experiments}
-\label{subsec:ex2}
+\subsection{Controllers}
+\label{subsec:task2controllers}
 
-\subsection{Comparison of results}
-\label{subsec:results2}
+\subsubsection{Expert controller}
+\label{subsubsec:omniscient2}
+
+\subsubsection{Manual controller}
+\label{subsubsec:manual2}
+
+\subsection{Distributed approach with communication}
+\label{subsec:task2comm}
+
+\subsubsection{Model training}
+\label{subsubsec:learnedcomm2}
+
+\input{contents/task2_experiments}

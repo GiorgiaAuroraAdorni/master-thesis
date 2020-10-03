@@ -724,7 +724,7 @@ goal position.
 		\includegraphics[width=\textwidth]{contents/images/task1/loss-distributed-gap_24@copy}
 		\caption{\texttt{avg\_gap} of $24$\gls{cm}.}
 	\end{subfigure}
-	\caption[Summary, in terms of loss, of the first set of experiments.]{Comparison 
+	\caption[Losses summary of the first set of experiments.]{Comparison 
 	of the losses by varying the input of the networks for the three gaps.}
 	\label{fig:distloss81324}
 \end{figure}
@@ -1097,7 +1097,6 @@ some agents can be even $10$\gls{cm} far from the target.
 
 We conclude the experiments performed using a distributed approach by 
 presenting the results obtained with a number of agents variable. 
-
 In Figure \ref{fig:distlossnvar}, are analysed the losses by varying the average 
 gap. As before, for the network it is easier to perform a task using a smaller gap 
 and in general training the model on a variable gap performs better than on a 
@@ -1279,10 +1278,8 @@ than those moved with the learned one.
 	\label{fig:net-d18distance}
 \end{figure}
 
-\vspace{-1cm}
-To summarise the performance, as the different inputs of the network 
-vary, for each gap, we show once again in the figures below the losses of the 
-trained models.
+To summarise the performance, as the number of agents vary for each gap, we 
+show once again in the figures below the losses of the trained models.
 In case of an \texttt{avg\_gap} of $8$\gls{cm}, the model trained using 
 a minor number of agents, as expected has a lower loss, following, with very 
 similar values the model that employ 8 robots and that with a variable number of 
@@ -1309,12 +1306,12 @@ the results obtained using fewer agents are the best.
 		\includegraphics[width=\textwidth]{contents/images/task1-extension/loss-distributed-gap_var@copy}
 		\caption{\texttt{avg\_gap} variable.}
 	\end{subfigure}
-		\caption[Summary, in terms of loss, of the second set of 
+		\caption[Losses summary of the second set of 
 		experiments.]{Comparison of the losses by varying the input of the networks 
 		for different gaps.}
 	\label{fig:distloss820var}
 \end{figure}
-
+\vspace{-0.5cm}
 \subsubsection{Summary}
 \label{subsubsec:summary}
 In this section we have shown that using a distributed controller learned by 
