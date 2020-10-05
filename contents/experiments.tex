@@ -13,8 +13,8 @@ defined by two perpendicular axes, $x$ and $y$.
 In this scenario, $N$ robots, all oriented in the same direction, are initially 
 randomly placed along the x-axis, avoiding collisions and in such a way the 
 average gap among the agents is included in the proximity sensors' ranges. 
-All the robots act in collaboration to achieve a common goal, however the first 
-and last in the row behave like walls. %% FIXME
+All the robots act in collaboration to achieve a common goal, except the first 
+and last in the row that behave like walls.
 
 The agent is a point on the plane, formally described by a homogeneous vector 
 with respect to the world coordinate frame $W$, obtained multiplying the 
@@ -66,41 +66,39 @@ initial positions of the robots.
 The initial configurations need to be randomly generated, verifying that there is 
 no bias towards those close to the target.
 In particular, once established the number of agents to spawn and the average 
-gap between them, a vector containing samples, each representing a real random 
-gap, is drawn from a uniform distribution in the interval $[0, 
+gap between them, a vector containing samples, each representing a random 
+gap in $\mathbb{R}$, is drawn from a uniform distribution in the interval $[0, 
 2*\mathtt{avg\_gap})$. 
-At each gap is added the value that corresponds to the length of the Thymio, that 
-is $10.9$ \gls{cm}, then the final positions are obtained returning the 
-cumulative sum of the elements in the generated vector. 
+The length of the Thymio, that is $10.9$ \gls{cm}, is added to each gap, then the 
+final positions are obtained by returning the cumulative sum of the elements in 
+the generated vector. 
 
-Another premise regards the sensors of the Thymio. 
-As introduced in Section \ref{subsec:enkisensors}, we have available 
-\texttt{prox\_values} and \texttt{prox\_comm\_events.intensities}. In preparation 
-for being used, the \texttt{prox\_comm\_events.intensities} should be flatten to 
-obtain a single array enclosing the intensities recorded by the possible events. 
+Another premise regards the sensors of the Thymio: as introduced in Section 
+\ref{subsec:enkisensors}, we have available \texttt{prox\_values} and 
+\texttt{prox\_comm\_events.intensities}. Before being used, the 
+\texttt{prox\_comm\_events.intensities} should be flattened to obtain a single 
+array containing the intensities of all recorded events. 
 To do so, we decided to create a new array, called \texttt{prox\_comm}, by 
-keeping for each element of it only the value that has the maximum intensity 
-chose among all the possible values in the corresponding position, – for this 
+keeping for each element only the value with the maximum intensity among the 
+possible values in the corresponding position of the original vectors – for this 
 purpose maximum $2$.
-In addition, we define another variable, name \texttt{all\_sensors}, that is an array 
-of $14$ intensities result of the combination of the \texttt{prox\_values} and 
-\texttt{prox\_comm} vectors.
+In addition, we define another variable, named \texttt{all\_sensors}, which is an 
+array of $14$ intensities resulting from the combination of the 
+\texttt{prox\_values} and \texttt{prox\_comm} vectors.
 
 \section{Datasets generation}
 \label{sec:dataset}
 
-Relying on the simulator Enki, introduced in Section \ref{sec:enki}, two datasets 
-containing $1000$ simulation runs each, are generated for the omniscient and 
-the manual controllers. 
+Two datasets containing $1000$ simulation runs each, are generated, for the 
+omniscient and the manual controllers, using Enki, the simulator introduced in 
+Section \ref{sec:enki}.
 
-Each run, that differs from the others for the initial positions where are spawn the 
-agents, sets up a world containing $N$ Thymio. 
+Each run, that differs from the others for the initial positions of the agents, sets up 
+a world containing $N$ Thymio. 
 In particular, for all the simulations the number of agents $N$ is chosen randomly 
 within the range $[5, 10]$, and the \texttt{avg\_gap}, that is the average distance 
 among the robot in the final configuration of the run, that can be in the range 
 $[5, 24]$.
-%, which means that the robots can sense each other using \texttt{prox\_values} 
-%and \texttt{prox\_comm} together.
 
 A simulation run is stopped either immediately after all the robots reach the 
 target pose, with a certain tolerance, or after $4$ \gls{s} ($40$ timesteps).
@@ -114,10 +112,10 @@ The dataset generated using the expert controller is the one used to train the
 models, while the one generated with the manual controller is used as a baseline 
 for the comparison with the learned model.
 
-Through the experiments we trained different models varying the input of the 
-network, that can be \texttt{prox\_values}, \texttt{prox\_comm} or 
-\texttt{all\_sensors}, the number of agents and the average gap distance between 
-them, that can both be fixed to a certain value or being variable.
+Throughout the experiments we compared different models, varying the input of 
+the network, either \texttt{prox\_values}, \texttt{prox\_comm} or 
+\texttt{all\_sensors}, the number of agents and the average gap between them, 
+either fixed to a certain value or variable.
 
 \input{contents/task1}
 \input{contents/task2}

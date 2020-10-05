@@ -7,9 +7,8 @@
 The first scenario tackles an interesting multi-agent coordination task, the 
 distribution of robots in space.
 
-As described in the overview of Chapter \ref{chap:experiments}, in which are 
-provided additional details, in a \gls{1d} environment are spawn in a ``single 
-file'' N robots in random positions. %% FIXME within the proximity sensors range 
+As described in the overview of Chapter \ref{chap:experiments}, which provides 
+additional details, are spawned in a ``single file'' N robots at random positions.
 Each agent can update its state – its absolute position – by performing actions – 
 moving forward and backwards along the x-axis – based on the observations 
 received from the environment – the distances from neighbours – using its 
@@ -18,27 +17,20 @@ peer robots within a range of about $48$\gls{cm}.
 A full explanation of how communication works for Thymio II is covered in 
 Section \ref{subsec:thymiocomm}.
 
-As a consequence of a \gls{1d} environment, the agents' movement are 
-limited to two directions: moving towards the x-axis when the velocity is positive 
-while going backwards when the speed is negative. 
+As a consequence of the \gls{1d} environment, the agents' movements are 
+limited to two directions: moving forward along the x-axis when the velocity is 
+positive, while going backwards when it is negative. 
 
 The robots share a common goal: arrange themselves uniformly along the 
 line between the two ``dead'' robots, in such a way they stand at equal distances 
 from each other.
 
-%% FIXME The problem presents a collaborative goal given the fact that the 
-%%single 
-%% agent can’t sense all the environment and the final configuration depends 
-%%on 
-%% the position of all of them.
-
-This problem represents a cooperative goal that can be reached performing 
+This problem represents a cooperative goal that can be reached by performing 
 imitation learning, that means training an end-to-end \gls{nn} by following 
 the example of an omniscient controller, introduced in Section 
 \ref{subsubsec:omniscient}.
-Exploiting its complete knowledge of the environment, % FIXME state of the 
-%system 
-the expert is then able to decide the best action to perform.
+Exploiting its complete knowledge of the environment, the expert is able to 
+decide the best action to perform.
 
 In the course of this study, we tried to understand if it is possible to use a 
 controller learned by imitation, instead of using a manual one. In particular, we 
@@ -46,18 +38,8 @@ focus on two approaches, presented in Sections \ref{subsec:dist} and
 \ref{subsec:comm}.
 In both cases, we train \glspl{dnn} that receive sensor inputs and produce 
 commands for the motors, but for the second alternative, the network has an 
-addition input – the received communication transmitted by the nearest agents in 
-the previous timestep – and an extra output – the message to be sent.
-
-
-%%FIXME
-%In this work, we decided to define and implement two multi-agent scenarios in 
-%which N agents have a common goal and that requires them to coordinate 
-%themselves to achieve it. Besides being an excellent example of distributed tasks, 
-%the two problems present an important difference. The first is possible to solve 
-%without communication, that can help to reach a more efficient solution but it is 
-%not strictly necessary. The second, instead, is impossible to solve without explicit 
-%communication between the agents.
+addition input – the received communication transmitted by the neighbouring 
+agents in the previous timestep – and an extra output – the message to be sent.
 
 \subsection{Controllers}
 \label{subsec:task1controllers}
@@ -66,17 +48,16 @@ the previous timestep – and an extra output – the message to be sent.
 \label{subsubsec:omniscient}
 
 As disclosed in Section \ref{subsec:controllersmodel}, the first element involved in 
-an imitation learning problem is an omniscient controller, also called expert.
+an imitation learning problem is the omniscient controller, also called expert.
 
-%fixme frase poco chiara alla fine
-This controller perceives the environment and the observation of all the agents, 
+This controller perceives the environment and the observations of all the agents, 
 obtaining a global knowledge of the state of the system. In this way it can use all 
-the available information that it owns to decide the best action to perform for all 
-the agents. 
+the information that it owns to decide the best action to perform for all the 
+agents. 
 
 In this first scenario, the omniscient controller, based on the current poses of the 
 robots, moves the agents at a certain speed to reach the target positions. In 
-particular, the linear velocity of each agent is computer as a ``signed distance`` 
+particular, the linear velocity of each agent is computed as a ``signed distance`` 
 between the current and the goal position of the robot, along its theta. 
 
 Formally, given the current pose, defined by the triple $(x, y, \theta)$ and the 
@@ -96,27 +77,25 @@ is computed as follow:
 \noindent
 To obtain the final velocity of the agent, this quantity is multiplied by a constant, 
 we choose $10$ to keep the controller as fast as possible, and then clipped to its 
-maximum value, $16.6$\gls{cm}.
+maximum value, $16.6$\gls{cm/s}.
 
 This controller can be informally considered as a simple Bang Bang controller 
-since the optimal controller moves at maximum speed the robot towards the 
-target unless the target is closer than %%FIXME è control step o control step 
-%%duration?
-\texttt{control\_step\_duration} $\times$ \texttt{maximum\_speed}. In this case, 
-the agent is moved lower then the maximum allowed speed so that at the end of 
-the timestep it is located exactly at the target.
+since the optimal controller moves the robot at maximum speed towards the 
+target unless the target is closer than \texttt{control\_step\_duration} $\times$ 
+\texttt{maximum\_speed}. In this case, the agent is moved slower then the 
+maximum allowed speed so that at the end of the timestep it is located exactly at 
+the target.
 
 Unfortunately, using an omniscient controller to solve this kind of problems is not 
 realistic nor feasible in a real environment.
 
 \subsubsection{Manual controller}
 \label{subsubsec:manual}
-%%FIXME
 The second controller we want to discuss/write about is the manual one, whose 
 main purpose is to draw conclusions about the quality of the controller learned.
 
 The main difference between this and the previous controller is that, the manual 
-one can be consider a local distributed controller, that has only a partial 
+one can be considered a local distributed controller, that only has a partial 
 knowledge of the environment since knows only the state of the current agent 
 and its observations.
 
@@ -124,13 +103,13 @@ This controller moves the robots towards the target by minimising the difference
 between the values recorded by the front and rear sensors, trying to maintain the 
 maximum achievable speed.
 
-For each agent the controller is the same and given an identical set of 
+For each agent the controller is the same and, if given an identical set of 
 observations as input, likewise, the outputs will be equivalent.
 
-The one implemented is a proportional controller, a particular variant of \gls{pid}, 
+The one implemented is a proportional controller, a particular variant of \gls{pid}
 with only the $K_p$ term. 
 The closed-loop control uses a feedback to adjust the control while the action 
-takes place in proportion to the existing error. This function given a desired 
+takes place in proportion to the existing error. This function, given a desired 
 output $x(t)$, or set point, produces an output $y(t)$, or process variable, such 
 that the error $e(t)$ is obtained as the difference between the value of the set 
 point and the process variable. Finally, the control variable $u(t)$ is the output of 
@@ -170,9 +149,9 @@ Moreover, since the value of the error is computed using the Equation
 
 It is important to notice that the speed returned by the controller is used to set the 
 \texttt{motor\_\{left, right\}\_target}, both with the same value in order to move 
-the robots straight ahead. Moreover, the first and the last robots of the line, which 
-are those which sensors never receive a response respectively from the back and 
-from the front, never move.
+the robots straight ahead. Moreover, the first and the last robots of the line, 
+whose sensors never receive a response respectively from the back and from the 
+front, never move.
 
 \input{contents/task1_distributed}
 \input{contents/task1_communication}
