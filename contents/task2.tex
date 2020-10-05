@@ -4,7 +4,9 @@
 \subsection{Overview}
 \label{subsec:desc2}
 
-The second scenario tackles another newsworthy multi-agent coordination task. 
+The second scenario tackles another newsworthy multi-agent coordination 
+task, 
+colour according a certain criterion the robots in the space. 
 The environment is the same described in Chapter \ref{chap:experiments} as 
 well as all the assumption defined in Section \ref{subsec:desc1}.
 
@@ -19,10 +21,10 @@ the case of an odd number robots, the agent located in the central position is
 assigned to the first set.
 
 As for the previous task, the problem can be solved performing imitation 
-learning, but in this case, the role of communication is fundamental. In fact, what 
+learning, instead, the role of communication is fundamental. In fact, what 
 makes the difference are not the distances perceived by the robot sensors but the 
 messages exchanged between the agents, that are of primal importance in order 
-to determine their ordinal position. 
+to determine their order. 
 
 In this scenario, the two ``dead'' robots play an important role: they always 
 communicate a message that indicates that they are the only two agents that 
@@ -33,10 +35,10 @@ actions – in this case not moving along the x-axis but colouring the top \gls{
 in red or blue – based on the observations received from the environment – the 
 messages received from neighbours – using their sensors. 
 
-Following the example of an omniscient controller, train an end-to-end \gls{nn} 
-that takes as input only the communication – transmitted by the nearest 
-neighbours in the previous timestep – and produces the colour of the robot 
-together with the message to be sent.
+Then, by following the example of an expert, we train an end-to-end \gls{nn} 
+that takes as input the communication – transmitted by the nearest neighbours in 
+the previous timestep – and produces the colour of the robot together with the 
+message to be sent.
 
 \subsection{Controllers}
 \label{subsec:task2controllers}
@@ -44,13 +46,246 @@ together with the message to be sent.
 \subsubsection{Expert controller}
 \label{subsubsec:omniscient2}
 
+As disclosed in Section \ref{subsec:controllersmodel}, the first element involved in 
+an imitation learning problem is an omniscient controller, also called expert, 
+which is able to perceive the environment and the observation of all the agents, 
+obtaining a global knowledge of the state of the system. In this way it can use all 
+the available information that it owns to decide the best action to perform for all 
+the agents.
+
+In this scenario, the omniscient controller, based on the current poses of each 
+robot, is able to define the order of the agents and turn on their top \gls{led}  in 
+one 
+time step.
+
+Unfortunately, using an expert to solve this kind of problem is not realistic nor 
+feasible in a real environment.
+
 \subsubsection{Manual controller}
 \label{subsubsec:manual2}
 
-\subsection{Distributed approach with communication}
+The second controller we want to write about is the manual one, whose main 
+purpose is to draw conclusions about the quality of the controller learned.
+
+The main difference between this and the previous controller is that, the manual 
+one can be consider a local controller, that has only a partial knowledge of the 
+environment since knows only the state of the current agent and its 
+observations.
+
+For this scenario, the observation of the robots, in particular the sensor readings, 
+do not provide useful information about the order of the agents, therefore they 
+are not used in order to accomplish this task.
+On the other hand, if an omniscient controller is not employed, it is impossible to 
+solve the problem without using communication, that is the only way for the 
+agents to understand they ordering.
+
+Thus, by initially making all robots transmit the same value, i.e. $0$, we are able 
+to establish which are the first and the last robots in the row, or those that do not 
+receive any communication respectively from the left and right. 
+These two agents can at this point start the actual communication by transmitting 
+the value received increased by $1$, i.e. $1$. 
+The following robots will in turn transmit the value they have received increased 
+by one. Since the messages received by each of them are two, the agents will in a 
+sense, learn to count in order to understand which is the correct value to 
+transmit.
+
+The protocol used to decide the communication and the colour, which also 
+depends on the amount of robots $N$, or if there are even or odd numbers, is 
+shown in Listing \ref{lst:manualtask2}. The colour of each agent in the initial 
+configuration is randomly chosen between the two possible colours, red and blue.
+
+\begin{python}
+c_left, c_right = get_received_communication(state)
+
+if N % 2 == 1:  # if the number of robots is odd
+
+	# Case 1: no communication received from left
+	if c_left == 0:
+		if c_right > N // 2:
+			# the agent is in the first half of the row, so its colour is blue
+			message = c_right - 1
+			colour = 1
+		elif c_right == N // 2:
+			# the agent is the central one, so its colour is blue
+			message = c_right + 1
+			colour = 1
+		else:
+			# the agent is in the second half of the row, so its colour is red
+			message = c_right + 1
+			colour = 0
+			
+	# Case 2: no communication received from right
+	elif c_right == 0:
+		if c_left > N // 2:
+			# the agent is in the second half of the row, so its colour is red
+			message = c_left - 1
+			colour = 0
+		elif c_left == N // 2:
+			# the agent is the central one, so its colour is blue
+			message = c_left + 1
+			colour = 1
+		else:
+			# the agent is in the first half of the row, so its colour is blue
+			message = c_left+ 1
+			colour = 1
+			
+	# Case 3: communication received from both sides
+	else:
+		if c_left > c_right:
+			# the agent is in the second half of the row, so its colour is red
+			message = c_right + 1
+			colour = 0
+		else:
+			# the agent is in the first half of the row, so its colour is blue
+			message = c_left + 1
+			colour = 1
+
+
+elif self.N % 2 == 0:  # if the number of robots is even
+
+	# Case 1: no communication received from left
+	if c_left == 0:
+		if c_right > N // 2:
+			# the agent is in the first half of the row, so its colour is blue
+			# the situation is ambiguous the message to transmit could be c_right or 
+			# even c_right - 1
+			message = c_right
+			colour = 1
+		else:
+			# the agent is in the second half of the row, so its colour is red
+			message = c_right + 1
+			colour = 0
+	
+	# Case 2: no communication received from right
+	elif c_right == 0:
+		if c_left < N // 2:
+			# the agent is in the first half of the row, so its colour is blue
+			message = c_left + 1
+			colour = 1
+		else:
+			# the agent is in the second half of the row, so its colour is red
+			# the situation is ambiguous the message to transmit could be c_left or 
+			# even c_left - 1
+			message = c_left
+			colour = 0
+	
+	# Case 3: communication received from both sides
+	else:
+		if c_left > c_right:
+			# the agent is in the second half of the row, so its colour is red
+			message = c_right + 1
+			colour = 0
+		elif c_left < c_right:
+			# the agent is in the first half of the row, so its colour is blue
+			message = c_left + 1
+			colour = 1
+		else:
+			# the agent is in the second half of the row, so its colour is red
+			message = c_left
+			colour = 0
+\end{python}
+
+\begin{lstlisting}[frame=none,caption=Protocol used from the manual controller 
+to decide for each robot the message to transmit and the colour., 
+label=lst:manualtask2]
+\end{lstlisting}
+
+
+\subsection{Communication approach}
 \label{subsec:task2comm}
 
 \subsubsection{Model training}
 \label{subsubsec:learnedcomm2}
+For this purpose, it is possible to use the same network used in the previous task, 
+that means the one implemented for the distributed approach with 
+communication, but this time ignoring the sensors readings.
+Thus, using the same data collected before we build a model that at each time 
+step takes as input for each robot only the message received in the previous time 
+step, communicated by the nearest agents (on the left and on the right), and 
+produces as output an array of 2 floats, the first one is the probability of the agent 
+top \gls{led} to be blue and the second is the communication, i.e. the message 
+transmitted by the robot to the nearest agents.
+
+The structure of the communication network is shown in Figure 
+\ref{fig:commnet2}, and as before it is composed by two nested 
+modules: 
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=\textwidth]{contents/images/commnettask2}
+	\caption[Communication network of the second task.]{Visualisation of the 
+		forward pass of the communication network with three agents and a 
+		sequence 
+		composed by two time steps.}
+	\label{fig:commnet2}
+\end{figure}
+in the high-level operates the \texttt{CommNet} that handle the 
+sensing of all the agents, while in the low-level the \texttt{SingleNet} that 
+works on the communication received by a single agent in a certain time 
+step, producing as output the colour and the communication to transmit. 
+The architecture of the \texttt{SingleNet}, displayed in Figure 
+\ref{fig:singlenetcomm2}, is almost the same as the one of the distributed 
+model without communication: there are three linear layers each of size 
+$\langle \mathtt{input\_size}, 10\rangle$,  $\langle 10, 10\rangle$ and 
+$\langle 10, 2\rangle$, where \texttt{input\_size} corresponds to the two 
+communication values received, one from the left and one from the right.
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=.15\textwidth]{contents/images/task2allcomm}
+	\caption[Network architectures for the communication approach.]{Visualisation 
+	of the network architecture chosen for the 
+		communication approach.}
+	\label{fig:singlenetcomm2}
+\end{figure}
+
+The activation functions used for this purpose are two and are shown in 
+Figure \ref{fig:activation}.
+To the first and second layer is applied a Tanh non-linear activation 
+function, while a sigmoid to the output, in order to normalise it in 
+the range $[0, 1]$.
+\begin{figure}[!htb]
+	\begin{center}
+		\begin{subfigure}[h]{0.495\textwidth}
+			\includegraphics[width=.8\textwidth]{contents/images/sigmoid2}
+			\caption{Tanh activation function}
+		\end{subfigure}
+		\hfill
+		\begin{subfigure}[h]{0.495\textwidth}
+			\includegraphics[width=.8\textwidth]{contents/images/tanh2}
+			\caption{Sigmoid activation function.}
+		\end{subfigure}
+	\end{center}
+	\caption{Trend of the activation functions applied as non-linear activations.}
+	\label{fig:activation}
+\end{figure}
+
+As before, we use Adam optimiser but with a smaller learning rate, $0.01$. 
+We split the dataset in mini-batches of size $10$ and then we train the models for 
+$100$ epochs. 
+
+In order to decide the metric to evaluate the goodness of the prediction it is 
+necessary to analyse the output of the network. As we said, the model returns, in 
+addition to the communication, the colour that is actually the probability of the 
+agent top \gls{led} to be blue. This means that, when the network produces a 0, 
+the probability that the \gls{led} is blue is equal to 0, i.e. is red, in the same way 1 
+means that instead this will be blue. In this way, we define a simple policy function 
+that returns the colour blue when the probability is between 0.5 and 1, and red 
+otherwise, or when the probability is less than 0.5.
+For this reason, instead of using the \gls{mse} loss function, as this is a binary 
+classification problem we choose the \gls{bce}, defined as follows:
+\begin{Equation}[H]
+	\centering
+	\begin{equation}
+	\mathtt{BCE} = -\frac{1}{n} \sum_{i=1}^n \log(p(y_i)) + (1-y_i) \cdot \log(1 - 
+	p(y_i))
+	\end{equation}
+	\caption{Binary Cross Entropy (\gls{bce}) loss function.}
+	\label{eq:bce}
+\end{Equation}
+where $y$ is the target (1 for blue and 0 for red), $p(y)$ is the predicted 
+probability of the \gls{led} of being blue for all $N$.
+This loss function should return high values for bad predictions and low values for 
+good ones.
+It is important to remember that the communication is still learned in an 
+unsupervised way.
 
 \input{contents/task2_experiments}
