@@ -8,12 +8,12 @@ new distributed network that exploits a communication protocol between
 agents to decide more reliably the output control. 
 Thus, using the same data collected before we build a model that at each time 
 step takes as input for each robot an array containing the response values of the 
-sensors – which can be either \texttt{prox\_values}, \texttt{prox\_comm} or 
-\texttt{all\_sensors} – and the message received in the previous time step, 
-communicated by the nearest agents (on the left and on the right), and produces 
-as output an array of 2 floats, the first one is the control, which, as before, is the 
-speed of the wheels, and the second one is the communication, i.e. the message 
-transmitted by the robot to the nearest agents.
+sensors – \texttt{prox\_values}, \texttt{prox\_comm} or \texttt{all\_sensors} – and 
+the message received in the previous time step, communicated by the nearest 
+agents (on the left and on the right), and produces as output an array of 2 floats, 
+the first one is the control, which, as before, is the speed of the wheels, and the 
+second one is the communication, i.e. the message transmitted by the robot to the 
+nearest agents.
 
 Also for this purpose, the model is independent of the number of agents in 
 the simulations. Instead, now is important to keep track of the time steps order 
@@ -289,8 +289,6 @@ Moreover, analysing the evolution of the control over time in Figure
 network with communication is much more similar to that decided by the expert.
 After about $10$ time steps both reach the target and set the speed at $0$, while 
 the manual and the distributed need more time.
-
-
 
 \begin{figure}[!htb]
 	\begin{center}
@@ -727,7 +725,12 @@ expert does.
 	\label{fig:net-c9distance}
 \end{figure}
 
-
+In this case, the analysis of the communication transmitted over time, in Figure 
+\ref{fig:net-c9comm}, denies the assumptions made previously. The robots do not 
+decrease or increase the value transmitted by approaching the target, 
+demonstrating, as anticipated the that this value is uncorrelated to the distance 
+from goal, reaffirming the difficulty of understanding the protocol learned from 
+the network.
 \begin{figure}[!htb]
 	\centering
 	\includegraphics[width=.65\textwidth]{contents/images/net-c9/1/plot-simulation-communication-1}
@@ -737,12 +740,6 @@ expert does.
 		robot over time using the controller learned from \texttt{net-c9}.}	
 	\label{fig:net-c9comm}
 \end{figure}
-In this case, the analysis of the communication transmitted over time, in Figure 
-\ref{fig:net-c9comm}, denies the assumptions made previously. The robots do not 
-decrease or increase the value transmitted by approaching the target, 
-demonstrating, as anticipated the that this value is uncorrelated to the distance 
-from goal, reaffirming the difficulty of understanding the protocol learned from 
-the network.
 
 To sum up, we show once again in the figures below the losses of the trained 
 models as the different inputs vary for each gap. In all the figures the blue line 
@@ -866,8 +863,8 @@ using a gap that is first small, then large and finally variable, respectively
 represented by the blue, the orange and the green lines.
 These results are also compared to those obtained without employing the 
 communication.
-Clearly, in case of small gaps the network perform better. We can also note that in 
-general by enable the communication the losses decrease, meaning an 
+Clearly, in case of small gaps the network performs better. We can also note that 
+in general by enable the communication the losses decrease, meaning an 
 improvement over the previous approach.
 \begin{figure}[!htb]
 	\begin{center}
