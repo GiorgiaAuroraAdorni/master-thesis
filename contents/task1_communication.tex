@@ -3,23 +3,22 @@
 
 \subsubsection{Model training}
 \label{subsubsec:learnedcomm}
-An alternative to the previous approach involves the possibility of training a 
-new distributed network that exploits a communication protocol between 
-agents to decide more reliably the output control. 
-Thus, using the same data collected before we build a model that at each time 
-step takes as input for each robot an array containing the response values of the 
-sensors – \texttt{prox\_values}, \texttt{prox\_comm} or \texttt{all\_sensors} – and 
-the message received in the previous time step, communicated by the nearest 
-agents (on the left and on the right), and produces as output an array of 2 floats, 
-the first one is the control, which, as before, is the speed of the wheels, and the 
-second one is the communication, i.e. the message transmitted by the robot to the 
-nearest agents.
+An alternative to the previous approach involves training a distributed network 
+that also exploits a communication protocol between agents to decide more 
+reliably the output control. 
+Thus, using the same data collected before, we build a model that at each time 
+step takes as input an array containing the response values of the sensors for each 
+robot – \texttt{prox\_values}, \texttt{prox\_comm} or \texttt{all\_sensors} – and 
+the messages received in the previous time step, communicated by the nearest 
+agents (on the left and on the right), and produces as output 2 floats: the control, 
+which, as before, is the speed of the wheels, and the communication, i.e. the 
+message transmitted by the robot to the two nearest agents.
 
-Also for this purpose, the model is independent of the number of agents in 
-the simulations. Instead, now is important to keep track of the time steps order 
-since the input of the network requires the communication received in the 
-actual time step which corresponds to the messages transmitted in the previous 
-one. To do so, a preprocessing is applied to the dataset to combine consecutive 
+Even for this purpose, the model is independent of the number of agents in 
+the simulations. Instead, now it is important to keep track of the time steps order 
+since the input of the network requires the communication received which 
+corresponds to the messages transmitted in the previous time step. To do so, a 
+preprocessing is applied to the dataset to combine consecutive 
 time steps into a set of sequences. Therefore, we divide each simulation in 
 sequences of length $2$, composed of two successive observations for each 
 robot, using a stride of $1$.   
@@ -41,9 +40,10 @@ never receive messages respectively from the left or from the right.
 The random initialisation of this vector is essential to increase the 
 generalization capabilities of the network during its training, showing it 
 different starting situations.
+Therefore, this corresponds to a static unroll of a \gls{rnn}.% \cite[][]{}.
 
 Another crucial aspect to consider when using communication is the type of   
-updated protocol to choose. As we have already said in section 
+update protocol to choose. As we have already said in section 
 \ref{subsec:thymiocomm}, each robot transmits a message every 0.1\gls{s} 
 and likewise receives one for each of the sensors. In our case, we expect 
 each agent to receive two communications, one for each of its respective 
@@ -53,19 +53,19 @@ synchronous communication update protocol. Formally, each robot $n$,
 given the observations at time $t$, that corresponds to the sensor readings 
 $S_n(t)$, and the communications at time $t-1$, in particular $C_{n-1}(t-1)$ 
 and $C_{n+1}(t-1)$, calculates the control $V_n(t)$ and the message to 
-transmit $C_n(t)$. 
-Adopting this policy it is not important to keep track of the order of the 
+transmit $C_n(t)$ at time $t$. 
+Adopting this policy, it is not important to keep track of the order of the 
 robots and it is as if the agents operate simultaneously. 
 Ideally, the frequency of updates must be lower than that with which the 
 robots exchange messages, however it can happen that due to delays or 
 noise in the sensor readings the communication of some robots is not 
 received or transmitted. In this case, the array is not updated and the last 
-message received is keep instead. 
+received message is kept instead. 
 
 As a consequence, we define a recurrent structure of the communication 
 network, shown in Figure \ref{fig:commnet1}. It is composed by two nested 
-modules: in the high-level operates the \texttt{CommNet} that handle the 
-sensing of all the agents, while in the low-level the \texttt{SingleNet} that 
+modules: in the outer level operates the \texttt{CommNet} that handles the 
+sensing of all the agents, while in the inner the \texttt{SingleNet} that 
 works on the sensing and the communication received by a single agent in a 
 certain time step, producing as output the control and the communication to 
 transmit. 
@@ -105,11 +105,11 @@ right.
 	\label{fig:singlenetcomm1}
 \end{figure}
 
-As before, to the first and second layer is applied a Tanh non-linear 
-activation function, while a sigmoid \cite[see][]{han1995influence}, shown in 
-Figure \ref{fig:sigmoid}, is applied to the second dimension of the output, 
-that is the value of the communication to transmit, in order to normalise it in 
-the range $[0, 1]$ and its output is given by
+As before, a Tanh non-linear activation function is applied to the first and second 
+layer, while a sigmoid \cite[see][]{han1995influence}, shown in Figure 
+\ref{fig:sigmoid}, is applied to the second dimension of the output, that is the 
+value of the communication to transmit, in order to normalise it in the range $[0, 
+1]$ and its output is given by
 \begin{Equation}[H]
 	\centering
 	\begin{equation}
@@ -175,7 +175,7 @@ fixed respectively at $5$ and the second chosen between $8$, $13$ and $24$.
 	\label{tab:modeln5comm}
 \end{figure}
 
-We start by briefly summarising in Figure \ref{fig:commlossallt} the performances 
+We start by briefly summarising in Figure \ref{fig:commlossallt} the performance 
 of these model in terms of train and validation losses.
 \begin{figure}[!htb]
 	\centering
@@ -223,7 +223,7 @@ the dataset generated using $8$\gls{cm} as average gap, in Figure
 controllers, in both cases, i.e. with and without communication, on the validation 
 sets.
 From these figures, as previously mentioned, we expect that the behaviour of the 
-robots using the distributed controller instead of the manual one is better, even if 
+robots using the distributed controller is better than the manual one, even if 
 far from the expert. On the other hand, adding the communication to the model 
 produces an increase in the coefficient \gls{r2} from $0.59$ to $0.85$, thus 
 promising superior performance and an attitude more similar to that of the 
@@ -376,8 +376,8 @@ The agents begin to move towards the desired position and, as they approach the
 target, the extreme ones transmit decreasing values while the central one 
 transmits a higher value. In this case, 5 time steps are sufficient to reach the final 
 configuration.
-It is difficult, however, only from this image to understand the policy with which 
-the network decides the communication policy.
+It is difficult, however, only from this image to understand the criteria which the 
+network uses to decide the communication.
 From a further analysis in fact it would seem that the value predicted by the 
 network is not linearly correlated neither to the distance from the goal nor to the 
 speed assumed by the agents.
@@ -412,8 +412,8 @@ first observation, the network seems to be able to work with all the gaps and th
 approach with communication demonstrate lower loss values than the previous 
 one.
 
-Focusing on the models that use the dataset generate using $24$\gls{cm} as 
-average gap, in Figure \ref{fig:net-c6r2} we observe the \gls{r2} of the manual 
+Focusing on the models trained on the dataset with average gap $24$\gls{cm}, in 
+Figure \ref{fig:net-c6r2} we observe the \gls{r2} of the manual 
 and the learned controllers, both the one with and the one without 
 communication, on the validation sets.
 Once again, we expect better performance using the new approach than the 
@@ -478,7 +478,7 @@ previous, given the fact that the coefficient is increased from $0.55$ up to $0.
 In Figure \ref{fig:net-c6traj} are shown the trajectories obtained employing the 
 four controllers. Even for the expert, the convergence to the target is slower than 
 before, as expected since the distance between the robots is greater, but it is 
-much faster than with the other two controllers. As we said for figure 
+much faster than with the other two controllers. As we said for Figure 
 \ref{fig:net-d6traj}, the manual controller has serious problems in reaching the 
 goal. The two learned controllers can still try to approach the desired position 
 employing more timesteps.
@@ -537,7 +537,7 @@ x-axis.
 As expected, the output is a high positive value when the robot is close to an 
 obstacle on the left, negative when there is an obstacle in front and not behind, 
 and $0$ when the distance from right and left is equal.
-The behaviour of the controller that uses the communication is the most accurate 
+The behaviour of the controller that uses the communication is most accurate 
 when the moving robot is halfway between the two stationary.
 
 Finally, in Figure \ref{fig:net-c6distance} is presented a metric that measures the 
@@ -557,9 +557,9 @@ than the expert, the agents reach the goal position.
 	\label{fig:net-c6distance}
 \end{figure}
 
-As before, is very difficult to analyse the communication transmitted over time 
+As before, it is very difficult to analyse the communication transmitted over time 
 through the visualisation in Figure \ref{fig:net-c6comm}. In this case, the agents 
-seem to communicate initially a high value  that is decrease by approaching the 
+seem to communicate initially a high value that decreases as they approach the 
 final configuration.
 \begin{figure}[!htb]
 	\centering
@@ -726,11 +726,11 @@ expert does.
 \end{figure}
 
 In this case, the analysis of the communication transmitted over time, in Figure 
-\ref{fig:net-c9comm}, denies the assumptions made previously. The robots do not 
-decrease or increase the value transmitted by approaching the target, 
-demonstrating, as anticipated the that this value is uncorrelated to the distance 
-from goal, reaffirming the difficulty of understanding the protocol learned from 
-the network.
+\ref{fig:net-c9comm}, contradicts the hypotheses made for the previous 
+experiments. The robots do not decrease or increase the value transmitted by 
+approaching the target, demonstrating, as anticipated that this value is 
+uncorrelated to the distance from goal, reaffirming the difficulty of understanding 
+the protocol learned from the network.
 \begin{figure}[!htb]
 	\centering
 	\includegraphics[width=.65\textwidth]{contents/images/net-c9/1/plot-simulation-communication-1}
@@ -835,7 +835,7 @@ behaviour of the control learned using \texttt{all\_sensors} inputs.
 	\label{tab:modelcomm}
 \end{figure}
 
-The objective of this set of experiments is verify the robustness of the models, 
+The objective of this set of experiments is to verify the robustness of the models, 
 proving that it is possible to train networks that use a variable number of agents.
 We analyse the same experiments of the previous approach.
 We focus our examination by inspecting the behaviour of the network trained on 
@@ -856,7 +856,7 @@ the train and validation losses obtained for these models.
 	\label{fig:commexlossallt}
 \end{figure}
 
-Proceeding step by step we summarise in Figure \ref{fig:commlossn5} the losses 
+Proceeding step by step, we summarise in Figure \ref{fig:commlossn5} the losses 
 of the experiments carried out using a $5$ agents, the same of the first group of 
 experiments presented above, in order to highlight the difference of performance 
 using a gap that is first small, then large and finally variable, respectively 
@@ -864,7 +864,7 @@ represented by the blue, the orange and the green lines.
 These results are also compared to those obtained without employing the 
 communication.
 Clearly, in case of small gaps the network performs better. We can also note that 
-in general by enable the communication the losses decrease, meaning an 
+in general by enabling the communication, the losses decrease, meaning an 
 improvement over the previous approach.
 \begin{figure}[!htb]
 	\begin{center}
@@ -1173,7 +1173,7 @@ from the goal.
 	\label{fig:net-c15distance}
 \end{figure}
 
-We conclude the experiment on task 1 presenting the results obtained using 
+We conclude the experiments on task 1 presenting the results obtained using 
 variable number of agents, in particular, in Figure \ref{fig:commlossNvar} are 
 summarised the performance in terms of loss, as before we used blue, orange and 
 green lines to represent respectively average gaps of $8$\gls{cm}, $13$\gls{cm} 
@@ -1325,5 +1325,5 @@ In general, using the communication has improved the performance.
 In this section we have shown that using a distributed controller learned by 
 imitating an expert and exploiting a communication protocol among the 
 agents, it is possible to obtain results more or less comparable to those reached 
-employing an expert controller, while a bit worse when using variable number of 
+employing an expert controller, albeit a bit worse when using variable number of 
 agents and gaps.
