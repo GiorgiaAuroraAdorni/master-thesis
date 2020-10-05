@@ -93,8 +93,8 @@ advantages is that negative inputs are mapped to strongly negative values.
 As optimiser, we chose Adam, {an algorithm for first-order gradient-based 
 optimisation of stochastic objective functions, based on adaptive estimates of 
 lower-order moments}, \cite[see][]{kingma2014adam, 
-loshchilov2017decoupled}, 
-implemented in the \texttt{torch.optim} package, with a learning rate of $0.01$. 
+loshchilov2017decoupled}, implemented in the \texttt{torch.optim} package, with 
+a learning rate of $0.01$. 
 
 Instead of computing the gradient descent on the entire dataset, the training set is 
 split in mini-batches of size $100$ and an approximation of the gradient is 

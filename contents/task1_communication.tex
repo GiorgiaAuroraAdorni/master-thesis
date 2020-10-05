@@ -81,10 +81,10 @@ transmit.
 The architecture of the \texttt{SingleNet}, displayed in Figure 
 \ref{fig:singlenetcomm1}, is almost the same as the one of the distributed 
 model without communication: there are three linear layers each of size 
-$\langle\mathtt{input\_size} + 2, 10\rangle$,  $\langle 10, 
-10\rangle$ and $\langle 10, 2\rangle$, where \texttt{input\_size} is the sum 
-of the shape of the sensing and the two communication values received, one 
-from the left and one from the right.
+$\langle\mathtt{input\_size}, 10\rangle$,  $\langle 10, 10\rangle$ and $\langle 
+10, 2\rangle$, where \texttt{input\_size} is the sum of the shape of the sensing 
+and the two communication values received, one from the left and one from the 
+right.
 
 \begin{figure}[!htb]
 	\centering
@@ -129,7 +129,7 @@ the range $[0, 1]$ and its output is given by
 \end{figure}
 
 As before, we use Adam optimiser but with a smaller learning rate, $0.001$. 
-We split the dataset in mini-batches, this time of size $10$ and then train 
+We split the dataset in mini-batches, this time of size $10$ and then we train 
 the models for $500$ epochs. 
 Finally we evaluate the goodness of the predicted control using the \gls{mse} 
 loss function, while the communication is learned in an unsupervised way.
