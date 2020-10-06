@@ -138,6 +138,20 @@
 \input{abbreviations}
 \input{acronyms}
 
+\newcommand{\footlabel}[2]{%
+	\addtocounter{footnote}{1}%
+	\footnotetext[\thefootnote]{%
+		\addtocounter{footnote}{-1}%
+		\refstepcounter{footnote}\label{#1}%
+		#2%
+	}%
+	$^{\ref{#1}}$%
+}
+
+\newcommand{\footref}[1]{%
+	$^{\ref{#1}}$%
+}
+
 \lstdefinelanguage{algebra}
 {morekeywords={import,sort,constructors,observers,transformers,axioms,if,
 else,end},
@@ -209,8 +223,8 @@ exceeded our humanity.''}{Albert Einstein} %optional
 \let\cleardoublepage\clearpage
 \input{contents/introduction}
 \input{contents/literature}
-\input{contents/model}
 \input{contents/implementation}
+\input{contents/model}
 \input{contents/experiments}
 \input{contents/conclusion}
 \endgroup
