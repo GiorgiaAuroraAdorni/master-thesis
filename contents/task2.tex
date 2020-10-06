@@ -4,15 +4,15 @@
 \subsection{Overview}
 \label{subsec:desc2}
 
-The second scenario tackles another newsworthy multi-agent coordination 
-task, 
-colour according a certain criterion the robots in the space. 
-The environment is the same described in Chapter \ref{chap:experiments} as 
-well as all the assumption defined in Section \ref{subsec:desc1}.
+The second scenario tackles another multi-agent coordination task, colouring the 
+robots according to a certain criterion in space. 
+The environment, as well as the assumptions, are the same described in Chapter 
+\ref{chap:experiments} and in Section \ref{subsec:desc1}.
+%FIXME
 
-The only difference lies in the goal shared by the robots: assuming that the agents 
-are divided into groups, their purpose is to colour themselves, by turning on their 
-top \gls{rgb} \gls{led}, depending on their membership group.
+The only difference lies in the goal to be achieved by the robots: assuming that 
+the agents are divided into groups, their purpose is to colour themselves, by 
+turning on their top \gls{rgb} \gls{led}, depending on their group membership.
 
 Initially, for the sake of simplicity, we decided to divide the robots into two 
 groups. In particular, in case of an even number of agents, the robots in the first 
@@ -21,23 +21,23 @@ the case of an odd number robots, the agent located in the central position is
 assigned to the first set.
 
 As for the previous task, the problem can be solved performing imitation 
-learning, instead, the role of communication is fundamental. In fact, what 
-makes the difference are not the distances perceived by the robot sensors but the 
-messages exchanged between the agents, that are of primal importance in order 
-to determine their order. 
+learning, but the role of communication is fundamental. In fact, what makes the 
+difference are not the distances perceived by the robot sensors but the messages 
+exchanged between the agents, which are they only mean to determine their 
+order. 
 
 In this scenario, the two ``dead'' robots play an important role: they always 
 communicate a message that indicates that they are the only two agents that 
 receive communication just from one side.
 
-Each agent can still update its state, that is the same as Task 1, by performing 
-actions – in this case not moving along the x-axis but colouring the top \gls{led} 
-in red or blue – based on the observations received from the environment – the 
-messages received from neighbours – using their sensors. 
+Each agent can still update its state by performing actions — in this case not 
+moving along the x-axis but colouring the top \gls{led} in red or blue — based on 
+the observations received from the environment — the messages received from 
+neighbours. 
 
 Then, by following the example of an expert, we train an end-to-end \gls{nn} 
-that takes as input the communication – transmitted by the nearest neighbours in 
-the previous timestep – and produces the colour of the robot together with the 
+that takes as input the communication — transmitted by the nearest neighbours in 
+the previous timestep — and produces the colour of the robot together with the 
 message to be sent.
 
 \subsection{Controllers}
@@ -47,43 +47,41 @@ message to be sent.
 \label{subsubsec:omniscient2}
 
 As disclosed in Section \ref{subsec:controllersmodel}, the first element involved in 
-an imitation learning problem is an omniscient controller, also called expert, 
-which is able to perceive the environment and the observation of all the agents, 
+an imitation learning problem is the omniscient controller, also called expert, 
+which is able to perceive the environment and the observations of all the agents, 
 obtaining a global knowledge of the state of the system. In this way it can use all 
-the available information that it owns to decide the best action to perform for all 
-the agents.
+the information to decide the best action to perform for each agent.
 
 In this scenario, the omniscient controller, based on the current poses of each 
-robot, is able to define the order of the agents and turn on their top \gls{led}  in 
-one 
-time step.
+robot, is able to determine the order of the agents and turn on their top \gls{led}  
+in one time step.
 
-Unfortunately, using an expert to solve this kind of problem is not realistic nor 
-feasible in a real environment.
+Unfortunately, neither this kind of problem can be solved using an expert since is 
+not realistic nor feasible in a real environment.
 
 \subsubsection{Manual controller}
 \label{subsubsec:manual2}
 
-The second controller we want to write about is the manual one, whose main 
-purpose is to draw conclusions about the quality of the controller learned.
+The second controller we implemented is the manual one, whose main 
+purpose is to draw conclusions about the quality of the learned controller.
 
 The main difference between this and the previous controller is that, the manual 
-one can be consider a local controller, that has only a partial knowledge of the 
-environment since knows only the state of the current agent and its 
+one can be considered a local controller, that only has a partial knowledge of the 
+environment since it knows only the state of the current agent and its 
 observations.
 
-For this scenario, the observation of the robots, in particular the sensor readings, 
-do not provide useful information about the order of the agents, therefore they 
-are not used in order to accomplish this task.
+For this scenario, the robots observation, in particular the sensor readings, do not 
+provide useful information about the order of the agents, therefore they are not 
+considered to accomplish this task.
 On the other hand, if an omniscient controller is not employed, it is impossible to 
-solve the problem without using communication, that is the only way for the 
+solve the problem without using communication, since it is the only way for the 
 agents to understand they ordering.
 
 Thus, by initially making all robots transmit the same value, i.e. $0$, we are able 
 to establish which are the first and the last robots in the row, or those that do not 
-receive any communication respectively from the left and right. 
+receive any communication respectively from back and front. 
 These two agents can at this point start the actual communication by transmitting 
-the value received increased by $1$, i.e. $1$. 
+the value they received increased by $1$, that is $1$. 
 The following robots will in turn transmit the value they have received increased 
 by one. Since the messages received by each of them are two, the agents will in a 
 sense, learn to count in order to understand which is the correct value to 
@@ -203,8 +201,8 @@ Thus, using the same data collected before we build a model that at each time
 step takes as input for each robot only the message received in the previous time 
 step, communicated by the nearest agents (on the left and on the right), and 
 produces as output an array of 2 floats, the first one is the probability of the agent 
-top \gls{led} to be blue and the second is the communication, i.e. the message 
-transmitted by the robot to the nearest agents.
+top \gls{led} to be blue and the second is the communication, i.e. the message to 
+be transmitted by the robot.
 
 The structure of the communication network is shown in Figure 
 \ref{fig:commnet2}, and as before it is composed by two nested 
@@ -218,16 +216,15 @@ modules:
 		composed by two time steps.}
 	\label{fig:commnet2}
 \end{figure}
-in the high-level operates the \texttt{CommNet} that handle the 
-sensing of all the agents, while in the low-level the \texttt{SingleNet} that 
+in the outer-level operates the \texttt{CommNet} that handle the 
+sensing of all the agents, while in the inner-level the \texttt{SingleNet} that 
 works on the communication received by a single agent in a certain time 
 step, producing as output the colour and the communication to transmit. 
-The architecture of the \texttt{SingleNet}, displayed in Figure 
-\ref{fig:singlenetcomm2}, is almost the same as the one of the distributed 
-model without communication: there are three linear layers each of size 
-$\langle \mathtt{input\_size}, 10\rangle$,  $\langle 10, 10\rangle$ and 
-$\langle 10, 2\rangle$, where \texttt{input\_size} corresponds to the two 
-communication values received, one from the left and one from the right.
+The \texttt{SingleNet}, displayed in Figure \ref{fig:singlenetcomm2}, is composed 
+by three linear layers of size $\langle \mathtt{input\_size}, 10\rangle$,  $\langle 
+10, 10\rangle$ and $\langle 10, 2\rangle$, where \texttt{input\_size} 
+corresponds to the two communication values received, one from the left and one 
+from the right.
 \begin{figure}[!htb]
 	\centering
 	\includegraphics[width=.15\textwidth]{contents/images/task2allcomm}
@@ -239,9 +236,8 @@ communication values received, one from the left and one from the right.
 
 The activation functions used for this purpose are two and are shown in 
 Figure \ref{fig:activation}.
-To the first and second layer is applied a Tanh non-linear activation 
-function, while a sigmoid to the output, in order to normalise it in 
-the range $[0, 1]$.
+To the first and second layer is applied a Tanh non-linear activation function, 
+while a sigmoid to the output, in order to normalise it in the range $[0, 1]$.
 \begin{figure}[!htb]
 	\begin{center}
 		\begin{subfigure}[h]{0.495\textwidth}
@@ -258,7 +254,7 @@ the range $[0, 1]$.
 	\label{fig:activation}
 \end{figure}
 
-As before, we use Adam optimiser but with a smaller learning rate, $0.01$. 
+As before, we use Adam optimiser but with a smaller learning rate, $0.001$. 
 We split the dataset in mini-batches of size $10$ and then we train the models for 
 $100$ epochs. 
 
