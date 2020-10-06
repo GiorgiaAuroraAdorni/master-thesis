@@ -1,5 +1,10 @@
-\chapter{Implementation and tools}
+\chapter{Tools}
 \label{chap:impl}
+
+This chapter introduces the tools used in this work, starting from the description 
+of the target platform (Section \ref{sec:thymio}), then describing the simulator 
+(Section \ref{sec:enki}) and finally mentioning the frameworks used for the 
+implementation.
 
 \section{Thymio II}
 \label{sec:thymio}
@@ -31,7 +36,7 @@ The robot is equipped with two motors, each connected to one of the two
 wheels, which allow the robot to move forward, backwards but also turn by 
 setting the velocity of the wheels at different speeds. The maximum speed 
 allowed 
-to the agent is $16.6$ \gls{cm/s}.
+to the agent is $16.6$\gls{cm/s}.
 
 \subsection{Sensors}
 \label{subsec:thysensors}
@@ -41,25 +46,21 @@ study we focused only on usage of the horizontal proximity ones.
 
 Around the robot periphery are positioned $7$ distances sensors, five on the 
 front and two on the rear. 
-
 \begin{figure}[h!tb]
 	\centering
 	\includegraphics[width=.6\textwidth]{contents/images/thymio2x}
 	\caption{Thymio II sensors}
 	\label{fig:thymio sensors}
 \end{figure}
-
 These sensors can measure the distances to nearby objects thanks to the use 
 of  \gls{ir}. The emitter radiates invisible infrared light and the receiver 
 measures the intensity of the reflection and the quantity of light that comes 
 back.
-
 If the reflection is strong enough – a large part of the light is reflected from 
 the object and returns to the robot – it can be inferred that the obstacle is 
 relatively close and it lies within a certain range of the sensor depending on 
 the received intensity measured. If the object is farther away, only a small 
 part of the light comes back.
-
 However, this estimate can be significantly affected by some property of the 
 obstacle, such as its colour and reflectivity, but also by the presence of 
 external light sources and the temperature of the environment (e.g. white is 
@@ -69,14 +70,13 @@ more intense than black that is perceived only while close).
 \label{subsec:thymiocomm}
 
 Thymio II can employ its horizontal \gls{ir} sensors to communicate a value 
-to robots within a range of about $48$ \gls{cm}. 
+to robots within a range of about $48$\gls{cm}. 
 In particular, the robot can enable the proximity communication and send an 
 integer payload of $11$-bit at $10$ \gls{Hz}, one value transmitted every $0.1$ 
 \gls{s}. 
 This message is received by other agents if at least one of their proximity sensors 
 is visible by one of the emitter’s \glspl{led} and if they have enabled the proximity 
 communication.
-
 Every time that a message is received by some robot, an event is 
 created containing the message, payload data and intensities data.
 
@@ -101,7 +101,7 @@ Enki is the open-source robot simulator used in this project. It provides collis
 and limited physics support for robots evolving on a flat surface and can simulate 
 groups of robots a hundred times faster than real-time \cite[see][]{enki}.
 
-In this study, we exploit the PyEnki package \cite[][]{enki-jguzzi} that provides 
+In this project, we exploit the PyEnki package \cite[][]{enki-jguzzi} that provides 
 Python bindings to the Enki simulator using Boost::Python 
 \cite[see][]{boostpython}.
 Moreover, it adds some functionalities to the original simulator such as the 
@@ -109,9 +109,14 @@ support for the proximity communication between Thymio II.
 Another peculiarity is that the simulated world can be run in real time inside a Qt 
 application or even without the \gls{gui} as fast as possible.
 
+In the simulator, the environment is represented as a \gls{3d} Cartesian 
+coordinate system, defined by three pair-wise perpendicular axes, $x$, $y$ and 
+$z$, that go through the origin in $(0, 0, 0)$. 
+
 In the following sections, the functioning of motors and sensors are explored in 
-detail, as well as the concept of communication, anticipated in the previous 
-Section, giving particular attention to the explanation of their use in the simulator.
+detail, as well as the concept of communication, anticipated in Section 
+\ref{subsec:thymiocomm}, giving particular attention to the explanation of their 
+use in the simulator.
 
 \subsection{Motors}
 \label{subsec:enkimotors}
@@ -120,7 +125,7 @@ wheels' speed can be set by writing the variables
 \texttt{motor\_\{left,right\}\_target}. The velocity is a float value specified in 
 centimetres per second (\gls{cm/s}).
 The wheels at maximum maximum allowed speed can provide a velocity of 
-$16.6$ \gls{cm/s}.
+$16.6$\gls{cm/s}.
 
 Another important element used for the construction of the model constraints is 
 the distances between the left and right driving wheels, that is fixed to $9.4$ 
@@ -143,7 +148,7 @@ These values can vary from $0$ – when the robot does not see anything – up t
 $4505$ – when the robot is very close to an obstacle. 
 Thymio II updates this array at a frequency of $10$ \gls{Hz}, generating the 
 \texttt{prox event} after every update. 
-The maximum range of these sensors is $14$ \gls{cm}.
+The maximum range of these sensors is $14$\gls{cm}.
 
 \paragraph{\texttt{prox\_comm\_events}}
 
@@ -151,7 +156,7 @@ a list of events, one for every received message collected during the last contr
 step of the simulation. 
 After enabling the proximity communication, using \texttt{prox\_comm\_enable} 
 command, the robot can use the horizontal \gls{ir} distance sensors to 
-communicate a value to peer robots within a range of about $48$ \gls{cm}. 
+communicate a value to peer robots within a range of about $48$\gls{cm}. 
 The integer payload to be sent is contained in the variable 
 \texttt{prox\_comm\_tx}, while the value received is contained in the variable 
 \texttt{prox\_comm\_events.rx} of the fired event.
@@ -163,7 +168,7 @@ and a list of  $7$ intensities  [\texttt{fll}, \texttt{fll}, \texttt{fc}, \textt
 The readings of the latter array, together with those contained in 
 \texttt{prox\_values}, are those that will be used in the course of this study.
 
-\begin{figure}[h!tb]
+\begin{figure}[!htb]
 	\centering
 	\includegraphics[width=.6\textwidth]{contents/images/thymio-comm}
 	\caption[Example of communication with the PyEnki simulator]{The PyEnki 
@@ -172,10 +177,33 @@ The readings of the latter array, together with those contained in
 	\label{fig:thymio comm}
 \end{figure}
 
-\section{Learning framework}
+\section{Frameworks}
 \label{sec:learning}
-The imitation learning approaches has been implemented in Python, in particular  
-using \texttt{PyTorch} and the following libraries and tools: \texttt{NumPy}, 
-\texttt{Pandas} and \texttt{scikit-learn}.
+The proposed imitation learning approaches have been implemented in 
+\texttt{Python} and all the models have been trained on an NVIDIA Tesla 
+V100-PCIE-16GB \gls{gpu}.
+For this purpose, we used different tools which we briefly mention below.
 
-All the models has been trained on an NVIDIA Tesla V100-PCIE-16GB \gls{gpu}.
+\paragraph{\texttt{PyTorch}} is an open source machine learning framework  for 
+tensor computation with strong GPU acceleration, uses also to build \glspl{dnn} 
+\footnote{\url{https://pytorch.org}}.
+
+\paragraph{\texttt{NumPy}} is a package for scientific computing that provides 
+support for a range of utilities for linear algebra and matrix manipulation 
+\footnote{\url{https://numpy.org}}.
+
+\paragraph{\texttt{Pandas}} is an open source library providing 
+high-performance, easy-to-use data structures and data analysis tools 
+\footnote{\url{https://pandas.pydata.org}}. We used it in particular for building 
+and working on the datasets generated for training the models. 
+
+\paragraph{\texttt{Matplotlib}} is a comprehensive package for creating 
+static, animated, and interactive visualisations in \texttt{Python} 
+\footnote{\url{https://matplotlib.org}}. 
+
+\paragraph{\texttt{scikit-learn}} is a library that provides simple and efficient 
+tools for predictive data analysis, built on \texttt{NumPy}, \texttt{Scipy}, and 
+\texttt{Matplotlib} \footnote{\url{https://scikit-learn.org}}.
+
+
+
