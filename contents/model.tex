@@ -99,6 +99,8 @@ agents have a common goal that requires them to cooperate to achieve it.
 While both are excellent examples of distributed tasks, they have an important 
 difference: the first problem can be solved without using communication, while 
 for the second one it is impossible.
+A full explanation of how communication works for Thymio II is covered in 
+Section \ref{subsec:thymiocomm}.
 
 \subsection{Distributed approach}
 \label{subsec:dist}
@@ -623,11 +625,10 @@ and its output is given by
 \end{figure}
 
 As optimiser, we chose Adam, {an algorithm for first-order gradient-based 
-	optimisation of stochastic objective functions, based on adaptive estimates of 
-	lower-order moments}, \cite[see][]{kingma2014adam, 
-	loshchilov2017decoupled}, implemented in the \texttt{torch.optim} package, 
-	with 
-a learning rate of $0.01$. 
+optimisation of stochastic objective functions, based on adaptive estimates of 
+lower-order moments}, \cite[see][]{kingma2014adam, 
+loshchilov2017decoupled}, implemented in the \texttt{torch.optim} package, 
+with a learning rate of $0.01$. 
 
 Instead of performing gradient descent on the entire dataset, the training set is 
 split in mini-batches of size $100$ and an approximation of the gradient is 
