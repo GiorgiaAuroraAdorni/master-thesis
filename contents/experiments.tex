@@ -1,116 +1,12 @@
 \chapter{Evaluation}
 \label{chap:experiments}
 
-%\section{Overview}
-%\label{sec:overview}
-
-In this work, we investigate collaborative multi-agent problems in a \gls{1d} 
-simulated environment.
-
-The environment is represented by a Cartesian plane, a system of coordinates
-defined by two perpendicular axes, $x$ and $y$. 
-
-In this scenario, $N$ robots, all oriented in the same direction, are initially 
-randomly placed along the x-axis, avoiding collisions and in such a way the 
-average gap among the agents is included in the proximity sensors' ranges. 
-All the robots act in collaboration to achieve a common goal, except the first 
-and last in the row that behave like walls.
-
-The agent is a point on the plane, formally described by a homogeneous vector 
-with respect to the world coordinate frame $W$, obtained multiplying the 
-homogeneous vector of the point, respect the robot coordinate frame $A$, by a 
-homogeneous transformation. 
-
-The relative pose $A$ of each agent is identified by a $3 \times 3$ matrix 
-$\mathbf{T}$, with respect to the world reference frame $W$. 
-
-\begin{Equation}[!htb]
-	\centering
-	\begin{equation}
-	{^W\!\xi_A} = {^W\!\mathbf{T}_A} 
-	=
-	\begin{pmatrix}
-	^W\!\mathbf{R}_A & ^W\!\mathbf{t}_A\\
-	0, 0 & 1
-	\end{pmatrix}
-	=
-	\begin{pmatrix}
-	\cos \theta & - \sin \theta & t_x\\
-	\sin \theta & \cos \theta & t_y\\
-	0 & 0 & 1
-	\end{pmatrix}
-	\end{equation}
-	\caption[Homogeneous transformation matrix.]{The homogeneous 
-	transformation matrix, 	$^W\!\mathbf{T}_A$, includes $^W\!\mathbf{R}_A$, a 
-	$2 \times 2$ rotation matrix and $^W\!\mathbf{t}_A$, a $2 \times 1$ 
-	translation vector.}
-	\label{eq:hommatrix}
-\end{Equation}
-
-However, since we are in a \gls{1d} environment, the $y$ coordinate is equal 
-to $0$ and also the orientation angle $\theta$ must be zero as all the agents are 
-oriented as the world frame. 
-
-Moreover, we can consider the agents as holonomic, since their movements are 
-limited in only one dimension. This premise simplifies our system, in which 
-consequently we have to keep into account only geometric constraints and not
-kinematic.
-
-\section{Assumptions}
-\label{sec:assum}
-Before diving in a detailed explanation of the experiments, it is necessary to 
-formulate some assumptions.
-
-Of fundamental importance is the approach adopted for the generation of the 
-initial positions of the robots.
-The initial configurations need to be randomly generated, verifying that there is 
-no bias towards those close to the target.
-In particular, once established the number of agents to spawn and the average 
-gap between them, a vector containing samples, each representing a random 
-gap in $\mathbb{R}$, is drawn from a uniform distribution in the interval $[0, 
-2*\mathtt{avg\_gap})$. 
-The length of the Thymio, that is $10.9$ \gls{cm}, is added to each gap, then the 
-final positions are obtained by returning the cumulative sum of the elements in 
-the generated vector. 
-
-Another premise regards the sensors of the Thymio: as introduced in Section 
-\ref{subsec:enkisensors}, we have available \texttt{prox\_values} and 
-\texttt{prox\_comm\_events.intensities}. Before being used, the 
-\texttt{prox\_comm\_events.intensities} should be flattened to obtain a single 
-array containing the intensities of all recorded events. 
-To do so, we decided to create a new array, called \texttt{prox\_comm}, by 
-keeping for each element only the value with the maximum intensity among the 
-possible values in the corresponding position of the original vectors – for this 
-purpose maximum $2$.
-In addition, we define another variable, named \texttt{all\_sensors}, which is an 
-array of $14$ intensities resulting from the combination of the 
-\texttt{prox\_values} and \texttt{prox\_comm} vectors.
-
-\section{Datasets generation}
-\label{sec:dataset}
-
-Two datasets containing $1000$ simulation runs each, are generated, for the 
-omniscient and the manual controllers, using Enki, the simulator introduced in 
-Section \ref{sec:enki}.
-
-Each run, that differs from the others for the initial positions of the agents, sets up 
-a world containing $N$ Thymio. 
-In particular, for all the simulations the number of agents $N$ is chosen randomly 
-within the range $[5, 10]$, and the \texttt{avg\_gap}, that is the average distance 
-among the robot in the final configuration of the run, that can be in the range 
-$[5, 24]$.
-
-A simulation run is stopped either immediately after all the robots reach the 
-target pose, with a certain tolerance, or after $4$ \gls{s} ($40$ timesteps).
-
-At each timestep, all the useful information regarding the agents are stored in the 
-dataset, such as the index of the timestep, the sensor readings, the pose of the 
-robot, the motors target, the communication, transmitted and received, and 
-finally its colour.
-
-The dataset generated using the expert controller is the one used to train the 
-models, while the one generated with the manual controller is used as a baseline 
-for the comparison with the learned model.
+In this chapter we present the results of our research / the performance of the 
+models. 
+For this purpose we used the tools presented in Chapter \ref{chap:impl} and the 
+environment set up provided in Chapter \ref{chap:methods}.
+We briefly describe the tasks we face in Sections \ref{sec:task1} and \ref{sec:task2}, 
+with particular attention to the ...
 
 Throughout the experiments we compared different models, varying the input of 
 the network, either \texttt{prox\_values}, \texttt{prox\_comm} or 
