@@ -1,72 +1,20 @@
-\section{Task 1: Distributing of robots in space}
+\section{Task 1: Distributing the robots in space}
 \label{sec:task1}
 
-\subsection{Overview}
-\label{subsec:desc1}
-
 The first scenario tackles an interesting multi-agent coordination task, 
-Distributing the robots in space.
+distributing the robots in space in such a way they stand at equal distances 
+from each other. In particular, they have arrange themselves uniformly along the 
+line between the two ``dead'' robots.
 
-As described in the overview of Chapter \ref{chap:experiments}, which provides 
-additional details, are spawned in a ``single file'' N robots at random positions.
-Each agent can update its state – its absolute position – by performing actions – 
-moving forward and backwards along the x-axis – based on the observations 
-received from the environment – the distances from neighbours – using its 
-sensors. They are also able to transmit and receive a communication value to 
-peer robots within a range of about $48$\gls{cm}. 
-A full explanation of how communication works for Thymio II is covered in 
-Section \ref{subsec:thymiocomm}.
+We focus on two approaches to solve to problem, one distributed that act in a 
+supervised way in order to predict the target velocity of the agents, and one that 
+in addition to predict the control infers a communication protocol between the 
+agents. 
 
-As a consequence of the \gls{1d} environment, the agents' movements are 
-limited to two directions: moving forward along the x-axis when the velocity is 
-positive, while going backwards when it is negative. 
-
-The robots share a common goal: arrange themselves uniformly along the 
-line between the two ``dead'' robots, in such a way they stand at equal distances 
-from each other.
-
-This problem represents a cooperative goal that can be reached by performing 
-imitation learning, that means training an end-to-end \gls{nn} by following 
-the example of an omniscient controller, introduced in Section 
-\ref{subsubsec:omniscient}.
-Exploiting its complete knowledge of the environment, the expert is able to 
-decide the best action to perform.
-
-In the course of this study, we tried to understand if it is possible to use a 
-controller learned by imitation, instead of using a manual one. In particular, we 
-focus on two approaches, presented in Sections \ref{subsec:dist} and 
-\ref{subsec:comm}.
 In both cases, we train \glspl{dnn} that receive sensor inputs and produce 
 commands for the motors, but for the second alternative, the network has an 
 addition input – the received communication transmitted by the neighbouring 
 agents in the previous timestep – and an extra output – the message to be sent.
-
-\subsection{Controllers}
-\label{subsec:task1controllers}
-
-\subsubsection{Expert controller}
-\label{subsubsec:omniscient}
-
-As disclosed in Section \ref{subsec:controllersmodel}, the first element involved in 
-an imitation learning problem is the omniscient controller, also called expert.
-
-This controller perceives the environment and the observations of all the agents, 
-obtaining a global knowledge of the state of the system. In this way it can use all 
-the information that it owns to decide the best action to perform for all the 
-agents. 
-
-
-
-\subsubsection{Manual controller}
-\label{subsubsec:manual}
-The second controller we want to discuss/write about is the manual one, whose 
-main purpose is to draw conclusions about the quality of the controller learned.
-
-The main difference between this and the previous controller is that, the manual 
-one can be considered a local distributed controller, that only has a partial 
-knowledge of the environment since knows only the state of the current agent 
-and its observations.
-
 
 
 \input{contents/task1_distributed}
