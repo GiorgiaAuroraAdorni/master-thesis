@@ -1,11 +1,11 @@
-\section{Task 1: Distribution of robots in space}
+\section{Task 1: Distributing of robots in space}
 \label{sec:task1}
 
 \subsection{Overview}
 \label{subsec:desc1}
 
-The first scenario tackles an interesting multi-agent coordination task, the 
-distribution of robots in space.
+The first scenario tackles an interesting multi-agent coordination task, 
+Distributing the robots in space.
 
 As described in the overview of Chapter \ref{chap:experiments}, which provides 
 additional details, are spawned in a ``single file'' N robots at random positions.
@@ -55,39 +55,7 @@ obtaining a global knowledge of the state of the system. In this way it can use 
 the information that it owns to decide the best action to perform for all the 
 agents. 
 
-In this first scenario, the omniscient controller, based on the current poses of the 
-robots, moves the agents at a certain speed to reach the target positions. In 
-particular, the linear velocity of each agent is computed as a ``signed distance`` 
-between the current and the goal position of the robot, along its theta. 
 
-Formally, given the current pose, defined by the triple $(x, y, \theta)$ and the 
-target pose $(\overline x, \overline y, \overline \theta)$, the signed distance $d$ 
-is computed as follow:
-\begin{Equation}[!htb]
-	\centering
-	\begin{equation}
-	d = \left(\overline x * \cos (\theta) + \overline y * \sin (\theta)\right) -
-	\left( x * \cos (\theta) + y * \sin (\theta)\right)
-	\end{equation}
-	\caption[Signed distance function.]{Function used to compute the ``signed 
-	distance'' between the current and the goal position of a robot.}
-	\label{eq:signeddist}
-\end{Equation}
-
-\noindent
-To obtain the final velocity of the agent, this quantity is multiplied by a constant, 
-we choose $10$ to keep the controller as fast as possible, and then clipped to its 
-maximum value, $16.6$\gls{cm/s}.
-
-This controller can be informally considered as a simple Bang Bang controller 
-since the optimal controller moves the robot at maximum speed towards the 
-target unless the target is closer than \texttt{control\_step\_duration} $\times$ 
-\texttt{maximum\_speed}. In this case, the agent is moved slower then the 
-maximum allowed speed so that at the end of the timestep it is located exactly at 
-the target.
-
-Unfortunately, using an omniscient controller to solve this kind of problems is not 
-realistic nor feasible in a real environment.
 
 \subsubsection{Manual controller}
 \label{subsubsec:manual}
@@ -99,59 +67,7 @@ one can be considered a local distributed controller, that only has a partial
 knowledge of the environment since knows only the state of the current agent 
 and its observations.
 
-This controller moves the robots towards the target by minimising the difference 
-between the values recorded by the front and rear sensors, trying to maintain the 
-maximum achievable speed.
 
-For each agent the controller is the same and, if given an identical set of 
-observations as input, likewise, the outputs will be equivalent.
-
-The one implemented is a proportional controller, a particular variant of \gls{pid}
-with only the $K_p$ term. 
-The closed-loop control uses a feedback to adjust the control while the action 
-takes place in proportion to the existing error. This function, given a desired 
-output $x(t)$, or set point, produces an output $y(t)$, or process variable, such 
-that the error $e(t)$ is obtained as the difference between the value of the set 
-point and the process variable. Finally, the control variable $u(t)$ is the output of 
-the \gls{pid} controller and is computed as follows:
-
-\begin{Equation}[!h]
-	\centering
-	\begin{equation}
-	u(t) = K_p * e(t)
-	\end{equation}
-	\caption[Proportioal PID controller.]{Proportional \gls{pid} controller.}
-	\label{eq:pid}
-\end{Equation}
-
-The value of the proportional gain has been tuned to yield satisfactory 
-performance so that the system is stable, as shown in Figure \ref{fig:pid}. 
-Moreover, since the value of the error is computed using the Equation 
-\ref{eq:systemerror}, then $K_p$ should be positive.
-
-\begin{Equation}[!h]
-	\centering
-	\begin{equation}
-	e(t) = x(t) - y(t)
-	\end{equation}
-	\caption{Calculation of the error value $e(t)$ of the system.}
-	\label{eq:systemerror}
-\end{Equation}
-
-\begin{figure}[htb]
-	\centering
-	\includegraphics[width=.5\textwidth]{contents/images/Step-responsep=kp5ki0kd0}
-	\caption[Step response of the proportinal PID controller.]{Visualisation of the 
-	step-response of a P controller with proportional 
-	gain $5$.}
-	\label{fig:pid}
-\end{figure}
-
-It is important to notice that the speed returned by the controller is used to set the 
-\texttt{motor\_\{left, right\}\_target}, both with the same value in order to move 
-the robots straight ahead. Moreover, the first and the last robots of the line, 
-whose sensors never receive a response respectively from the back and from the 
-front, never move.
 
 \input{contents/task1_distributed}
 \input{contents/task1_communication}
