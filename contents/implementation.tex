@@ -1,5 +1,6 @@
 \chapter{Tools}
 \label{chap:impl}
+\glsreset{ir}
 
 This chapter introduces the tools used in this work, starting from the description 
 of the target platform (Section \ref{sec:thymio}), then describing the simulator 
@@ -53,18 +54,7 @@ front and two on the rear.
 	\label{fig:thymio sensors}
 \end{figure}
 These sensors can measure the distances to nearby objects thanks to the use 
-of  \gls{ir}. The emitter radiates invisible infrared light and the receiver 
-measures the intensity of the reflection and the quantity of light that comes 
-back.
-If the reflection is strong enough – a large part of the light is reflected from 
-the object and returns to the robot – it can be inferred that the obstacle is 
-relatively close and it lies within a certain range of the sensor depending on 
-the received intensity measured. If the object is farther away, only a small 
-part of the light comes back.
-However, this estimate can be significantly affected by some property of the 
-obstacle, such as its colour and reflectivity, but also by the presence of 
-external light sources and the temperature of the environment (e.g. white is 
-more intense than black that is perceived only while close).
+of  \gls{ir}, addressed in Section \ref{subsec:sensors}.
 
 \subsection{Communication}
 \label{subsec:thymiocomm}
@@ -139,7 +129,7 @@ wheel speed at each control step.
 In Enki, it is possible to access the Thymio sensor readings in two different ways, 
 by using \texttt{prox\_values} and \texttt{prox\_comm\_events}.
 
-\paragraph{\texttt{prox\_values}}
+\paragraph*{\texttt{prox\_values}}
  an array of floats that holds the values of $7$ horizontal distance sensors around 
  its periphery [\texttt{fll} (front left left), \texttt{fll} (front left), \texttt{fc} (front 
  centre), \texttt{fr} (front right right), \texttt{frr} (front right), \texttt{bl} (back left), 
@@ -150,7 +140,7 @@ Thymio II updates this array at a frequency of $10$ \gls{Hz}, generating the
 \texttt{prox event} after every update. 
 The maximum range of these sensors is $14$\gls{cm}.
 
-\paragraph{\texttt{prox\_comm\_events}}
+\paragraph*{\texttt{prox\_comm\_events}}
 
 a list of events, one for every received message collected during the last control 
 step of the simulation. 
@@ -184,24 +174,24 @@ The proposed imitation learning approaches have been implemented in
 V100-PCIE-16GB \gls{gpu}.
 For this purpose, we used different tools which we briefly mention below.
 
-\paragraph{\texttt{PyTorch}} is an open source machine learning framework  for 
+\paragraph*{\texttt{PyTorch}} is an open source machine learning framework  for 
 tensor computation with strong GPU acceleration, uses also to build \glspl{dnn} 
 \footnote{\url{https://pytorch.org}}.
 
-\paragraph{\texttt{NumPy}} is a package for scientific computing that provides 
+\paragraph*{\texttt{NumPy}} is a package for scientific computing that provides 
 support for a range of utilities for linear algebra and matrix manipulation 
 \footnote{\url{https://numpy.org}}.
 
-\paragraph{\texttt{Pandas}} is an open source library providing 
+\paragraph*{\texttt{Pandas}} is an open source library providing 
 high-performance, easy-to-use data structures and data analysis tools 
 \footnote{\url{https://pandas.pydata.org}}. We used it in particular for building 
 and working on the datasets generated for training the models. 
 
-\paragraph{\texttt{Matplotlib}} is a comprehensive package for creating 
+\paragraph*{\texttt{Matplotlib}} is a comprehensive package for creating 
 static, animated, and interactive visualisations in \texttt{Python} 
 \footnote{\url{https://matplotlib.org}}. 
 
-\paragraph{\texttt{scikit-learn}} is a library that provides simple and efficient 
+\paragraph*{\texttt{scikit-learn}} is a library that provides simple and efficient 
 tools for predictive data analysis, built on \texttt{NumPy}, \texttt{Scipy}, and 
 \texttt{Matplotlib} \footnote{\url{https://scikit-learn.org}}.
 

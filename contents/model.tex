@@ -275,7 +275,7 @@ baseline for the comparison with the learned model.
 In a \gls{mas}, each agent can perceive the environment through sensors 
 acquiring a total or partial knowledge of it. The observations extracted can be 
 used by a controller, the key component of the system, introduced in Section 
-\ref{sec:closedloop}, together with the current state of the agents, to determine 
+\ref{subsec:control}, together with the current state of the agents, to determine 
 actions, draw inferences and finally solve tasks. 
 
 For the two scenarios that we consider in this study, the state of the agent is the 
@@ -317,6 +317,7 @@ reason, in the following paragraphs we define the approaches used for the
 implementation of the controllers in the two scenarios.
 
 \subsubsection{Task 1: Distributing the robots in space}
+\label{subsubsec:experttask1}
 
 In the first scenario, the omniscient controller, based on the current poses of the 
 robots, moves the agents at a certain speed to reach the target positions. In 
@@ -342,9 +343,9 @@ To obtain the final velocity of the agent, this quantity is multiplied by a cons
 we choose $10$ to keep the controller as fast as possible, and then clipped to its 
 maximum value, $16.6$\gls{cm/s}.
 
-This controller can be informally considered as a simple Bang Bang controller, 
-describe in Section \ref{subsec:bangbang},since the optimal controller moves the 
-robot at maximum speed towards the target unless the target is closer than 
+This controller can be considered as a simple Bang Bang controller, describe in 
+Section \ref{subsubsec:bangbang}, since the optimal controller moves the robot 
+at maximum speed towards the target unless the target is closer than 
 \texttt{control\_step\_duration} $\times$ \texttt{maximum\_speed}. In this case, 
 the agent is moved slower then the maximum allowed speed so that at the end of 
 the timestep it is located exactly at the target.
@@ -354,21 +355,20 @@ In this scenario, the omniscient controller, based on the current poses of each
 robot, is able to determine the order of the agents and turn on their top \gls{led}  
 in one time step.
 
-Unfortunately, centralised solutions for distributed problems are not realistic nor 
-feasible in real environments. 
-Instead, we are interested in situations in which is used a local controller to decide 
-the next action, based on the individual agent's observations, or even cases in 
-which the programming part of the controller is automated.
 
 \subsection{Manual controller}
 \label{subsec:manual}
-As we anticipated in the previous paragraph, in real situations agents do not have 
-access to their states but only to their local observations. The global state of the 
-system, accessible to a centralized controller, in this case is hidden from each 
-agent who therefore cannot understand its absolute position.
 
-The main purpose of this controller is to draw conclusions about the quality of the 
-controller learned.
+Unfortunately, centralised solutions for distributed problems are not feasible in 
+real situations since agents do not have access to their states but only to their local 
+observations. The global state of the system, accessible to a centralized controller, 
+in this case is hidden from each agent who therefore cannot understand its 
+absolute position.
+Instead, we are interested in situations in which is used a local controller to decide 
+the next action, based on the individual agent's observations, or even cases in 
+which the programming part of the controller is automated.
+In fact, the main purpose of this controller is to draw conclusions about the 
+quality of the controller learned.
 
 As before, to different the goal to be achieved correspond different controllers 
 that should act differently. For this reason, in the following paragraphs we define 
@@ -376,6 +376,7 @@ the approaches used for the implementation of the controllers in the two
 scenarios.
 
 \subsubsection{Task 1: Distributing the robots in space}
+\label{subsubsec:manualtask1}
 \glsreset{pid}
 In the first scenario, the controller is in charge of moving the robots towards the 
 target by minimising the difference between the values recorded by the front and 
@@ -386,7 +387,7 @@ observations as input, likewise, the outputs will be equivalent.
 
 The kind of controller we decided to implement for this purpose is a proportional 
 controller, a particular variant of the \gls{pid} controller with only the $K_p$ 
-term, described in detail in Section \ref{subsec:pid}. 
+term, described in detail in Section \ref{subsubsec:pid}. 
 In particular, the value of the proportional gain has been tuned to yield 
 satisfactory performance so that the system is stable, as shown in Figure 
 \ref{fig:pid}. 

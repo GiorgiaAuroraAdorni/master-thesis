@@ -139,6 +139,10 @@
 \input{abbreviations}
 \input{acronyms}
 
+\usepackage{tocloft}
+\setlength{\cftfignumwidth}{3em}
+
+
 \newcommand{\footlabel}[2]{%
 	\addtocounter{footnote}{1}%
 	\footnotetext[\thefootnote]{%
@@ -204,7 +208,7 @@ exceeded our humanity.''}{Albert Einstein} %optional
 \begingroup
 \let\cleardoublepage\clearpage
 \listoffigures %optional
-%\cleardoublepage
+\clearpage%\cleardoublepage
 \listoftables %optional
 %\cleardoublepage
 \listof{Equation}{\listequationsname}
@@ -224,6 +228,7 @@ exceeded our humanity.''}{Albert Einstein} %optional
 \let\cleardoublepage\clearpage
 \input{contents/introduction}
 \input{contents/literature}
+\input{contents/background}
 \input{contents/implementation}
 \input{contents/model}
 \input{contents/experiments}
