@@ -30,13 +30,13 @@ formally defined as a tuple $(S, O, A, R, \pi)$, \cite[see][]{schaal1999imitatio
 where:
 \begin{itemize}
 	\item $S$ is the state of the system, or the set of local states for each agent, 
-	composed by all the possible combinations of positions and observations.
+	composed of all the possible combinations of positions and observations.
 	\item $O$ is the set of possible observations for each agent, obtained through 
 	sensors.
 	\item $A$ is the set of possible actions for each agent.
 	\item $R$ is the reward function $S \times A \rightarrow \mathbb{R}$.
 	\item $\pi$ is the policy $S \rightarrow A$ which determines the action to 
-	execute in a given state for each single agent.
+	execute in a given state for every single agent.
 \end{itemize}
 
 As introduced in Chapter \ref{chap:intro}, through the course of this study we 
@@ -61,7 +61,7 @@ expert demonstrations without access to a reward signal \cite[][]{song2018multi}
 \glsreset{nn}
 
 \gls{il} is a class of methods that has been successfully applied to a 
-wide range of domains in robotics, for example the autonomous driving.
+wide range of domains in robotics, for example, the autonomous driving.
 Unlike reward-based methods, \gls{il} acquires skills by observing demonstrations 
 of the desired behaviour in order to provide a learning signal to the agents 
 \cite[][]{zhang2018deep}.
@@ -72,7 +72,7 @@ collecting a certain amount of data, corresponding to a sequence of the
 encountered observations and actions performed by a teacher agent which acts 
 according to an unknown policy in order to achieve a certain goal.
 Then, the demonstrations of the expert’s behaviour are used to learn a controller, 
-by training usually a classifier or regressor, that predict a behaviour to correctly 
+by training usually a classifier or regressor, that predict behaviour to correctly 
 achieve the same goal in a certain environment \cite[][]{stadie2017third, 
 ross2011reduction}.
 The machine learning model should be able to learn how to extract relevant 
@@ -81,7 +81,7 @@ observations to actions.
 
 Instead, in an unsupervised approach are collected only the data that corresponds 
 to a sequence of the encountered observations performed by a teacher agent, 
-and the controller learned should be able infer the correspondence from 
+and the controller learned should be able to infer the correspondence from 
 observations to actions and find a way to accomplish the same task 
 \cite[][]{stadie2017third}.
 In this case, learning a good model is more challenging since the coordination, 
@@ -110,8 +110,8 @@ approach without communication.
 The agents share the same goal: arrange themselves uniformly along the line 
 between the two “dead” robots, in such a way they stand at equal distances from 
 each other.
-This problem represents an example of cooperative task, for this reason, it will be 
-desirable for the agents to cooperate \cite[][]{barrett2017making}. 
+This problem represents an example of a cooperative task, for this reason, it will 
+be desirable for the agents to cooperate \cite[][]{barrett2017making}. 
 
 On the one hand, when communication is not possible, they can achieve their 
 goal without directly interact with each other. 
@@ -125,23 +125,23 @@ about active and passive stigmergy \cite[][]{grasse1959reconstruction}.
 
 On the other hand, the difficulty of the problem we do consider is that the agent 
 does not have full knowledge of its mates’ behaviours.
-Although a communication protocol is not necessary, allows an explicitly 
-exchange of messages between the agents may nonetheless increase agent 
-performance: they use the exchange of message in order to coordinate more 
-effectively and distribute more accurately, finally reaching a more efficient 
-solution \cite{panait2005cooperative}.
+Although a communication protocol is not necessary, allows an explicit exchange 
+of messages between the agents may nonetheless increase agent performance: 
+they use the exchange of message in order to coordinate more effectively and 
+distribute more accurately, finally reaching a more efficient solution 
+\cite{panait2005cooperative}.
 
 \subsection{Distributed approach with communication}
 \label{subsec:comm}
 
-As for the previous task also in the second the agents share a common goal: 
+As for the previous task, also in the second the agents share a common goal: 
 assuming that they are divided into groups, their objective is to colour themselves 
 according to their group membership. 
 For this kind of problems, allow explicit communication is not a plus but a 
 necessity.
 
 An important aspect that needs to be considered is the decision of what to 
-communicate and when, so that no issue arises.
+communicate and when so that no issue arises.
 
 Regarding the communication content, the agents can, for example, inform the 
 others of their actual state by sharing the sensor readings, or even information 
@@ -165,7 +165,7 @@ transmit $C_n(t)$ at time $t$.
 Adopting this technique, it is not important to keep track of the order of the 
 robots and it is as if the agents operate simultaneously. 
 Ideally, the frequency of updates must be lower than that with which the 
-robots exchange messages, however it can happen that due to delays or 
+robots exchange messages, however, it can happen that due to delays or 
 noise in the sensor readings the communication of some robots is not 
 received or transmitted. In this case, the array is not updated and the last 
 received message is kept instead, without causing undesired behaviour but simply 
@@ -283,7 +283,7 @@ combination of four elements: its position on the $x$-axis, the observations, i.
 the distances from neighbours recorded in the sensor readings, communication 
 messages, one transmitted to the two nearest neighbours, one on the left and the 
 other on the right, and two received from peer robots, and finally its colour.
-Instead, the set of actions that agents can performs are different depending on 
+Instead, the set of actions that agents can perform are different depending on 
 the task: in the first scenario the agents move forward and backwards along the 
 x-axis, therefore the set includes the range of velocity that they can assume, in the 
 second one, the agents  can turn on their top RGB LED in red or blu, so the set this 
@@ -309,7 +309,7 @@ As disclosed in Section \ref{sec:controllersmodel}, the first element involved i
 imitation learning problem is the omniscient controller, also called expert. 
 This is a centralised controller that perceives the environment and observe the 
 state and the observations of all the agents, obtaining a global knowledge of the 
-state of the system. In this way it can use all the information that it owns to decide 
+state of the system. In this way, it can use all the information that it owns to decide 
 the best action to perform for all the agents. 
 
 As the goals to be achieved vary, the controllers should act differently. For this 
@@ -343,11 +343,11 @@ To obtain the final velocity of the agent, this quantity is multiplied by a cons
 we choose $10$ to keep the controller as fast as possible, and then clipped to its 
 maximum value, $16.6$\gls{cm/s}.
 
-This controller can be considered as variant of a Bang Bang controller, described 
+This controller can be considered as a variant of a Bang Bang controller, described 
 in Section \ref{subsubsec:bangbang}, since the optimal controller moves the 
 robot at maximum speed towards the target unless the target is closer than 
 \texttt{control\_step\_duration} $\times$ \texttt{maximum\_speed}. In this case, 
-the agent is moved slower then the maximum allowed speed so that at the end of 
+the agent is moved slower than the maximum allowed speed so that at the end of 
 the timestep it is located exactly at the target.
 
 \subsubsection{Task 2: Colouring the robots in space}
@@ -362,7 +362,7 @@ in one time step.
 Unfortunately, centralised solutions for distributed problems are not feasible in 
 real situations since agents do not have access to their states but only to their local 
 observations. The global state of the system, accessible to a centralized controller, 
-in this case is hidden from each agent who therefore cannot understand its 
+in this case, is hidden from each agent who therefore cannot understand its 
 absolute position.
 Instead, we are interested in situations in which is used a local controller to decide 
 the next action, based on the individual agent's observations, or even cases in 
@@ -370,7 +370,7 @@ which the programming part of the controller is automated.
 In fact, the main purpose of this controller is to draw conclusions about the 
 quality of the controller learned.
 
-As before, to different the goal to be achieved correspond different controllers 
+As before, to different goals to be achieved correspond different controllers 
 that should act differently. For this reason, in the following paragraphs we define 
 the approaches used for the implementation of the controllers in the two 
 scenarios.
@@ -382,7 +382,7 @@ In the first scenario, the controller is in charge of moving the robots towards 
 target by minimising the difference between the values recorded by the front and 
 rear sensors, trying to maintain the maximum achievable speed.
 
-For each agent the controller is the same and, if given an identical set of 
+For each agent, the controller is the same and, if given an identical set of 
 observations as input, likewise, the outputs will be equivalent.
 
 The kind of controller we decided to implement for this purpose is a Proportional 
@@ -408,12 +408,12 @@ whose sensors never receive a response respectively from the back and from the
 front, never move.
 
 \subsubsection{Task 2: Colouring the robots in space}
-In this scenario, the robots observation, in particular the sensor readings, do not 
+In this scenario, the robots observation, in particular, the sensor readings, do not 
 provide useful information about the order of the agents, therefore they are not 
 considered to accomplish this task.
 On the other hand, if an omniscient controller is not employed, it is impossible to 
 solve the problem without using communication, since it is the only way for the 
-agents to understand they ordering.
+agents to understand their ordering.
 
 Thus, by initially making all robots transmit the same value, i.e. $0$, we are able 
 to establish which are the first and the last robots in the row, or those that do not 
@@ -531,7 +531,7 @@ label=lst:manualtask2]
 \subsection{Learned controller}
 \label{subsec:learned}
 
-Usually to train a network that learn a controller, the states and the actions, 
+Usually, to train a network that learns a controller, the states and the actions, 
 provided by an expert, need to be observable. For this study, we have decided to 
 use instead of the observations of the robots instead of the state, i.e. the positions. 
 The reason behind this decision is that in most environments, agents are never 
@@ -543,10 +543,10 @@ clear how to represent it \cite[][]{ml-agents}.
 As the goals to be achieved vary, the controllers should act differently. For this 
 reason, we define distinct approaches for the implementation of the controllers 
 in the two scenarios.
-As regard the first task, we consider two different networks: one distributed that 
-act in a supervised way, and one that in addition to predict the control output 
+As regards the first task, we consider two different networks: one distributed that 
+act in a supervised way, and one that in addition to predicting the control output 
 infers a communication protocol between the agents. 
-As concern the second task, we trained one network that predict the colour 
+As concern the second task, we trained one network that predicts the colour 
 output and in addition, as before, infers the communication between the robots.
 
 \subsubsection{Task 1: Distributing the robots in space without using 
@@ -658,16 +658,16 @@ and \texttt{input\_size} can be $7$ or $14$.
 It is important to notice that the communication is not yet in the input since 
 it is not contained in the original dataset, instead is treated as a hidden 
 variable to be inferred. 
-At the beginning of each sequence there are no previous time steps to 
-consider since no messages have been received yet. Therefore, a placeholder 
-is randomly initialised, filled with float values in the range $[0, 1]$. 
-The size of this array corresponds to the number of agents plus two 
-elements, one at the beginning and one at the end of the vector, always set 
-to $0$, since they are used to store the fact that the two extreme robots 
-never receive messages respectively from the left or from the right. 
-The random initialisation of this vector is essential to increase the 
-generalization capabilities of the network during its training, showing it 
-different starting situations.
+At the beginning of each sequence, there are no previous time steps to consider 
+since no messages have been received yet. Therefore, a placeholder is randomly 
+initialised, filled with float values in the range $[0, 1]$. 
+The size of this array corresponds to the number of agents plus two elements, one 
+at the beginning and one at the end of the vector, always set to $0$ since they are 
+used to store the fact that the two extreme robots never receive messages 
+respectively from the left or from the right. 
+The random initialisation of this vector is essential to increase the generalization 
+capabilities of the network during its training, showing it different starting 
+situations.
 Therefore, this corresponds to a static unroll of a \gls{rnn}.%FIXME \cite[][]{}.
 
 As a consequence, we define a recurrent structure of the communication 
@@ -714,14 +714,14 @@ As before, we use Adam optimiser, addressed in Section \ref{subsec:optimiser},
 but with a smaller learning rate, $0.001$. 
 We split the dataset in mini-batches, this time of size $10$ and then we train 
 the models for $500$ epochs. 
-Finally we evaluate the goodness of the predicted control using the \gls{mse} 
+Finally, we evaluate the goodness of the predicted control using the \gls{mse} 
 loss function, while the communication is learned in an unsupervised way.
 Since the network is fully connected, the communication affects directly the 
 output, and consequently, the error minimised, even if it is computed using 
-only the control. Improving the loss has an impact also on the 
-communication latent variable: since the error is propagated through the 
-internal network, in order to update the weight during the back-propagation 
-step, that influences the communication.
+only the control. Improving the loss has an impact also on the communication 
+latent variable: since the error is propagated through the internal network, in 
+order to update the weight during the back-propagation step, that influences the 
+communication.
 
 \subsubsection{Task 2: Colouring the robots in space}
 In this scenario, it is possible to implement a network very similar to that used for 
@@ -778,17 +778,17 @@ As before, we use Adam optimiser but with a smaller learning rate, $0.001$.
 We split the dataset in mini-batches of size $10$ and then we train the models for 
 $100$ epochs. 
 
-In order to decide the metric to evaluate the goodness of the prediction it is 
+In order to decide the metric to evaluate the goodness of the prediction, it is 
 necessary to analyse the output of the network. As we said, the model returns, in 
 addition to the communication, the colour that is actually the probability of the 
 agent top \gls{led} to be blue. This means that, when the network produces a 0, 
-the probability that the \gls{led} is blue is equal to 0, i.e. is red, in the same way 1 
-means that instead this will be blue. In this way, we define a simple policy function 
-that returns the colour blue when the probability is between 0.5 and 1, and red 
-otherwise, or when the probability is less than 0.5.
+the probability that the \gls{led} is blue is equal to 0, i.e. is red, in the same way, 1 
+means that instead, this will be blue. In this way, we define a simple policy 
+function that returns the colour blue when the probability is between 0.5 and 1, 
+and red otherwise, or when the probability is less than 0.5.
 For this reason, instead of using the \gls{mse} loss function, as this is a binary 
 classification problem we choose the \gls{bce}, defined in Section 
 \ref{subsec:lossfunctions}, implemented in the \texttt{torch.nn} package.
-It is important to remember that the communication is still learned in an 
-unsupervised way.
+It is important to remember that communication is still learned in an unsupervised 
+way.
 

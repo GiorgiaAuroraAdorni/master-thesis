@@ -1,8 +1,8 @@
 \chapter{Literature review}
 \label{chap:stateoftheart}
-This chapter discusses the previous research studies about the topic, in particular, 
-evaluating their limitations. Finally, is provided a brief introduction of the 
-approach we adopted.
+This chapter discusses previous research about the topic, evaluating, in particular, 
+their shortcomings. Finally, it provides a brief introduction to the approach we 
+adopted.
 
 \glsreset{ai}
 \glsreset{dl}
@@ -10,19 +10,19 @@ approach we adopted.
 \glsreset{dnn}
 
 In recent years, the application of \gls{ai} and \gls{dl} techniques to multi-agents 
-cooperative problems, has become increasingly successful.
+cooperative problems has become increasingly successful.
 Gasser and Huhns, in \emph{Distributed Artificial Intelligence} 
-\cite[see][]{gasser2014distributed}, have addressed the issue of coordination and 
+\cite[][]{gasser2014distributed}, have addressed the issue of coordination and 
 cooperation among agents with the combination of distributed systems and 
-artificial intelligence (AI), discipline known as \gls{dai}.
+\gls{ai}, a discipline known as \gls{dai}.
 
-Panait and Luke in their work \emph{Cooperative multi-agent learning: The state 
-of the art} \cite[][]{panait2005cooperative} report that \gls{mal}, the application 
+Panait and Luke, in their work \emph{Cooperative multi-agent learning: The state 
+of the art} \cite[][]{panait2005cooperative}, report that \gls{mal}, the application 
 of machine learning to problems involving multiple agents, has become a popular 
-approach, which deals with unusually large search spaces. 
+approach which deals with unusually large search spaces. 
 
-Three popular approaches used to solve cooperative \gls{ma} problems are 
-supervised and unsupervised learning, and \gls{rl}, which are distinguished 
+Three classic techniques used to solve cooperative \gls{ma} problems are 
+Supervised and Unsupervised Learning, and \gls{rl}, which are distinguished 
 according to the type of feedback provided, that in the first case is the target, in 
 the second no feedback are provided, and in the last one is a reward of the 
 learned output \cite[][]{panait2005cooperative}.
@@ -31,26 +31,25 @@ The vast majority of articles in this field used reward-based methods, in partic
 \gls{rl} approaches, that make it possible to achieve sophisticated goals in 
 complex and uncertain environments \cite[][]{oliehoek2012decentralised}. 
 
-However, in reward-based methods, is notoriously hard design a suitable reward 
-function for the agent to optimise, able to precisely lead to the right behaviour in 
-all the possible scenarios, even for complex tasks, moreover this problem is 
-further enhanced in multi-agent scenarios \cite[][]{hadfield2017inverse, 
-oliehoek2012decentralised}.
+However, in reward-based methods, it is notoriously hard to design a suitable 
+reward function for the agent to optimise, able to precisely lead to the desired 
+behaviour in all possible scenarios. This problem is further exacerbated in 
+multi-agent settings \cite[][]{hadfield2017inverse, oliehoek2012decentralised}.
 
-\gls{irl} addresses this problem by providing using a given set of expert 
-trajectories to produce a reward function under which these are optimal. 
+\gls{irl} addresses this problem by using a given set of expert trajectories to 
+produce a reward function under which these are optimal. 
 Nevertheless, this technique imposes often unrealistic requirements 
 \cite[][]{vsovsic2016inverse}.
 
-\gls{il} methods \cite[see][]{schaal1999imitation, stepputtis2019imitation} aim at 
-overcome this issues addressing the problems via expert demonstrations 
-\cite[][]{song2018multi}: by observing demonstrations of the desired behaviour, 
-the model acquires skills and provided actions to the agent 
-\cite[][]{zhang2018deep, billard2008survey}.
+\gls{il} methods \cite[see][]{schaal1999imitation, stepputtis2019imitation} aim to 
+overcome these issues via expert demonstrations \cite[][]{song2018multi}: by 
+observing the desired behaviour, performed by an expert, the model acquires 
+skills and provides actions to the agent \cite[][]{zhang2018deep, 
+billard2008survey}.
 
-Using this approach the models become capable to learn how to extract relevant 
-information from the data provided to it, directly learning a mapping from 
-observations to actions. 
+Using this approach the models learn how to extract relevant information from 
+the data provided to them, directly learning a mapping from observations to 
+actions. 
 A more challenging situation occurs when the model has to infer the coordination 
 among the agents that is implicit in the demonstrations.
 
@@ -59,19 +58,15 @@ agents} \cite[][]{tan1993multi}, Tan suggests that cooperating learners can use
 communication in a variety of ways in order to improve team performance. 
 
 Also Pesce and Montana suggest the use of inter-agent communication for 
-situation in which the agents can only acquire partial observations and are faced 
+situations in which the agents can only acquire partial observations and are faced 
 with a task requiring coordination and synchronisation skills 
 \cite[][]{pesce2019improving}.
 
-
-This work uses imitation learning approaches to solve the problem of 
+In this thesis work we use imitation learning approaches to solve the problem of 
 coordinating multiple agents. Moreover, we introduce a communication protocol, 
-that consists in an explicit exchange of messages between the robot, that is 
-inferred by the network as in the work \emph{Coordinated multi-agent imitation 
-learning} \cite[][]{le2017coordinated}. 
+consisting in an explicit exchange of messages between the robots, that is 
+learned by the network in an unsupervised way as in \emph{Coordinated 
+multi-agent imitation learning} \cite[][]{le2017coordinated}. 
 
-The results provide some support on the effectiveness of the communication 
-strategy developed, as well as an illustration of the different pattern emerge from 
-the tasks.
-
-
+The results show the effectiveness of the communication strategy developed, as 
+well as an illustration of the different patterns emerging from the tasks.
