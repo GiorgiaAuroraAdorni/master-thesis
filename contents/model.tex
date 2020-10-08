@@ -343,9 +343,9 @@ To obtain the final velocity of the agent, this quantity is multiplied by a cons
 we choose $10$ to keep the controller as fast as possible, and then clipped to its 
 maximum value, $16.6$\gls{cm/s}.
 
-This controller can be considered as a simple Bang Bang controller, describe in 
-Section \ref{subsubsec:bangbang}, since the optimal controller moves the robot 
-at maximum speed towards the target unless the target is closer than 
+This controller can be considered as variant of a Bang Bang controller, described 
+in Section \ref{subsubsec:bangbang}, since the optimal controller moves the 
+robot at maximum speed towards the target unless the target is closer than 
 \texttt{control\_step\_duration} $\times$ \texttt{maximum\_speed}. In this case, 
 the agent is moved slower then the maximum allowed speed so that at the end of 
 the timestep it is located exactly at the target.
@@ -385,8 +385,8 @@ rear sensors, trying to maintain the maximum achievable speed.
 For each agent the controller is the same and, if given an identical set of 
 observations as input, likewise, the outputs will be equivalent.
 
-The kind of controller we decided to implement for this purpose is a proportional 
-controller, a particular variant of the \gls{pid} controller with only the $K_p$ 
+The kind of controller we decided to implement for this purpose is a Proportional 
+(P) controller, a particular variant of the \gls{pid} controller with only the $K_p$ 
 term, described in detail in Section \ref{subsubsec:pid}. 
 In particular, the value of the proportional gain has been tuned to yield 
 satisfactory performance so that the system is stable, as shown in Figure 
@@ -600,36 +600,11 @@ shape of the sensing that can be either $7$ or $14$.
 	\label{fig:singlenetdistributed1}
 \end{figure}
 
-A non-linear activation function is applied to the first and second layer. 
-In particular, we chose the hyperbolic tangent (Tanh) 
-\cite[see][]{kalman1992tanh}, a zero-centred function, shown in Figure 
-\ref{fig:tanh}, often used in deep learning, whose range lies between $(-1, 1)$ 
-and its output is given by
+The Tanh non-linear activation function introduced in Section 
+\ref{subsec:activationfun}, is applied to the first and second layer. 
 
-\begin{Equation}[H]
-	\centering
-	\begin{equation}
-	f(x)= \frac{\sinh (x)}{\cosh (x)} = \bigg( \frac{e^x - e^{-x}}{e^x + 
-		e^{-x}}\bigg)
-	\end{equation}
-	\caption{Hyperbolic Tangent Function (Tanh).}
-	\label{eq:tanh}
-\end{Equation}
-
-\begin{figure}[!htb]
-	\centering
-	\includegraphics[width=.45\textwidth]{contents/images/tanh2}%
-	\caption[Plot of the Tanh activation function.]{Plot of the Hyperbolic 
-		Tangent Function (Tanh) applied as non-linear activation to the first and the 
-		second layer of the network.}
-	\label{fig:tanh}
-\end{figure}
-
-As optimiser, we chose Adam, {an algorithm for first-order gradient-based 
-optimisation of stochastic objective functions, based on adaptive estimates of 
-lower-order moments}, \cite[see][]{kingma2014adam, 
-loshchilov2017decoupled}, implemented in the \texttt{torch.optim} package, 
-with a learning rate of $0.01$. 
+As optimiser, we chose Adam, introduced in Section \ref{subsec:optimiser}, 
+implemented in the \texttt{torch.optim} package, with a learning rate of $0.01$. 
 
 Instead of performing gradient descent on the entire dataset, the training set is 
 split in mini-batches of size $100$ and an approximation of the gradient is 
@@ -641,18 +616,8 @@ Mini-batches shuffle facilitate to avoid this problem by enabling the gradient t
 randomness, thereby helping convergence \cite[][]{meng2019convergence}.
 
 All the models are trained for $50$ epochs and evaluated using the \gls{mse} loss 
-function, defined in Equation \ref{eq:mse}, often used in regression problems. 
-\begin{Equation}[!htb]
-	\centering
-	\begin{equation}
-	\mathtt{MSE} = \frac{\sum_{i=1}^n (y_i-\hat y_i)^2}{n}
-	\end{equation}
-	\caption{Mean Squared Error (\gls{mse}) loss function.}
-	\label{eq:mse}
-\end{Equation}
-This criterion, implemented in the \texttt{torch.nn} package, measures the 
-average of squared error between predictions and targets and learns to reduce it 
-by penalising big errors in the model predictions.
+function, defined in Section \ref{subsec:lossfunctions}, implemented in the 
+\texttt{torch.nn} package.
 
 \subsubsection{Task 1: Distributing the robots in space using communication}
 \label{subsubsec:task1comm}
@@ -681,6 +646,15 @@ Accordingly, the shape of the model input has been transformed from $1 \times
 \mathtt{input\_size}$, where \texttt{seq\_length} is fixed at $2$, $N$ is variable 
 and \texttt{input\_size} can be $7$ or $14$.
 
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=\textwidth]{contents/images/commnet2}
+	\caption[Communication network.]{Visualisation of the forward pass of the 
+		communication network with three agents and a sequence composed by two 
+		time steps.}
+	\label{fig:commnet1}
+\end{figure}
+
 It is important to notice that the communication is not yet in the input since 
 it is not contained in the original dataset, instead is treated as a hidden 
 variable to be inferred. 
@@ -698,14 +672,6 @@ Therefore, this corresponds to a static unroll of a \gls{rnn}.%FIXME \cite[][]{}
 
 As a consequence, we define a recurrent structure of the communication 
 network, shown in Figure \ref{fig:commnet1}.
-\begin{figure}[!htb]
-	\centering
-	\includegraphics[width=\textwidth]{contents/images/commnet2}
-	\caption[Communication network.]{Visualisation of the forward pass of the 
-		communication network with three agents and a sequence composed by two 
-		time steps.}
-	\label{fig:commnet1}
-\end{figure}
 It is composed by two nested modules: in the outer level operates the 
 \texttt{CommNet} that handles the sensing of all the agents, while in the inner the 
 \texttt{SingleNet} that works on the sensing and the communication received by a 
@@ -740,29 +706,12 @@ right.
 \end{figure}
 
 As before, a Tanh non-linear activation function is applied to the first and second 
-layer, while a sigmoid \cite[see][]{han1995influence}, shown in Figure 
-\ref{fig:sigmoid}, is applied to the second dimension of the output, that is the 
-value of the communication to transmit, in order to normalise it in the range $[0, 
-1]$ and its output is given by
-\begin{Equation}[H]
-	\centering
-	\begin{equation}
-	\sigma(x)= \frac{1}{1 + e - x}
-	\end{equation}
-	\caption{Sigmoid Function.}
-	\label{eq:sigmoid}
-\end{Equation}
+layer, while a sigmoid, introduced in Section \ref{subsec:activationfun}, is applied 
+to the second dimension of the output in order to normalise it in the range $[0, 
+1]$.
 
-\begin{figure}[!htb]
-	\centering
-	\includegraphics[width=.45\textwidth]{contents/images/sigmoid2}%
-	\caption[Trend of the Sigmoid activation function.]{Trend of the Sigmoid 
-		Function applied as a non-linear activation to the second output of the 
-		network.}
-	\label{fig:sigmoid}
-\end{figure}
-
-As before, we use Adam optimiser but with a smaller learning rate, $0.001$. 
+As before, we use Adam optimiser, addressed in Section \ref{subsec:optimiser}, 
+but with a smaller learning rate, $0.001$. 
 We split the dataset in mini-batches, this time of size $10$ and then we train 
 the models for $500$ epochs. 
 Finally we evaluate the goodness of the predicted control using the \gls{mse} 
@@ -787,7 +736,27 @@ top \gls{led} to be blue and the second is the communication, i.e. the message t
 be transmitted by the robot.
 
 The communication network, which structure is shown in Figure 
-\ref{fig:commnet2}, is composed by two nested modules: 
+\ref{fig:commnet2}, is composed by two nested modules: in the outer-level 
+operates the \texttt{CommNet} that handle the sensing of all the agents, while in 
+the inner-level the \texttt{SingleNet} that works on the communication received 
+by a single agent in a certain time step, producing as output the colour and the 
+communication to transmit. 
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=.14\textwidth]{contents/images/task2allcomm}
+	\caption[Network architectures for the communication approach.]{Visualisation 
+		of the network architecture chosen for the 
+		communication approach.}
+	\label{fig:singlenetcomm2}
+\end{figure}
+
+The \texttt{SingleNet}, displayed in Figure \ref{fig:singlenetcomm2}, is composed 
+by three linear layers of size $\langle \mathtt{input\_size}, 10\rangle$,  $\langle 
+10, 10\rangle$ and $\langle 10, 2\rangle$, where \texttt{input\_size} 
+corresponds to the two communication values received, one from the left and one 
+from the right.
+
+
 \begin{figure}[!htb]
 	\centering
 	\includegraphics[width=\textwidth]{contents/images/commnettask2}
@@ -797,44 +766,13 @@ The communication network, which structure is shown in Figure
 		composed by two time steps.}
 	\label{fig:commnet2}
 \end{figure}
-in the outer-level operates the \texttt{CommNet} that handle the 
-sensing of all the agents, while in the inner-level the \texttt{SingleNet} that 
-works on the communication received by a single agent in a certain time 
-step, producing as output the colour and the communication to transmit. 
 
-The \texttt{SingleNet}, displayed in Figure \ref{fig:singlenetcomm2}, is composed 
-by three linear layers of size $\langle \mathtt{input\_size}, 10\rangle$,  $\langle 
-10, 10\rangle$ and $\langle 10, 2\rangle$, where \texttt{input\_size} 
-corresponds to the two communication values received, one from the left and one 
-from the right.
-\begin{figure}[!htb]
-	\centering
-	\includegraphics[width=.14\textwidth]{contents/images/task2allcomm}
-	\caption[Network architectures for the communication approach.]{Visualisation 
-		of the network architecture chosen for the 
-		communication approach.}
-	\label{fig:singlenetcomm2}
-\end{figure}
-
-The activation functions used for this purpose are two and are shown in 
-Figure \ref{fig:activation}.
+The activation functions used for this purpose are two,  the \emph{hyperbolic 
+tangent} (Tanh) and the \emph{sigmoid}, introduced in Section 
+\ref{subsec:activationfun}.
 To the first and second layer is applied a Tanh non-linear activation function, 
 while a sigmoid to the output, in order to normalise it in the range $[0, 1]$.
-\begin{figure}[H]
-	\begin{center}
-		\begin{subfigure}[h]{0.495\textwidth}
-			\includegraphics[width=\textwidth]{contents/images/sigmoid2}
-			\caption{Tanh activation function}
-		\end{subfigure}
-		\hfill
-		\begin{subfigure}[h]{0.495\textwidth}
-			\includegraphics[width=\textwidth]{contents/images/tanh2}
-			\caption{Sigmoid activation function.}
-		\end{subfigure}
-	\end{center}
-	\caption{Trend of the activation functions applied as non-linear activations.}
-	\label{fig:activation}
-\end{figure}
+
 
 As before, we use Adam optimiser but with a smaller learning rate, $0.001$. 
 We split the dataset in mini-batches of size $10$ and then we train the models for 
@@ -849,20 +787,8 @@ means that instead this will be blue. In this way, we define a simple policy fun
 that returns the colour blue when the probability is between 0.5 and 1, and red 
 otherwise, or when the probability is less than 0.5.
 For this reason, instead of using the \gls{mse} loss function, as this is a binary 
-classification problem we choose the \gls{bce}, defined as follows:
-\begin{Equation}[H]
-	\centering
-	\begin{equation}
-	\mathtt{BCE} = -\frac{1}{n} \sum_{i=1}^n \log(p(y_i)) + (1-y_i) \cdot \log(1 - 
-	p(y_i))
-	\end{equation}
-	\caption{Binary Cross Entropy (\gls{bce}) loss function.}
-	\label{eq:bce}
-\end{Equation}
-where $y$ is the target (1 for blue and 0 for red), $p(y)$ is the predicted 
-probability of the \gls{led} of being blue for all $N$.
-This loss function should return high values for bad predictions and low values for 
-good ones.
+classification problem we choose the \gls{bce}, defined in Section 
+\ref{subsec:lossfunctions}, implemented in the \texttt{torch.nn} package.
 It is important to remember that the communication is still learned in an 
 unsupervised way.
 
