@@ -69,7 +69,7 @@ follows:
 	\begin{equation}
 	R = b \, \frac{V_{rx} + V_{lx}}{V_{rx} - V_{lx}}
 	\end{equation}
-	\caption[Function to compute the distance from the \gls{icc} and the robot 
+	\caption[Function to compute the distance from the ICC to the robot 
 	reference point.]{Function to compute $R$, the signed distance from the 
 	\gls{icc} to the midpoint between the wheels $P_O$, or robot reference point, 
 	using the right and left linear velocities and the distance between the centres of 
@@ -172,7 +172,7 @@ decide the next action to take \cite[][]{mordechai2018elements}.
 
 These methods can be used to compute trajectories that lead the robot from an 
 initial configuration to a final one. To achieve a more appropriate behaviour we 
-are interested in the use of closed loop control systems 
+are interested in the use of closed-loop control systems 
 \cite[][]{siegwart2011introduction}.
 
 \begin{figure}[!htb]
@@ -207,7 +207,7 @@ This model can be formally defined using the variables introduced below:
 	\end{Equation}	
 \end{itemize} 
 
-The closed loop control algorithms sometimes can be very sophisticated. For the 
+The closed-loop control algorithms sometimes can be very sophisticated. For the 
 purpose of this study, we design two algorithms, the first one is a \gls{pid} 
 controller, while the second a Bang Bang controller.
 
@@ -422,7 +422,7 @@ shown in Equation \ref{eq:mse}.
 	\begin{equation}
 	\mathtt{MSE} = \frac{\sum_{i=1}^n (y_i-\hat y_i)^2}{n}
 	\end{equation}
-	\caption{Mean Squared Error (\gls{mse}) loss function.}
+	\caption{Mean Squared Error (MSE) loss function.}
 	\label{eq:mse}
 \end{Equation}
 Formally, this criterion measures the average of squared error between 
@@ -440,7 +440,7 @@ formulation:
 	\mathtt{BCE} = -\frac{1}{n} \sum_{i=1}^n y_i \cdot \log(\hat y_i) + (1-y_i) 
 	\cdot \log(1 - \hat y_i)
 	\end{equation}
-	\caption[Binary Cross Entropy (\gls{bce}) loss function.\bigskip]{Binary Cross 
+	\caption[Binary Cross Entropy (BCE) loss function.\bigskip]{Binary Cross 
 	Entropy 
 	(\gls{bce}) loss function \cite[][]{sadowski2016notes}.}
 	\label{eq:bce}
@@ -469,5 +469,5 @@ a local minimum, for non-convex surfaces.
 
 The optimiser we have chosen for this thesis project is Adam, {an algorithm for 
 first-order gradient-based optimisation of stochastic objective functions, based 
-on adaptive estimates of lower-order moments} \cite[see][]{kingma2014adam, 
+on adaptive estimates of lower-order moments} \cite[][]{kingma2014adam, 
 loshchilov2017decoupled}. 

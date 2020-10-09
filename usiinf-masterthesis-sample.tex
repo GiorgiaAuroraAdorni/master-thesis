@@ -122,7 +122,8 @@
 \usepackage[titletoc,page]{appendix}
 \makeatletter\@openrightfalse\makeatother
 
-\usepackage[acronym,automake,makeindex]{glossaries}
+\usepackage[acronym,automake,nonumberlist]{glossaries}
+%\usepackage[noindex]{glossaries-extra}
 
 % Generate the glossary
 \makeglossary
@@ -207,8 +208,10 @@ exceeded our humanity.''}{Albert Einstein} %optional
 \begingroup
 \let\cleardoublepage\clearpage
 \listoffigures %optional
+\addcontentsline{toc}{chapter}{List of Figures}
 \clearpage%\cleardoublepage
 \listoftables %optional
+\addcontentsline{toc}{chapter}{List of Tables}
 %\cleardoublepage
 \listof{Equation}{\listequationsname}
 \addcontentsline{toc}{chapter}{List of \listequationsname}
@@ -248,7 +251,7 @@ exceeded our humanity.''}{Albert Einstein} %optional
 \chapter{List of acronyms}
 \label{chp:acronyms}
 \let\clearpage\relax
-\glsaddall  % comment to hide unused acronyms
+%\glsaddall  % comment to hide unused acronyms
 \vspace*{-120pt}
 \printglossary[type=acronym]
 \endgroup

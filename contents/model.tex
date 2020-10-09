@@ -26,7 +26,7 @@ goal \cite[][]{stone2000multiagent, vsovsic2016inverse}.
 
 This system, containing agents also called ``swarming agents’’, in principle is an 
 extension of a \gls{decpomdp} \cite[][]{oliehoek2012decentralised}, and can be 
-formally defined as a tuple $(S, O, A, R, \pi)$, \cite[see][]{schaal1999imitation}, 
+formally defined as a tuple $(S, O, A, R, \pi)$, \cite[][]{schaal1999imitation}, 
 where:
 \begin{itemize}
 	\item $S$ is the state of the system, or the set of local states for each agent, 
@@ -254,8 +254,8 @@ within the range $[5, 10]$, and the \texttt{avg\_gap}, that is the average dista
 among the robot in the final configuration of the run, that can be in the range 
 $[5, 24]$.
 A simulation run is stopped either immediately after all the robots reach the 
-target pose, with a certain tolerance, or after $4$ \gls{s} ($40$ timesteps).
-At each timestep, all the useful information regarding the agents are stored in the 
+target pose, with a certain tolerance, or after $4$ \gls{s} ($40$ time steps).
+At each time step, all the useful information regarding the agents are stored in the 
 dataset, such as the sensor readings, the pose of the robot, the motors target, the 
 communication, transmitted and received, and its colour.
 
@@ -348,7 +348,7 @@ in Section \ref{subsubsec:bangbang}, since the optimal controller moves the
 robot at maximum speed towards the target unless the target is closer than 
 \texttt{control\_step\_duration} $\times$ \texttt{maximum\_speed}. In this case, 
 the agent is moved slower than the maximum allowed speed so that at the end of 
-the timestep it is located exactly at the target.
+the time step it is located exactly at the target.
 
 \subsubsection{Task 2: Colouring the robots in space}
 In this scenario, the omniscient controller, based on the current poses of each 
