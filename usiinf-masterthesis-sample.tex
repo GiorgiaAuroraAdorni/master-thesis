@@ -23,11 +23,15 @@
 \usepackage{subcaption}
 
 \usepackage{url}
+\makeatletter
+\g@addto@macro{\UrlBreaks}{\UrlOrds}
+\makeatother
+\PassOptionsToPackage{hyphens}{url}
 %Import the natbib package and sets a bibliography  and citation styles
-\bibliographystyle{dinat}
+%\bibliographystyle{dinat}
 %\bibliographystyle{alpha}
 %\bibliographystyle{dcu}
-%\bibliographystyle{plainnat}
+\bibliographystyle{plainnat}
 \setcitestyle{authoryear,open={[},close={]}}
 
 \newfloat{Equation}{htbp}{equ}[chapter]
