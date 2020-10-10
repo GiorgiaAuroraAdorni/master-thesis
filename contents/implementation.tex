@@ -10,10 +10,8 @@ implementation.
 \section{Thymio II}
 \label{sec:thymio}
 
-The target platform is Thymio II, a small differential drive mobile robot 
-developed 
-in the context of a collaboration between the MOBOTS group of the 
-\gls{epfl} and 
+The target platform is Thymio II, a small differential drive mobile robot developed 
+in the context of a collaboration between the MOBOTS group of the \gls{epfl} and 
 the \gls{ecal}. 
 
 Thymio runs the Aseba open-source programming environment, an event-based 
@@ -26,10 +24,8 @@ Another particularity of this tool is the integration with the open-source
 \cite[][]{asebaros}. 
 
 The Thymio II includes sensors that can measure light, sound and distance. 
-It can 
-perform actions such as move using two wheels, each powered by its own 
-motor, 
-but also turning lights on and off.
+It can perform actions such as move using two wheels, each powered by its own 
+motor, but also turning lights on and off.
 
 \subsection{Motors}
 \label{subsection:thymotors}
@@ -134,8 +130,8 @@ by using \texttt{prox\_values} and \texttt{prox\_comm\_events}.
  its periphery [\texttt{fll} (front left left), \texttt{fll} (front left), \texttt{fc} (front 
  centre), \texttt{fr} (front right right), \texttt{frr} (front right), \texttt{bl} (back left), 
  \texttt{br} (back right)]. 
-These values can vary from $0$ – when the robot does not see anything – up to 
-$4505$ – when the robot is very close to an obstacle. 
+These values can vary from $0$ — when the robot does not see anything — up to 
+$4505$ — when the robot is very close to an obstacle. 
 Thymio II updates this array at a frequency of $10$ \gls{Hz}, generating the 
 \texttt{prox event} after every update. 
 The maximum range of these sensors is $14$\gls{cm}.

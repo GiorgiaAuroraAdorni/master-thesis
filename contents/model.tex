@@ -255,9 +255,9 @@ among the robot in the final configuration of the run, that can be in the range
 $[5, 24]$.
 A simulation run is stopped either immediately after all the robots reach the 
 target pose, with a certain tolerance, or after $4$ \gls{s} ($40$ time steps).
-At each time step, all the useful information regarding the agents are stored in the 
-dataset, such as the sensor readings, the pose of the robot, the motors target, the 
-communication, transmitted and received, and its colour.
+At each time step, all the useful information regarding the agents are stored in 
+the dataset, such as the sensor readings, the pose of the robot, the motors target, 
+the communication, transmitted and received, and its colour.
 
 All the original datasets are shuffled, based on the single run, in order to improve 
 the generalisation on the samples, and then split the resulting collection into 
@@ -361,7 +361,7 @@ in one time step.
 
 Unfortunately, centralised solutions for distributed problems are not feasible in 
 real situations since agents do not have access to their states but only to their local 
-observations. The global state of the system, accessible to a centralized controller, 
+observations. The global state of the system, accessible to a centralised controller, 
 in this case, is hidden from each agent who therefore cannot understand its 
 absolute position.
 Instead, we are interested in situations in which is used a local controller to decide 
