@@ -3,7 +3,104 @@
  
 This chapter presents our concluding thought (Section \ref{sec:concl}) and 
 suggestions for possible future research lines (Section \ref{sec:future}).
+
 \section{Concluding thoughts}
 \label{sec:concl}
+\glsreset{il}
+Robotics research has dedicated extensive attention to cooperative multi-agent 
+problems, proposing different approaches that allow the collaboration and 
+communication of swarm of robots to achieve a common goal.
+
+Our work makes a further step in the direction of \gls{il} approaches, and aims to 
+find feasible solutions to different multi-agent scenarios.
+
+We explore two alternative task: distributing the robots in space such that they 
+stand at equal distance from each other, and, assuming that the agents are 
+divided into two sets, colouring the robots in space depending on their group 
+membership.
+To solve these examples of cooperative task, we propose two main models: both 
+learn decentralised controllers, via observation of the demonstrations of a 
+centralised controller, by training end-to-end \glspl{nn}, but in one of these we 
+introduce a communication protocol consisting in an explicit exchange of 
+messages between the robots, that is inferred by the network.
+
+For the first task, we build two models: one that at each time step takes as input 
+an array containing the response values of the sensors for each robot and 
+produces as output the speed of the agent, the other one that in input takes also 
+the messages received in the previous time step, communicated by the nearest 
+agents (on the left and on the right), and produces as output, in addition to the 
+control, the communication, i.e. the message transmitted by the robot to the two 
+neighbours. 
+
+For the second task, we implement a single model, similar to the previous, but this 
+time ignoring the sensors readings. Thus, the network, at each time step, takes as 
+input for each robot only the message received in the previous time step, 
+communicated by the nearest agents, and returns as output an array of 2 floats, 
+the first one is the probability of the agent top LED to be blue and the second is 
+the communication, i.e. the message to be transmitted by the robot.
+
+Throughout the experiments, in addition to comparing the approach with or 
+without communication, we also analyse the effect of varying the inputs of the 
+networks, the average gap and the number of agents chosen. 
+
+First of all, we examine the behaviour of the learned controllers by varying the 
+input of the network — either \texttt{prox\_values}, \texttt{prox\_comm} or 
+\texttt{all\_sensors}. Since at each input corresponds a different range of the 
+proximity sensors, the performance mainly depends on the average gap chosen: 
+for \texttt{prox\_values} the best results are obtained by using small gaps, less 
+than 12cm, while with \texttt{prox\_comm} using larger ones. In general, 
+\texttt{all\_sensors} input is able to work with arbitrary gaps, obtaining more 
+stable behaviours and achieving satisfactory results in both approaches.
+
+We continue analysing the performance by varying the average gap between the 
+agents — either fixed to a certain value or variable in the range $[5, 24]$. 
+Similarly to the previously mentioned experiment, the results this time are heavily 
+influenced by the input used. Considering \texttt{all\_sensors} input, the networks 
+have excellent performance with any gap, from a smaller to a larger one, even 
+with a variable one. Unlike in the first task, in the second one,no clear differences 
+are highlighted varying the gap. 
+
+Then, we proceed to compare the behaviour of the models varying the number of 
+agents — either fixed among the simulation runs or variable in the range $[5, 
+10]$. The main reason of these experiments is to verify the robustness of the 
+models and proving that it is possible to train networks that handle a variable 
+number of agents.
+The results show, as expected, that in both approaches, it is easier to obtain a 
+correct behaviour of the controller using a small number of agents.
+
+Finally, since multi-agent systems present interesting scalability challenges, we 
+focus on the behaviour of a network that takes as input \texttt{all\_sensors}, 
+variable gaps and number of agents applied on simulations with a higher number 
+of robots, from 5 up to 50.
+In the first task, a greater number of robots implies a slowdown in reaching the 
+correct positions in both approaches, even when using an expert controller. 
+In fact, the complexity grows rapidly as the number of robots increases and it is 
+common for biases to add up and for the error to become more significant.
+In the second scenario, regardless the number of agents, the goal is reached at 
+constant speed: in general, $\frac{N}{2}$ time steps, sometimes $\frac{N}{2} - 1$, 
+are necessary to reach the correct final configuration. Therefore the network is 
+able to scale with the increase of the number of robots, without worsening 
+performance.
+
+In conclusion, using a distributed controller learned by imitating an expert, the 
+first task obtains performance more or less comparable to those reached with 
+a manual controller. Instead, applying a communication strategy improves the 
+performance of the distributed model, letting it decide which actions to take 
+almost as precisely and quickly as the expert controller.
+The second task shows that it is possible to let the network autonomously infer a 
+communication protocol, obtaining excellent results and solving the task more 
+effectively, in many cases, than the baseline.
+
 \section{Future works}
 \label{sec:future}
+
+We demonstrate the effectiveness of our method in a couple of simulated 
+scenarios, so a following experiment could be implemented to prove the power of 
+our model in the real world.
+Another possible expansion of our work could be the application of our models to 
+new problems and scenarios, such as colouring the robots using different criteria 
+and supporting their repositioning in the row.
+In this study we focus on relatively simple environments, indeed an interesting 
+extension of this approach would be consider more realistic situations, moving to 
+multi-dimensional environments, first \gls{2d} and then \gls{3d}, working with 
+drones rather than differential drive robots.
