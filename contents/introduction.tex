@@ -1,7 +1,66 @@
 \chapter{Introduction}
 \label{chap:intro}
+In this work we consider cooperative multi-agent scenarios, in which agents 
+collaborate, and possibly communicate, to achieve a common goal.
 
+Homogeneous Multi-Agent Systems (MAS) consider $N$ interacting agents, which 
+have the same physical structure and observation capabilities, so they can be 
+considered to be interchangeable and collaborate to solve a given task  
+\cite[][]{stone2000multiagent, vsovsic2016inverse}.
+This system is characterised by a state $S$ — which can be decomposed in sets of 
+local states for each agent, the set of possible observations $O$ for each agent — 
+obtained through sensors and the set of possible actions  $A$ for each agent.
 
+The objective of this work is to use \gls{il} approaches to learn decentralised 
+solutions via imitation of a centralised control, which indicates the action to be 
+performed, by training end-to-end \glspl{nn}, either classifiers or regressors, that 
+only exploit local observations and communications. This controller is the same 
+for each agent, which means that given an identical set of observations as input, 
+likewise, for each of these the outputs will be equivalent.
+
+In this study, we focus on two different multi-agent scenarios: distributing the 
+robots in space such that they stand at equal distance from each other, and, 
+assuming that the agents are divided into two sets, colouring the robots in space 
+depending on their group membership. 
+For the sake of simplicity, in the second task, we decided to divide the robots into 
+two groups: in case of an even number of agents, those in the first half of the row 
+belong to the first group and the remaining to the second, while in the case of an 
+odd number of robots, the same reasoning is applied and the central agent is 
+assigned to the first set.
+Both are examples of cooperative tasks based on the use of a distributed 
+controller. While the second cannot be solved without allowing an explicit 
+exchange of messages between the agents, in the first one, a communication 
+protocol is not necessary, nonetheless, it may increase performance.
+
+For the purpose of this work, we assumed that all the agents act in collaboration 
+to achieve a common goal, except the first and last in the row that behave like 
+walls. The two ``dead'' robots play an important role especially in the use of 
+communication: they are the only ones who are able to immediately localise 
+themselves since they can receive messages just from one side.
+Moreover, we consider the Thymio as holonomic, since their movements are 
+limited in only one dimension. This premise simplifies our system, in which 
+consequently we have to keep into account only geometric constraints and not
+kinematic.
+
+To solve these tasks we have adopted two different methodologies, depending on 
+whether the communication is used or not.
+First of all, we analyse typical supervised learning approaches, which directly learn 
+a mapping from observations to actions. This method can be applied only to the 
+first task, in which a very simple ``distributed network'' that takes as input an 
+array containing the response values of the sensors — which can be either 
+\texttt{prox\_values},  \texttt{prox\_comm} or  \texttt{all\_sensors} — and 
+produces as output an array containing one float that represents the speed of the 
+wheels, which is assumed to be the same both right and left.
+After that, we concentrate on more challenging situations where the 
+communication is not provided to the network, instead, it is a latent variable 
+which has to be inferred \cite[][]{le2017coordinated}.
+
+Throughout the experiments, we demonstrate the effectiveness of our methods, 
+comparing approaches with and without communication. We also analyse the 
+effect of varying the inputs of the networks, the initial distance between the robot  
+and the number of agents chosen.
+
+\bigskip
 \subsubsection*{Thesis Outline}
 \label{subsec:outline}
 
