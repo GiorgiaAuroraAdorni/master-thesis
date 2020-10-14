@@ -650,17 +650,15 @@ Finally, by increasing the gap even more, up to $24$\gls{cm},
 and \texttt{all\_sensors} still have excellent performances similar to each other.
 
 
-
 \subsubsection{Experiment 2: variable number of agents}
 \label{subsubsec:task1-exp-distr-2}
-
-The second and last group of experiments we carried out using a distributed 
-approach, examines the behaviour of the control learned using 
-\texttt{all\_sensors} inputs. In this situation the simulation runs use a different 
-number of robots $N$, that can be fixed at $5$ or $8$ for the entire simulation, 
-or even vary in the range $[5, 10]$. The same reasoning is applied for the choice 
-of the \texttt{avg\_gap}, that can be a fixed value in all the runs, chosen between 
-$8$ or $20$, but also vary in the range $[5, 24]$. 
+The second group of experiments we carried out using a distributed approach, 
+examines the behaviour of the control learned using \texttt{all\_sensors} inputs. 
+In this situation the simulation runs use a different number of robots $N$, that 
+can be fixed at $5$ or $8$ for the entire simulation, or even vary in the range $[5, 
+10]$. The same reasoning is applied for the choice of the \texttt{avg\_gap}, that 
+can be a fixed value in all the runs, chosen between $8$ or $20$, but also vary in 
+the range $[5, 24]$. 
 The objective of this set of experiments, summarised in Table \ref{tab:modeldist}, 
 is to verify the robustness of the models, proving that it is possible to train 
 networks that handle a variable number of agents. 
@@ -1212,13 +1210,44 @@ the results obtained using fewer agents are the best.
 		experiments.]{Comparison of the losses by varying the input of the networks 
 		for different gaps.}
 	\label{fig:distloss820var}
+	\vspace{-0.5cm}
 \end{figure}
+
+\subsubsection{Experiment 3: increasing number of agents}
+\label{subsubsec:task1-exp-distr-3}
+Multi-agent systems present interesting scalability challenges. For this reason, the 
+objective of the last group of experiments is to show the behaviour of a network 
+trained using \texttt{all\_sensors} input, variable gaps and number of agents, 
+applied on simulations with a higher number of robots, from 5 up to 50.
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=.5\textwidth]{contents/images/distances-from-goal-compressed-distributed}%
+	\caption[Evaluation of distances from goal for a high number of 
+	robots.]{Comparison of performance in terms of distances from goal obtained 
+	on simulations with an increasing number of robots.}
+	\label{fig:distdistr}
+\end{figure}
+In Figure \ref{fig:distdistr} is visualised, for 5 different experiments, the absolute 
+distance of each robot from the target over time. This value is averaged on all 
+robots among all the simulation runs. 
+In general, as expected, a greater number of robots implies a slowdown in 
+reaching the correct positions: the complexity grows rapidly as the number of 
+agents increases and it is common for biases to add up and for the error to 
+become more significant.
+In the experiment performed with a variable number of agents, i.e. in the range 
+$[5, 10]$, in the final configuration the robots are on average at about $3$cm 
+from the from the goal position. Increasing the number of agents, first to 20, then 
+30, 40 and finally 50, the robots are more and more distant, in the worst case 
+$13$cm from the target.
+
 
 \subsubsection{Remarks}
 \label{subsubsec:remarks-task1-dist}
 In this section we have shown that using a distributed controller learned by 
 imitating an expert it is possible to obtain results more or less comparable to 
 those reached employing a manual controller.
+The problem present interesting scalability challenges, and in general, a greater 
+number of robots implies a slowdown in reaching the correct positions.
 However, this approach is not enough to achieve satisfactory performance. In the 
 following section we are going to describe a second approach that solve the 
 problem by exploiting a communication protocol between agents.

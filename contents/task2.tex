@@ -4,13 +4,11 @@
 The second scenario tackles another multi-agent coordination task, assuming that 
 the agents are divided into groups, their purpose is to colour themselves, by 
 turning on their top \gls{rgb} \gls{led}, depending on their group membership. 
-
 As for the previous task, the problem can be solved performing imitation 
 learning, but the role of communication is fundamental. In fact, what makes the 
 difference are not the distances perceived by the robot sensors but the messages 
 exchanged between the agents, which are they only mean to determine their 
 order. 
-
 In this scenario, the two ``dead'' robots play an important role: they always 
 communicate a message that indicates that they are the only two agents that 
 receive communication just from one side.
@@ -18,19 +16,11 @@ receive communication just from one side.
 \subsection{Distributed approach with communication}
 \label{subsec:task2-exp-comm}
 
-
 \subsubsection{Experiment 1: variable number of agents}
 \label{subsubsec:task2-exp-comm-1}
-
 In this section we explore the experiments carried out using the communication 
 approach, in particular, examining the behaviour of the control learned from 9 
-networks based on different simulation runs that use a number of robots $N$ that 
-can be fixed at $5$ or $8$ for the entire simulation, or even vary in the range $[5, 
-10]$, and an \texttt{avg\_gap} that can be a fixed value in all the runs, chosen 
-between $8$ or $20$, but also vary in the range $[5, 24]$. 
-The objective of this set of experiments, summarised in Table 
-\ref{tab:modelcommt2}, is to verify the robustness of the communication 
-protocol and prove also the scalability of the network on the number of agents.
+networks 
 \begin{figure}[!htb]
 	\centering
 	\begin{tabular}{ccc}
@@ -54,9 +44,17 @@ protocol and prove also the scalability of the network on the number of agents.
 	\label{tab:modelcommt2}
 \end{figure}
 
+\noindent
+based on different simulation runs that use a number of robots $N$ that 
+can be fixed at $5$ or $8$ for the entire simulation, or even vary in the range $[5, 
+10]$, and an \texttt{avg\_gap} that can be a fixed value in all the runs, chosen 
+between $8$ or $20$, but also vary in the range $[5, 24]$. 
+The objective of this set of experiments, summarised in Table 
+\ref{tab:modelcommt2}, is to verify the robustness of the communication 
+protocol and prove also the scalability of the network on the number of agents.
+
 First of all we start by showing in Figure \ref{fig:t2lossallt} an overview of the train 
 and validation losses obtained for these models.
-
 \begin{figure}[!htb]
 	\centering
 	\includegraphics[width=.8\textwidth]{contents/images/task2/loss-communication-all@}%
@@ -70,21 +68,22 @@ and validation losses obtained for these models.
 
 We start our examination by inspecting the behaviour of the network trained on 
 simulations with variable average gap, i.e \texttt{net-v3}, \texttt{net-v6} and 
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=.45\textwidth]{contents/images/task2/loss-communication-N5}
+	\caption[Comparison of the losses of the models that use $5$ 
+	agents.]{Comparison of the losses of the models that use $5$ agents as 
+		the gap varies.}
+	\label{fig:commlossn5t2}
+\end{figure}
+
+\noindent
 \texttt{net-v9} and we summarise in Figure \ref{fig:commlossn5t2} the losses of 
 these experiments in order to highlight the difference of performance using a gap 
 that is first small, then large and finally variable, respectively represented by the 
 blue, the orange and the green lines.
 Clearly, in case of small gaps the network performs better, albeit slightly, as the 
 agents are already close to the target.
-
-\begin{figure}[!htb]
-	\centering
-	\includegraphics[width=.5\textwidth]{contents/images/task2/loss-communication-N5}
-	\caption[Comparison of the losses of the models that use $5$ 
-	agents.]{Comparison of the losses of the models that use $5$ agents as 
-	the gap varies.}
-	\label{fig:commlossn5t2}
-\end{figure}
 
 Then, we move to explore the results of the experiments by showing in Figure 
 \ref{fig:net-v3auc} the \gls{roc} curve of the model 
@@ -103,15 +102,7 @@ We assume that a model whose predictions are 100\% correct has an \gls{auc} of
 	\caption[Evaluation of the ROC of \texttt{net-v3}.]{Visualisation of the 
 		\gls{roc} curve of \texttt{net-v3}.}
 	\label{fig:net-v3auc}
-\end{figure}
-
-%Moreover, we show another metric for evaluating our model, the accuracy, 
-%that 
-%is the fraction of the number of correct predictions over the total number 
-%of 
-%samples. In this case the value obtained is not very satisfactory, as we reach 
-%an 
-%accuracy of only $66\%$.
+\end{figure}x
 
 Also for this task it is interesting to analyse the type of communication protocol 
 inferred by the network, also comparing it with the one implemented by the 
@@ -136,7 +127,7 @@ localise themselves.
 \begin{figure}[!htb]
 	\begin{subfigure}[h]{\textwidth}
 		\centering
-		\includegraphics[width=.55\textwidth]{contents/images/net-v3/net-v3-manual-0(1)}
+		\includegraphics[width=.6\textwidth]{contents/images/net-v3/net-v3-manual-0(1)}
 		\caption{Communication and colour decided using the manual controller.}
 	\end{subfigure}
 	\hspace*{\fill}%          % empty line absolutely necessary!
@@ -144,7 +135,7 @@ localise themselves.
 	\hspace*{\fill}%  
 	\begin{subfigure}[h]{\textwidth}
 		\centering			
-		\includegraphics[width=.55\textwidth]{contents/images/net-v3/net-v3-learned-0(1)}
+		\includegraphics[width=.6\textwidth]{contents/images/net-v3/net-v3-learned-0(1)}
 		\caption{Communication and colour decided using the learned controller.}
 	\end{subfigure}
 	\caption[Evaluation of the communication learned by 
@@ -207,6 +198,7 @@ previous model examined.
 	\label{fig:net-v6auc}
 \end{figure}
 
+\bigskip
 In Figure \ref{fig:net-v6error} is presented the measure of the amount of wrong 
 expected colours, on the y-axis, over time, averaged on all robots among all the 
 simulation runs. 
@@ -229,7 +221,14 @@ well as the colour assumed by each robot, we immediately see a difference in bot
 the figures.
 This time it is possible to hypothesize the policy adopted by the network to send 
 messages: as before, the extreme robots always send the same message but this 
-time the central ones communicate a  
+time the central ones communicate a value interpreted as a reward. In detail, 
+starting from the edges, the value 0 is transmitted, then, once the robot that 
+follows or precedes receives this value in turn communicates 0, until all the agents 
+have received the message and therefore have clear their positional order.
+This type of reward acts in such a way as to colour as desired the following robot, 
+for those in the first half, or the one that precedes, for those in the second, 
+communicating 0 respectively when there is a red agent behind it or when in front 
+there is a blue one. In this way the control is able to stabilise and achieve its goal.
 \begin{figure}[!htb]
 	\begin{subfigure}[h]{\textwidth}
 		\centering
@@ -248,17 +247,9 @@ time the central ones communicate a
 	\texttt{net-v6}.]{Visualisation of the communication transmitted by each 
 		robot over time and the colour decided by the controller learned from 
 		\texttt{net-v6}.}	
-	\label{fig:net-v6commcolour}
+	\label{fig:net-v6commcolour}	
+	\vspace{-0.5cm}
 \end{figure}
-value interpreted as a reward. In detail, starting from the edges, the value 0 is 
-transmitted, then, once the robot that follows or precedes receives this value in 
-turn communicates 0, until all the agents have received the message and 
-therefore have clear their positional order.
-This type of reward acts in such a way as to colour as desired the following robot, 
-for those in the first half, or the one that precedes, for those in the second, 
-communicating 0 respectively when there is a red agent behind it or when in front 
-there is a blue one. In this way the control is able to stabilise and achieve its goal.
-
 
 \paragraph*{Results using variable agents}
 We conclude the experiment on this task by presenting the results obtained using 
@@ -278,6 +269,9 @@ experiment examined.
 	\label{fig:commlossnvart2}
 \end{figure}
 
+From the \gls{roc} curve of the model in Figure \ref{fig:net-v9auc}  we observe 
+that this time the \gls{auc} is a bit increased respect the previous experiment, 
+going from $0.87$ up to $0.89$, but still worse than the first one.
 \begin{figure}[!htb]
 	\centering
 	\includegraphics[width=.47\textwidth]{contents/images/net-v9/roc-net-v9(a)}%
@@ -286,18 +280,10 @@ experiment examined.
 	\label{fig:net-v9auc}
 \end{figure}
 
-\bigskip
-From the \gls{roc} curve of the model in Figure \ref{fig:net-v9auc}  we observe 
-that this time the \gls{auc} is a bit increased respect the previous experiment, 
-going from $0.87$ up to $0.89$, but still worse than the first one.
-%Instead the accuracy is decreased from a value of $73\%$ down to $71\%$ 
-%respect the previous model examined.
-
 This time we visualise in Figures \ref{fig:net-v9commcolour} and 
 \ref{fig:net-v9commcolour2} two examples of communication protocol inferred 
 by the network and the one chosen by the manual controller, as well as the colour 
 assumed by each robot.
-
 The first visualisation is obtained from a simulation with 10 agents. 
 As before, the policy adopted by the network to send messages is very similar to 
 the previous one. 
@@ -321,23 +307,25 @@ the previous one.
 		\texttt{net-v9}.}	
 	\label{fig:net-v9commcolour}
 \end{figure}
-
-\noindent
 The robots at the edges start to transmit the value 0. Then, once 
 the next robots receive the message in turn they communicates 0 or a value very 
 close to it, until all the agents have received and sent the the message and have 
 finally clear their positional order.
 This time the manual and learned controllers achieve the goal in the same 
 number of time steps.
-
 The second visualisation is obtained from a simulation with 6 agents. 
 The policy adopted by the network is the same as before, this time is even more 
 efficient than the protocol used from the manual controller. In fact, in 2 time 
 steps, one less then the other controller, the model is able to achieve the goal.
+
+Finally, in Figure \ref{fig:net-v9error} is presented the measure of the amount of 
+wrong expected colours, on the y-axis, over time, averaged on all robots among 
+all the simulation runs. 
+
 \begin{figure}[!htb]
 	\begin{subfigure}[h]{\textwidth}
 		\centering
-		\includegraphics[width=.55\textwidth]{contents/images/net-v9/net-v9-manual-1}
+		\includegraphics[width=.5\textwidth]{contents/images/net-v9/net-v9-manual-1}
 		\caption{Communication and colour decided using the manual controller.}
 	\end{subfigure}
 	\hspace*{\fill}%          % empty line absolutely necessary!
@@ -345,7 +333,7 @@ steps, one less then the other controller, the model is able to achieve the goal
 	\hspace*{\fill}%  
 	\begin{subfigure}[h]{\textwidth}
 		\centering			
-		\includegraphics[width=.55\textwidth]{contents/images/net-v9/net-v9-learned-1}
+		\includegraphics[width=.5\textwidth]{contents/images/net-v9/net-v9-learned-1}
 		\caption{Communication and colour decided using the learned controller.}
 	\end{subfigure}
 	\caption[Evaluation of the communication learned by 
@@ -355,20 +343,19 @@ steps, one less then the other controller, the model is able to achieve the goal
 	\label{fig:net-v9commcolour2}
 \end{figure}
 
-Finally, in Figure \ref{fig:net-v9error} is presented the measure of the amount of 
-wrong expected colours, on the y-axis, over time, averaged on all robots among 
-all the simulation runs. 
+\begin{figure}[H]
+\centering
+\includegraphics[width=.5\textwidth]{contents/images/net-v9/colours-errors-compressed}%
+\caption[Evaluation of \texttt{net-v9} amount of wrong expected 
+colours.]{Comparison of performance in terms of amount of wrong expected 
+	colours obtained using the controller learned from \texttt{net-v9}.}
+\label{fig:net-v9error}
+\end{figure}
+
+\noindent
 for this experiment the number of colours correctly predicted by the learned 
 controller is a bit less than that obtained by the manual controller, and even if the 
 variance for the model is higher the performance are acceptable.
-\begin{figure}[!htb]
-	\centering
-	\includegraphics[width=.5\textwidth]{contents/images/net-v9/colours-errors-compressed}%
-	\caption[Evaluation of \texttt{net-v9} amount of wrong expected 
-	colours.]{Comparison of performance in terms of amount of wrong expected 
-		colours obtained using the controller learned from \texttt{net-v9}.}
-	\label{fig:net-v9error}
-\end{figure}
 
 \paragraph*{Summary}
 To sum up, we show the losses of the trained models as the number of robots vary 
@@ -404,6 +391,37 @@ and tend to move away from each other as the gap grows.
 	\vspace{-0.5cm}
 \end{figure}
 
+\subsubsection{Experiment 2: increasing number of agents}
+\label{subsubsec:task2-exp-comm-2}
+
+The last group of experiments focus on the scalability properties of a multi-agent 
+system, showing the behaviour of the network trained using variable gaps and 
+number of agents, applied on simulations with a higher number of robots, from 5 
+up to 50.
+
+In Figure \ref{fig:errorcomm} is visualised, for 5 different experiments, the 
+the percentage of wrong expected colours, on the y-axis, over time, averaged for 
+all the robots among the simulation runs. 
+In all experiments, the number of errors in the simulation in the first timestep 
+corresponds to 50\%, i.e. half of the colours are wrong. This result is expected 
+since the colours at the first timestep are chosen randomly. As the time steps pass, 
+the number of errors decreases at a constant speed, about two robots per 
+timestep. In general, $\frac{N}{2}$ timesteps are required to achieve convergence, 
+sometimes $\frac{N}{2} - 1$ when the number of agents is odd. 
+Despite this, if using a number of robots between 5 and 10, in the final 
+configuration on average 1\% of the colours are wrong, increasing the amount of 
+agents this value increases, reaching 10\% in the case of 50 robots.
+Despite this, the performances are very promising and the network is able to scale 
+well by increasing the number of robots.
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=.5\textwidth]{contents/images/colours-errors-compressed}%
+	\caption[Evaluation of distances from goal for a high number of 
+	robots.]{Comparison of performance in terms of distances from goal obtained 
+		on simulations with an increasing number of robots.}
+	\label{fig:errorcomm}
+\end{figure}
+
 \subsubsection{Remarks}
 \label{subsubsec:remarks-task2-comm}
 
@@ -413,3 +431,5 @@ Therefore, using a controller, learned through imitation learning, which
 autonomously infers a communication protocol between the agents, it is possible 
 to obtain excellent results and solve the task in many cases more effectively than 
 the baseline.
+Moreover, the network is able to scale with the increase of the number of robots, 
+without worsening performance.

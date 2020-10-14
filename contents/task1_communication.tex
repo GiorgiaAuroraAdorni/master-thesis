@@ -11,11 +11,6 @@ approach without communication, addressed in Section
 \ref{subsubsec:task1-exp-distr-1}, paying more attention to the cases with 
 variable gaps and robots. 
 
-The first analysis, summarised in Table \ref{tab:modeln5comm}, also in this case  
-concerns the behaviour of the learned controllers in case of the three different 
-inputs, \texttt{prox\_values}, \texttt{prox\_comm} or 
-\texttt{all\_sensors}, for a number of robots $N$ and an \texttt{avg\_gap} both 
-fixed respectively at $5$ and the second chosen between $8$, $13$ and $24$.
 \begin{figure}[!htb]
 	\centering
 	\begin{tabular}{cccc}
@@ -36,14 +31,18 @@ fixed respectively at $5$ and the second chosen between $8$, $13$ and $24$.
 		\bottomrule
 	\end{tabular}
 	\captionof{table}[Experiments with $5$ agents (communication).]{List of the 
-	experiments carried out with $5$ agents using communication.}
+		experiments carried out with $5$ agents using communication.}
 	\label{tab:modeln5comm}
 \end{figure}
 
-We start by briefly summarising in Figure \ref{fig:commlossallt} the performance 
-of these model in terms of train and validation losses. It is immediately evident 
-that the trend of the curves are very similar to that obtained with the distributed 
-approach. 
+The first analysis, summarised in Table \ref{tab:modeln5comm}, concerns the 
+behaviour of the learned controllers in case of the three different inputs, 
+\texttt{prox\_values}, \texttt{prox\_comm} or \texttt{all\_sensors}, for a number 
+of robots $N$ and an \texttt{avg\_gap} both fixed respectively at $5$ and the 
+second chosen between $8$, $13$ and $24$.
+The performance of these model in terms of train and validation losses are shown 
+in Figure \ref{fig:commlossallt}. It is immediately evident that the trend of the 
+curves are very similar to that obtained with the distributed approach. 
 \begin{figure}[!htb]
 	\centering
 	\includegraphics[width=.8\textwidth]{contents/images/task1-comm/loss-communication-all@}%
@@ -57,25 +56,6 @@ approach.
 \paragraph*{Results using \texttt{prox\_values} input}
 We continue by analysing and comparing the performances obtained from these 
 experiments and those in Section \ref{para:1}.
-
-In Figure \ref{fig:commlossprox_values} is shown an overview of the performance, 
-in terms of loss, of the models trained using \texttt{prox\_values} and varying the 
-average gap: the blue, orange and green lines represent respectively gaps of $8$, 
-$13$ and $24$\gls{cm}.
-The loss in case of the smaller gap is decreased from $40$ to $20$, meaning an 
-improvement over the previous approach.
-
-Focusing on the models that use the \texttt{prox\_values} readings as input and 
-the dataset generated using $8$\gls{cm} as average gap, in Figure 
-\ref{fig:net-c1r2} we observe the \gls{r2} of the manual and the learned 
-controllers, in both cases, i.e. with and without communication, on the validation 
-sets.
-From these figures, as previously mentioned, we expect that the behaviour of the 
-robots using the distributed controller is better than the manual one, even if 
-far from the expert. On the other hand, adding the communication to the model 
-produces an increase in the coefficient \gls{r2} from $0.59$ to $0.85$, thus 
-promising superior performance and an attitude more similar to that of the 
-omniscient controller.
 
 \begin{figure}[!htb]
 	\begin{center}
@@ -97,6 +77,27 @@ omniscient controller.
 	\label{fig:commlossprox_values}
 \end{figure}
 
+
+In Figure \ref{fig:commlossprox_values} is shown an overview of the performance, 
+in terms of loss, of the models trained using \texttt{prox\_values} and varying the 
+average gap: the blue, orange and green lines represent respectively gaps of $8$, 
+$13$ and $24$\gls{cm}.
+The loss in case of the smaller gap is decreased from $40$ to $20$, meaning an 
+improvement over the previous approach.
+
+Focusing on the models that use the \texttt{prox\_values} readings as input and 
+the dataset generated using $8$\gls{cm} as average gap, in Figure 
+\ref{fig:net-c1r2} we observe the \gls{r2} of the manual and the learned 
+controllers, in both cases, i.e. with and without communication, on the validation 
+sets.
+From these figures, as previously mentioned, we expect that the behaviour of the 
+robots using the distributed controller is better than the manual one, even if 
+far from the expert. On the other hand, adding the communication to the model 
+produces an increase in the coefficient \gls{r2} from $0.59$ to $0.85$, thus 
+promising superior performance and an attitude more similar to that of the 
+omniscient controller.
+
+
 \begin{figure}[!htb]
 	\begin{center}
 		\begin{subfigure}[h]{0.49\textwidth}
@@ -113,6 +114,11 @@ omniscient controller.
 	\label{fig:net-c1r2}
 \end{figure}
 
+To confirm this improvement, we show in Figure \ref{fig:net-c1traj} the 
+trajectories obtained employing the four controllers. 
+Clearly, the convergence of the robots to the target using the communication is 
+much faster that with the distributed controller alone, but it is even better than 
+the manual, to such an extent that it can be compared to the expert.
 \begin{figure}[H]
 	\begin{center}
 		\begin{subfigure}[h]{0.49\textwidth}
@@ -153,18 +159,7 @@ omniscient controller.
 	\label{fig:net-c1traj}
 \end{figure}
 
-To confirm this improvement, we show in Figure \ref{fig:net-c1traj} the 
-trajectories obtained employing the four controllers. 
-Clearly, the convergence of the robots to the target using the communication is 
-much faster that with the distributed controller alone, but it is even better than 
-the manual, to such an extent that it can be compared to the expert.
-
-Moreover, analysing the evolution of the control over time in Figure 
-\ref{fig:net-c1control}, we observe that this time the control learned from the 
-network with communication is much more similar to that decided by the expert.
-After about $10$ time steps both reach the target and set the speed at $0$, while 
-the manual and the distributed need more time.
-\begin{figure}[!htb]
+\begin{figure}[H]
 	\begin{center}
 		\begin{subfigure}[h]{0.35\textwidth}
 			\includegraphics[width=\textwidth]{contents/images/net-d1/control-overtime-omniscient}%
@@ -176,12 +171,6 @@ the manual and the distributed need more time.
 			\caption{Distributed control.}
 		\end{subfigure}
 	\end{center}
-	\caption[Evaluation of the control decided by \texttt{net-c1}.]{Comparison of 
-	output control decided using four controllers: the expert, the manual and the 
-	two learned from \texttt{net-d1} and \texttt{net-c1}.}
-\end{figure}
-
-\begin{figure}\ContinuedFloat
 	\begin{center}
 		\begin{subfigure}[h]{0.35\textwidth}			
 			\includegraphics[width=\textwidth]{contents/images/net-d1/control-overtime-manual}%
@@ -193,13 +182,18 @@ the manual and the distributed need more time.
 			\caption{Communication control.}
 		\end{subfigure}
 	\end{center}
-	\caption[]{Comparison of 
+	\caption[Evaluation of the control decided by \texttt{net-c1}.]{Comparison of 
 		output control decided using four controllers: the expert, the manual and the 
-		two learned from \texttt{net-d1} and \texttt{net-c1} (cont.).}
+		two learned from \texttt{net-d1} and \texttt{net-c1}.}
 	\label{fig:net-c1control}
 \end{figure}
 
-\bigskip 
+Moreover, analysing the evolution of the control over time in Figure 
+\ref{fig:net-c1control}, we observe that this time the control learned from the 
+network with communication is much more similar to that decided by the expert.
+After about $10$ time steps both reach the target and set the speed at $0$, while 
+the manual and the distributed need more time.
+
 In Figure \ref{fig:net-c1responseposition} is displayed the behaviour of a robot 
 located between two stationary agents which are already in the correct position, 
 showing the response of the controllers, on the y-axis, by varying the position of 
@@ -216,13 +210,6 @@ behaviour of the controller with communication is more similar to the one desire
 	\label{fig:net-c1responseposition}
 \end{figure}
 
-Finally, in Figure \ref{fig:net-c1distance} are presented the absolute distances of 
-each robot from the target, visualised on the y-axis, over time.
-On average, the distance from goal of the communication controller is far better  
-than that obtained with the distributed and the manual. After about $5$ time 
-steps the robots are in the final configuration, while using the distributed 
-alone, $25$ time steps are necessary to get closer to the target. Instead, the 
-manual controller does not reach the goal, remaining $1$\gls{cm} away. 
 \begin{figure}[!htb]
 	\centering
 	\includegraphics[width=.65\textwidth]{contents/images/net-c1/distances-from-goal-compressed-communication}%
@@ -232,6 +219,14 @@ manual controller does not reach the goal, remaining $1$\gls{cm} away.
 		\texttt{net-c1}.}
 	\label{fig:net-c1distance}
 \end{figure}
+
+Finally, in Figure \ref{fig:net-c1distance} are presented the absolute distances of 
+each robot from the target, visualised on the y-axis, over time.
+On average, the distance from goal of the communication controller is far better  
+than that obtained with the distributed and the manual. After about $5$ time 
+steps the robots are in the final configuration, while using the distributed 
+alone, $25$ time steps are necessary to get closer to the target. Instead, the 
+manual controller does not reach the goal, remaining $1$\gls{cm} away. 
 
 For this experiment it seems that the addition of the communication allowed the 
 distributed controller to assume an efficient behaviour, for this reason it is 
@@ -291,6 +286,12 @@ demonstrate lower loss values than the previous one.
 	\label{fig:commlossprox_comm}
 \end{figure}
 
+Focusing on the models trained on the dataset with average gap $24$\gls{cm}, in 
+Figure \ref{fig:net-c6r2} we observe the \gls{r2} of the manual 
+and the learned controllers, both the one with and the one without 
+communication, on the validation sets.
+Once again, we expect better performance using the new approach than the 
+previous, given the fact that the coefficient is increased from $0.55$ up to $0.85$.
 \begin{figure}[!htb]
 	\begin{center}
 		\begin{subfigure}[h]{0.49\textwidth}
@@ -306,12 +307,6 @@ demonstrate lower loss values than the previous one.
 		\texttt{net-c6}, with respect to the omniscient one.}
 	\label{fig:net-c6r2}
 \end{figure}
-Focusing on the models trained on the dataset with average gap $24$\gls{cm}, in 
-Figure \ref{fig:net-c6r2} we observe the \gls{r2} of the manual 
-and the learned controllers, both the one with and the one without 
-communication, on the validation sets.
-Once again, we expect better performance using the new approach than the 
-previous, given the fact that the coefficient is increased from $0.55$ up to $0.85$.
 
 In Figure \ref{fig:net-c6traj} are shown the trajectories obtained employing the 
 four controllers. Even for the expert, the convergence to the target is slower than 
@@ -393,19 +388,20 @@ In Figure \ref{fig:net-c6responseposition} is displayed the behaviour of a robot
 located between two stationary agents, showing the response of the controllers, 
 on the y-axis, by varying the position of the moving robot, visualised on the 
 x-axis.  
-\begin{figure}[!htb]
+As expected, the output is a high positive value when the robot is close to an 
+obstacle on the left, negative when there is an obstacle in front and not behind, 
+and $0$ when the distance from right and left is equal.
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=.45\textwidth]{contents/images/net-c6/response-varying_init_position-communication}%
 	\caption{Response of \texttt{net-c6} by varying the initial position.}
 	\label{fig:net-c6responseposition}
 \end{figure}
-As expected, the output is a high positive value when the robot is close to an 
-obstacle on the left, negative when there is an obstacle in front and not behind, 
-and $0$ when the distance from right and left is equal.
+
+\noindent
 The behaviour of the controller that uses the communication is most accurate 
 when the moving robot is halfway between the two stationary.
 
-\bigskip
 Finally, in Figure \ref{fig:net-c6distance} is presented a metric that measures the 
 absolute distance of each robot from the target over time.
 Unlike the non-optimal performances obtained with the manual and distributed 
@@ -413,7 +409,7 @@ controllers, in which in both cases the robots in the final configuration are
 located on average at about $5$\gls{cm} from the target, the distance from goal 
 of the communication controller is far better. In just $11$ time steps, $4$ more 
 than the expert, the agents reach the goal position.
-\begin{figure}[H]
+\begin{figure}[!htb]
 	\centering
 	\includegraphics[width=.65\textwidth]{contents/images/net-c6/distances-from-goal-compressed-communication}%
 	\caption[Evaluation of \texttt{net-c6} distances from goal.]{Comparison of 
@@ -426,9 +422,8 @@ than the expert, the agents reach the goal position.
 As before, it is very difficult to analyse the communication transmitted over time 
 through the visualisation in Figure \ref{fig:net-c6comm}. In this case, the agents 
 seem to communicate initially a high value, except the central one that is sending 
-values in the range $[0.6, 1]$. In all the cases, these values decrease as the robots 
-approach the target position.
-\begin{figure}[!htb]
+values in the range $[0.6, 1]$.
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=.6\textwidth]{contents/images/net-c6/4/plot-simulation-communication-4}
 	\vspace{-0.5cm}
@@ -437,6 +432,9 @@ approach the target position.
 		robot over time using the controller learned from \texttt{net-c6}.}	
 	\label{fig:net-c6comm}
 \end{figure}
+
+\noindent
+ In all the cases, these values decrease as the robots approach the target position.
 
 \paragraph*{Results using \texttt{all\_sensors} input}
 We conclude the first group of experiments presenting the results obtained using 
@@ -491,30 +489,36 @@ the coefficient \gls{r2} from $0.56$ to $0.84$.
 	\label{fig:net-c9r2}
 \end{figure}
 
-\begin{figure}[H]
+This improvement is further supported by the trajectories shown in Figure 
+\ref{fig:net-c9traj}. 
+The convergence to the target is still slow due to the high distance between the 
+robots, but this time the controller with communication is much faster than the 
+distributed controller but also than the manual. The bands of the deviation show 
+that this approach can reach the same results of the expert.
+\begin{figure}[!htb]
 	\begin{center}
 		\begin{subfigure}[h]{0.49\textwidth}
 			\centering
-			\includegraphics[width=.9\textwidth]{contents/images/net-d9/position-overtime-omniscient}%
+			\includegraphics[width=.92\textwidth]{contents/images/net-d9/position-overtime-omniscient}%
 			\caption{Expert controller trajectories.}
 		\end{subfigure}
 		\hfill
 		\begin{subfigure}[h]{0.49\textwidth}
 			\centering
-			\includegraphics[width=.9\textwidth]{contents/images/net-d9/position-overtime-learned_distributed}
+			\includegraphics[width=.92\textwidth]{contents/images/net-d9/position-overtime-learned_distributed}
 			\caption{Distributed controller trajectories.}
 		\end{subfigure}
 	\end{center}
 	\begin{center}
 		\begin{subfigure}[h]{0.49\textwidth}
 			\centering			
-			\includegraphics[width=.9\textwidth]{contents/images/net-d9/position-overtime-manual}%
+			\includegraphics[width=.92\textwidth]{contents/images/net-d9/position-overtime-manual}%
 			\caption{Manual controller trajectories.}
 		\end{subfigure}
 		\hfill
 		\begin{subfigure}[h]{0.49\textwidth}
 			\centering
-			\includegraphics[width=.9\textwidth]{contents/images/net-c9/position-overtime-learned_communication}
+			\includegraphics[width=.92\textwidth]{contents/images/net-c9/position-overtime-learned_communication}
 			\caption{Communication controller trajectories.}
 		\end{subfigure}
 	\end{center}
@@ -525,12 +529,6 @@ the coefficient \gls{r2} from $0.56$ to $0.84$.
 	\label{fig:net-c9traj}
 \end{figure}
 
-This improvement is further supported by the trajectories shown in Figure 
-\ref{fig:net-c9traj}. 
-The convergence to the target is still slow due to the high distance between the 
-robots, but this time the controller with communication is much faster than the 
-distributed controller but also than the manual. The bands of the deviation show 
-that this approach can reach the same results of the expert.
 
 Moreover, analysing the evolution of the control over time in Figure 
 \ref{fig:net-c9control}, we observe that this time the control learned from the 
@@ -566,14 +564,7 @@ controller.
 	\label{fig:net-c9control}
 \end{figure}
 
-In Figure \ref{fig:net-c9responseposition} is displayed the behaviour of a robot 
-located between two stationary agents which are already in the correct position, 
-showing the response of the controllers, on the y-axis, by varying the position of 
-the moving robot, visualised on the x-axis. As expected, the output is a high 
-value, positive or negative respectively when the robot is close to an obstacle on 
-the left or on the right, or it is close to $0$ when the distance from right and left 
-is equal.
-\begin{figure}[!htb]
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=.5\textwidth]{contents/images/net-c9/response-varying_init_position-communication}%
 	\caption{Response of \texttt{net-c9} by varying the initial position.}
@@ -581,6 +572,14 @@ is equal.
 \end{figure}
 
 \bigskip
+In Figure \ref{fig:net-c9responseposition} is displayed the behaviour of a robot 
+located between two stationary agents which are already in the correct position, 
+showing the response of the controllers, on the y-axis, by varying the position of 
+the moving robot, visualised on the x-axis. As expected, the output is a high 
+value, positive or negative respectively when the robot is close to an obstacle on 
+the left or on the right, or it is close to $0$ when the distance from right and left 
+is equal.
+
 Finally, in terms of absolute distance of each robot from the target, in Figure 
 \ref{fig:net-c9distance} we show that exploiting the communication, the robots 
 are able to end up in the correct position by using a couple more time steps than 
@@ -596,11 +595,6 @@ expert does.
 \end{figure}
 
 In this case, the analysis of the communication transmitted over time, in Figure 
-\ref{fig:net-c9comm}, contradicts the hypotheses made for the previous 
-experiments. The robots do not decrease or increase the value transmitted by 
-approaching the target, demonstrating, as anticipated that this value is 
-uncorrelated to the distance from goal, reaffirming the difficulty of understanding 
-the protocol learned from the network.
 \begin{figure}[!htb]
 	\centering
 	\includegraphics[width=.6\textwidth]{contents/images/net-c9/1/plot-simulation-communication-1}
@@ -611,6 +605,14 @@ the protocol learned from the network.
 	\label{fig:net-c9comm}
 \end{figure}
 
+\noindent
+\ref{fig:net-c9comm}, contradicts the hypotheses made for the previous 
+experiments. The robots do not decrease or increase the value transmitted by 
+approaching the target, demonstrating, as anticipated that this value is 
+uncorrelated to the distance from goal, reaffirming the difficulty of understanding 
+the protocol learned from the network.
+
+
 \paragraph*{Summary}
 
 To sum up, we show in the figures below the losses of the trained models as the 
@@ -620,16 +622,6 @@ finally in green \texttt{all\_sensors}.
 In both approaches, with \texttt{avg\_gap} of $8$\gls{cm}, the model trained 
 using \texttt{prox\_values} has a lower loss, followed, with a very close value, by 
 the network that employ \texttt{all\_sensors}.
-Next is the model that works with \texttt{prox\_comm}, that is not able to work 
-well with small gaps, even when using communication. 
-Similarly, by increasing the gap to $13$\gls{cm}, \texttt{prox\_values} is not able 
-to achieve satisfactory results in both approaches, while used together with 
-\texttt{prox\_comm}, \texttt{all\_sensors} reaches good performances, which can 
-even be improved by using communication.
-Finally, by increasing the gap even more, up to $24$\gls{cm}, 
-\texttt{prox\_values} becomes completely unusable, while \texttt{prox\_comm} 
-and \texttt{all\_sensors} have excellent responses, in particular with the new 
-approach.
 \begin{figure}[!htb]
 	\begin{center}
 		\begin{subfigure}[h]{0.32\textwidth}
@@ -678,11 +670,23 @@ approach.
 	\label{fig:commloss81324}
 \end{figure}
 
+\noindent
+Next is the model that works with \texttt{prox\_comm}, that is not able to work 
+well with small gaps, even when using communication. 
+Similarly, by increasing the gap to $13$\gls{cm}, \texttt{prox\_values} is not able 
+to achieve satisfactory results in both approaches, while used together with 
+\texttt{prox\_comm}, \texttt{all\_sensors} reaches good performances, which can 
+even be improved by using communication.
+Finally, by increasing the gap even more, up to $24$\gls{cm}, 
+\texttt{prox\_values} becomes completely unusable, while \texttt{prox\_comm} 
+and \texttt{all\_sensors} have excellent responses, in particular with the new 
+approach.
+
 \subsubsection{Experiment 2: variable number of agents}
 \label{subsubsec:task1-exp-comm-2}
 
-The last group of experiments we carried out using a distributed approach with 
-communication, summarised in Table \ref{tab:modelcomm}, examines the 
+The second group of experiments we carried out using a distributed approach 
+with communication, summarised in Table \ref{tab:modelcomm}, examines the 
 behaviour of the control learned using \texttt{all\_sensors} inputs. 
 \begin{figure}[!htb]
 	\centering
@@ -711,17 +715,6 @@ behaviour of the control learned using \texttt{all\_sensors} inputs.
 
 The objective of this set of experiments is to verify the robustness of the models, 
 proving that it is possible to train networks that use a variable number of agents.
-We analyse the same experiments of the previous approach, presented in Section 
-\ref{subsec:task1-exp-distr-comm}.
-We focus our examination by inspecting the behaviour of the network trained on 
-simulations with different number of robots $N$ and variable average gap, i.e 
-\texttt{net-c12}, \texttt{net-c15} and \texttt{net-c18}. Then we compare 
-the 
-performances obtained for these models to the corresponding distributed 
-networks, i.e \texttt{net-d12}, \texttt{net-d15} and \texttt{net-d18}.
-
-First of all we start by showing in Figure \ref{fig:commexlossallt} an overview of 
-the train and validation losses obtained for these models.
 \begin{figure}[!htb]
 	\centering
 	\includegraphics[width=.8\textwidth]{contents/images/task1-comm-extension/loss-communication-all@}%
@@ -730,6 +723,16 @@ the train and validation losses obtained for these models.
 		of average gap.}
 	\label{fig:commexlossallt}
 \end{figure}
+
+We analyse the same experiments of the previous approach, presented in Section 
+\ref{subsec:task1-exp-distr-comm}.
+We focus our examination by inspecting the behaviour of the network trained on 
+simulations with different number of robots $N$ and variable average gap, i.e 
+\texttt{net-c12}, \texttt{net-c15} and \texttt{net-c18}. Then we compare the 
+performances obtained for these models to the corresponding distributed 
+networks, i.e \texttt{net-d12}, \texttt{net-d15} and \texttt{net-d18}.
+In Figure \ref{fig:commexlossallt} os shown an overview of the train and 
+validation losses obtained for these models.
 
 \paragraph*{Results using 5 agents}
 Proceeding step by step, we summarise in Figure \ref{fig:commlossn5} the losses 
@@ -770,6 +773,14 @@ From these we expect that the behaviour of the robots using the learned
 controller with communication instead of the manual or the distributed alone is 
 better, even if far from the expert. The new model produces an increase in the 
 coefficient from $0.41$ to $0.49$.
+
+Analysing in Figure \ref{fig:net-c12traj} the trajectories obtained employing the 
+four controllers it is difficult to demonstrate the improvement over the previous 
+approach as having a variable gap we observe a deviation of the position of the 
+robots with respect to the average that in this case it does not indicate a limitation 
+of the model but just that the target positions are different among the simulation 
+runs. 
+
 \begin{figure}[!htb]
 	\begin{center}
 		\begin{subfigure}[h]{0.49\textwidth}
@@ -818,13 +829,8 @@ coefficient from $0.41$ to $0.49$.
 	the two learned from \texttt{net-d12} and \texttt{net-c12}.}
 	\label{fig:net-c12traj}
 \end{figure}
-Analysing in Figure \ref{fig:net-c12traj} the trajectories obtained employing the 
-four controllers it is difficult to demonstrate the improvement over the previous 
-approach as having a variable gap we observe a deviation of the position of the 
-robots with respect to the average that in this case it does not indicate a limitation 
-of the model but just that the target positions are different among the simulation 
-runs. 
 
+\bigskip
 An analysis of the evolution of the control over time in Figure 
 \ref{fig:net-c12control} evidence that the control decided by the communication 
 network is similar to that set by the expert.
@@ -867,12 +873,6 @@ obstacle on the left, negative when there is an obstacle in front and not behind
 and $0$ when the distance from right and left is equal.
 The behaviour of the controller that uses the communication is the most accurate 
 when the moving robot is halfway between the two stationary.
-\begin{figure}[!htb]
-	\centering
-	\includegraphics[width=.45\textwidth]{contents/images/net-c12/response-varying_init_position-communication}%
-	\caption{Response of \texttt{net-c12} by varying the initial position.}
-	\label{fig:net-c12responseposition}
-\end{figure}
 
 Finally, in Figure \ref{fig:net-c12distance} are presented the absolute distances of 
 each robot from the target, visualised on the y-axis, over time.
@@ -880,9 +880,18 @@ On average, the distance from goal of the communication controller is a bit bett
 than that obtained with the distributed while similar to the manual, even if slower. 
 In the final configuration in all three cases the agents are $1$\gls{cm} away from 
 the target. 
-\begin{figure}[H]
+
+\begin{figure}[!htb]
 	\centering
-	\includegraphics[width=.65\textwidth]{contents/images/net-c12/distances-from-goal-compressed-communication}%
+	\includegraphics[width=.46\textwidth]{contents/images/net-c12/response-varying_init_position-communication}%
+	\caption{Response of \texttt{net-c12} by varying the initial position.}
+	\label{fig:net-c12responseposition}
+	\vspace{0.5cm}
+\end{figure}
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=.68\textwidth]{contents/images/net-c12/distances-from-goal-compressed-communication}%
 	\caption[Evaluation of \texttt{net-c12} distances from goal.]{Comparison of 
 		performance in terms of distances from goal obtained using four controllers: 
 		the expert, the manual and the two learned from \texttt{net-d12} and 
@@ -897,27 +906,6 @@ average gap, as before the blue, orange and green lines represent respectively
 gaps of $8$\gls{cm}, $20$\gls{cm} and variable. From a first observation we see 
 that the networks perform better in case of small gaps and when using 
 communication.
-\begin{figure}[!htb]
-	\begin{center}
-		\begin{subfigure}[h]{0.49\textwidth}
-			\centering
-			\includegraphics[width=.7\textwidth]{contents/images/task1-comm-extension/loss-distributed-N8@copy}
-			\caption{Distributed approach.}
-		\end{subfigure}
-		\hfill
-		\begin{subfigure}[h]{0.49\textwidth}
-			\centering
-			\includegraphics[width=.7\textwidth]{contents/images/task1-comm-extension/loss-communication-N8@copy}
-			\caption{Distributed approach with communication.}
-		\end{subfigure}	
-	\end{center}
-	\vspace{-0.5cm}
-	\caption[Comparison of the losses of the models that use $8$ 
-	agents.]{Comparison of the losses of the models that use $8$ agents as 
-	the gap 
-		varies.}
-	\label{fig:commlossN8}
-\end{figure}
 
 Focusing on the models that use the dataset generate using a variable average 
 gap, in Figure \ref{fig:net-c15r2} we observe the \gls{r2} of the manual and the 
@@ -925,6 +913,29 @@ learned controllers, both the one with and the one without communication, on
 the validation sets.
 Given the fact that the coefficient is increased from $0.23$ up to $0.32$ we 
 expect superior performance.  
+
+\begin{figure}[!htb]
+	\begin{center}
+		\begin{subfigure}[h]{0.49\textwidth}
+			\centering
+			\includegraphics[width=.72\textwidth]{contents/images/task1-comm-extension/loss-distributed-N8@copy}
+			\caption{Distributed approach.}
+		\end{subfigure}
+		\hfill
+		\begin{subfigure}[h]{0.49\textwidth}
+			\centering
+			\includegraphics[width=.72\textwidth]{contents/images/task1-comm-extension/loss-communication-N8@copy}
+			\caption{Distributed approach with communication.}
+		\end{subfigure}	
+	\end{center}
+	\vspace{-0.5cm}
+	\caption[Comparison of the losses of the models that use $8$ 
+	agents.]{Comparison of the losses of the models that use $8$ agents as 
+		the gap 
+		varies.}
+	\label{fig:commlossN8}
+\end{figure}
+
 \begin{figure}[!htb]
 	\begin{center}
 		\begin{subfigure}[h]{0.49\textwidth}
@@ -941,12 +952,7 @@ expect superior performance.
 	\label{fig:net-c15r2}
 \end{figure}
 
-In Figure \ref{fig:net-c15traj} are shown the trajectories obtained employing the 
-four controllers.  On average, all the robots seems to approach the desired 
-position, some with less and some with more time steps, but is still difficult 
-to demonstrate improvement over the previous approach due to the deviation in 
-the graph caused by the different target positions.
-\begin{figure}[!htb]
+\begin{figure}[H]
 	\begin{center}
 		\begin{subfigure}[h]{0.49\textwidth}
 			\centering
@@ -960,6 +966,12 @@ the graph caused by the different target positions.
 			\caption{Distributed controller trajectories.}
 		\end{subfigure}
 	\end{center}
+	\caption[Evaluation of the trajectories learned by \texttt{net-c15}.]{Comparison 
+		of trajectories generated using four controllers: the 
+		expert, the manual and the two learned from \texttt{net-d15} and 
+		\texttt{net-c15}.}
+\end{figure}
+\begin{figure}[!htb]\ContinuedFloat
 	\begin{center}
 		\begin{subfigure}[h]{0.49\textwidth}
 			\centering			
@@ -973,16 +985,22 @@ the graph caused by the different target positions.
 			\caption{Communication controller trajectories.}
 		\end{subfigure}
 	\end{center}
-	\caption[Evaluation of the trajectories learned by \texttt{net-c15}.]{Comparison 
+	\caption[]{Comparison 
 	of trajectories generated using four controllers: the 
 		expert, the manual and the two learned from \texttt{net-d15} and 
-		\texttt{net-c15}.}
+		\texttt{net-c15} (cont.).}
 	\label{fig:net-c15traj}
 \end{figure}
 
+In Figure \ref{fig:net-c15traj} are shown the trajectories obtained employing the 
+four controllers.  On average, all the robots seems to approach the desired 
+position, some with less and some with more time steps, but is still difficult 
+to demonstrate improvement over the previous approach due to the deviation in 
+the graph caused by the different target positions.
+
 Even the analysis of the evolution of the control over time in Figure 
 \ref{fig:net-c15control} is not able to provide further considerations.
-\begin{figure}[H]
+\begin{figure}[!htb]
 	\begin{center}
 		\begin{subfigure}[h]{0.35\textwidth}
 			\includegraphics[width=\textwidth]{contents/images/net-d15/control-overtime-omniscient}%
@@ -1010,13 +1028,13 @@ Even the analysis of the evolution of the control over time in Figure
 			\caption{Communication control.}
 		\end{subfigure}
 	\end{center}
-	\vspace{-0.5cm}
 	\caption[]{Comparison of the output control decided using four controllers: the 
 	expert, the manual and the two learned from \texttt{net-d15} and 
 	\texttt{net-c15} (cont.).}
 	\label{fig:net-c15control}
 \end{figure}
 
+\bigskip
 In Figure \ref{fig:net-c15responseposition} is displayed the behaviour of a robot 
 located between two stationary agents, showing the response of the controllers, 
 on the y-axis, by varying the position of the moving robot, visualised on the 
@@ -1152,7 +1170,6 @@ the model trained using a minor number of agents, as expected, has a lower loss.
 Instead, very similar are the losses obtained in case of $8$ or variable agents, in 
 which the model with less robots is still the better.
 In general, using the communication has improved the performance.
-
 \begin{figure}[!htb]
 	\begin{center}
 		\begin{subfigure}[h]{0.32\textwidth}
@@ -1200,6 +1217,31 @@ In general, using the communication has improved the performance.
 	\label{fig:commlossexte81324}
 \end{figure}
 
+
+\subsubsection{Experiment 3: increasing number of agents}
+\label{subsubsec:task1-exp-comm-3}
+The last group of experiments focus on the scalability properties of a multi-agent 
+system, showing the behaviour of the network trained using \texttt{all\_sensors} 
+input, variable gaps and number of agents, applied on simulations with a higher 
+number of robots, from 5 up to 50.
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=.55\textwidth]{contents/images/distances-from-goal-compressed-communication}%
+	\caption[Evaluation of distances from goal for a high number of 
+robots.]{Comparison of performance in terms of distances from goal obtained 
+	on simulations with an increasing number of robots.}
+	\label{fig:distdistrcomm}
+\end{figure}
+In Figure \ref{fig:distdistrcomm} is visualised, for 5 different experiments, the 
+absolute distance of each robot from the target over time. This value is averaged 
+on all robots among all the simulation runs. 
+The results obtained using the communication approach are a bit better then the 
+previous, even if the increasing number of robots still produces a slowdown in 
+reaching the correct positions.
+In the final configuration the robots are on average at about $1$cm from the 
+from the goal position, instead of $3$ as before. Increasing the number of agents, 
+first to 20, then 30, 40 and finally 50, the robots are in the worst case $10$cm 
+from the target, $3$cm closer than without using communication.
 
 \subsubsection{Remarks}
 \label{subsubsec:remarks-task1-comm}
