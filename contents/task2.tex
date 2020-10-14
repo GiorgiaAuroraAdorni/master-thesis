@@ -394,23 +394,23 @@ and tend to move away from each other as the gap grows.
 \subsubsection{Experiment 2: increasing number of agents}
 \label{subsubsec:task2-exp-comm-2}
 
-The last group of experiments focus on the scalability properties of a multi-agent 
-system, showing the behaviour of the network trained using variable gaps and 
-number of agents, applied on simulations with a higher number of robots, from 5 
-up to 50.
+The last group of experiments focuses on the scalability properties of a 
+multi-agent system, showing the behaviour of the network trained using variable 
+gaps and number of agents, applied on simulations with a higher number of 
+robots, from 5 up to 50.
 
 In Figure \ref{fig:errorcomm} is visualised, for 5 different experiments, the 
-the percentage of wrong expected colours, on the y-axis, over time, averaged for 
-all the robots among the simulation runs. 
-In all experiments, the number of errors in the simulation in the first timestep 
-corresponds to 50\%, i.e. half of the colours are wrong. This result is expected 
-since the colours at the first timestep are chosen randomly. As the time steps pass, 
-the number of errors decreases at a constant speed, about two robots per 
-timestep. In general, $\frac{N}{2}$ timesteps are required to achieve convergence, 
-sometimes $\frac{N}{2} - 1$ when the number of agents is odd. 
-Despite this, if using a number of robots between 5 and 10, in the final 
-configuration on average 1\% of the colours are wrong, increasing the amount of 
-agents this value increases, reaching 10\% in the case of 50 robots.
+expected percentage of wrong colours over time, averaged for all the robots 
+among the simulation runs. 
+In all experiments, the number of errors in the simulation corresponds to 50\%, 
+i.e. half of the colours are wrong. This results are expected since the colours at the 
+first time step are chosen randomly. As the time steps pass, the number of errors 
+decreases at a constant speed, about two robots per time step. In general, 
+$\frac{N}{2}$ time steps are required to achieve convergence, sometimes 
+$\frac{N}{2} - 1$ when the number of agents is odd. 
+Despite this, when using a number of robots between 5 and 10, on average 1\% of 
+the colours are wrong in the final configuration. Increasing the amount of agents 
+this value increases, reaching 10\% in the case of 50 robots.
 Despite this, the performances are very promising and the network is able to scale 
 well by increasing the number of robots.
 \begin{figure}[!htb]
@@ -427,7 +427,7 @@ well by increasing the number of robots.
 
 In this section we have shown that, for some problems, communication is a 
 necessity. 
-Therefore, using a controller, learned through imitation learning, which 
+Therefore, using a controller learned through imitation learning, which 
 autonomously infers a communication protocol between the agents, it is possible 
 to obtain excellent results and solve the task in many cases more effectively than 
 the baseline.

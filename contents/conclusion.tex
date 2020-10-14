@@ -1,8 +1,9 @@
-\chapter{Conclusion and perspectives}
+\chapter*{Conclusion and perspectives}
+\addcontentsline{toc}{chapter}{Conclusion and perspectives}
 \label{chap:concl}
  
-This chapter presents our concluding thought (Section \ref{sec:concl}) and 
-suggestions for possible future research lines (Section \ref{sec:future}).
+This chapter presents first, in Section \ref{sec:concl}, our concluding thoughts and 
+finally suggestions for possible future research lines in Section \ref{sec:future}.
 
 \section{Concluding thoughts}
 \label{sec:concl}
@@ -14,19 +15,19 @@ communication of swarm of robots to achieve a common goal.
 Our work makes a further step in the direction of \gls{il} approaches, and aims to 
 find feasible solutions to different multi-agent scenarios.
 
-We explore two alternative task: distributing the robots in space such that they 
+We explore two alternative tasks: distributing the robots in space such that they 
 stand at equal distance from each other, and, assuming that the agents are 
 divided into two sets, colouring the robots in space depending on their group 
 membership.
-To solve these examples of cooperative task, we propose two main models: both 
+To solve these examples of cooperative tasks, we propose two main models: both 
 learn decentralised controllers, via observation of the demonstrations of a 
-centralised controller, by training end-to-end \glspl{nn}, but in one of these we 
-introduce a communication protocol consisting in an explicit exchange of 
-messages between the robots, that is inferred by the network.
+centralised controller, by training end-to-end \glspl{nn} in which is possible to
+introduce a communication protocol, is inferred by the network, consisting in an 
+explicit exchange of messages between the robots.
 
 For the first task, we build two models: one that at each time step takes as input 
 an array containing the response values of the sensors for each robot and 
-produces as output the speed of the agent, the other one that in input takes also 
+produces as output the speed of the agent, the other one that as input takes also 
 the messages received in the previous time step, communicated by the nearest 
 agents (on the left and on the right), and produces as output, in addition to the 
 control, the communication, i.e. the message transmitted by the robot to the two 
@@ -40,7 +41,7 @@ the first one is the probability of the agent top LED to be blue and the second 
 the communication, i.e. the message to be transmitted by the robot.
 
 Throughout the experiments, in addition to comparing the approach with or 
-without communication, we also analyse the effect of varying the inputs of the 
+without communication, we also analyse the effects of varying the inputs of the 
 networks, the average gap and the number of agents chosen. 
 
 First of all, we examine the behaviour of the learned controllers by varying the 
@@ -54,18 +55,18 @@ stable behaviours and achieving satisfactory results in both approaches.
 
 We continue analysing the performance by varying the average gap between the 
 agents — either fixed to a certain value or variable in the range $[5, 24]$. 
-Similarly to the previously mentioned experiment, the results this time are heavily 
-influenced by the input used. Considering \texttt{all\_sensors} input, the networks 
-have excellent performance with any gap, from a smaller to a larger one, even 
-with a variable one. Unlike in the first task, in the second one,no clear differences 
-are highlighted varying the gap. 
+Similarly to the previously mentioned experiment, the results are heavily 
+influenced by the input used this time too. Considering \texttt{all\_sensors} input, 
+the networks have excellent performance with any gap, from a smaller to a larger 
+one, even with a variable one. Unlike in the first task, in the second one, no clear 
+differences emerge varying the gap. 
 
 Then, we proceed to compare the behaviour of the models varying the number of 
 agents — either fixed among the simulation runs or variable in the range $[5, 
 10]$. The main reason of these experiments is to verify the robustness of the 
 models and proving that it is possible to train networks that handle a variable 
 number of agents.
-The results show, as expected, that in both approaches, it is easier to obtain a 
+The results show, as expected, that in both approaches it is easier to obtain a 
 correct behaviour of the controller using a small number of agents.
 
 Finally, since multi-agent systems present interesting scalability challenges, we 
@@ -94,7 +95,7 @@ effectively, in many cases, than the baseline.
 \section{Future works}
 \label{sec:future}
 
-We demonstrate the effectiveness of our method in a couple of simulated 
+We demonstrated the effectiveness of our method in a couple of simulated 
 scenarios, so a following experiment could be implemented to prove the power of 
 our model in the real world.
 Another possible expansion of our work could be the application of our models to 

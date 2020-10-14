@@ -1,13 +1,11 @@
 In recent years, robotics research has dedicated an extensive attention to 
 cooperative multi-agents problems, in which agents have a common goal that 
-requires them to collaborate, and possibly to communicate, to achieve it 
-\cite[][]{ismail2018survey}.
+requires them to collaborate, and possibly to communicate, to achieve it.
 Imitation learning algorithms successfully address the issue of coordinating robot 
 swarms, providing new insights and promising solutions. 
 These methods learn a controller by observing demonstrations of an expert, in 
 other words the behaviour of a centralised controller, which can perceive the 
-entire environment, including the state and observations of all agents 
-\cite[][]{billard2008survey, zhang2018deep}. 
+entire environment, including the state and observations of all agents. 
 
 Performing tasks with complete knowledge of the state of a system is relatively 
 easy, but centralised solutions might not be feasible in real scenarios since agents 
@@ -15,26 +13,25 @@ do not have direct access to the state but only to their own observations.
 To overcome this issue, we train end-to-end \glspl{nn}, usually classifiers or 
 regressors, that only exploit local observations and communications, learning 
 decentralised solution via imitation of a centralised control, which indicates the 
-action to be performed \cite[][]{ross2011reduction, tolstaya2020learning}.
+action to be performed.
 
 In this study, we focus on two different scenarios: distributing the robots in space 
 such that they stand at equal distance from each other, and colouring the robots 
-in space depending on their group membership.
+in space depending on their position with respect to the others in the group.
 Both are examples of cooperative tasks based on the use of a distributed 
 controller. While the second cannot be solved without allowing an explicit 
 exchange of messages between the agents, in the first one, a communication 
 protocol is not necessary, although it may increase performance.
 
-The experiments are run in Enki \cite[][]{enki}, a high-performance open-source 
-simulator for planar robots, which provides collision detection and limited physics 
-support for robots evolving on a flat surface. Moreover, it can simulate groups of 
-robots hundreds of times faster than real-time.
+The experiments are run in Enki, a high-performance open-source simulator for 
+planar robots, which provides collision detection and limited physics support for 
+robots evolving on a flat surface. Moreover, it can simulate groups of robots 
+hundreds of times faster than real-time.
 
 In addition to analysing typical supervised learning approaches, which directly 
 learn a mapping from observations to actions, we concentrate on more 
 challenging situations where the communication is not provided to the network, 
-instead it is a latent variable which has to be inferred \cite[][]{le2017coordinated, 
-stadie2017third}.
+instead it is a latent variable which has to be inferred.
 
 The results show how applying a communication strategy improves the 
 performance of the distributed model, letting it decide which actions to take 

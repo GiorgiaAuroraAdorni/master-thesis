@@ -3,9 +3,9 @@
 \glsreset{ir}
 
 This chapter introduces the tools used in this work, starting from the description 
-of the target platform (Section \ref{sec:thymio}), then describing the simulator 
-(Section \ref{sec:enki}) and finally mentioning the frameworks used for the 
-implementation.
+of the target platform in Section \ref{sec:thymio}, then describing the simulator 
+in Section \ref{sec:enki} and finally mentioning the frameworks used for the 
+implementation in Section \ref{sec:learning}.
 
 \section{Thymio II}
 \label{sec:thymio}
@@ -58,8 +58,8 @@ of  \gls{ir}, addressed in Section \ref{subsec:sensors}.
 Thymio II can employ its horizontal \gls{ir} sensors to communicate a value 
 to robots within a range of about $48$\gls{cm}. 
 In particular, the robot can enable the proximity communication and send an 
-integer payload of $11$-bit at $10$ \gls{Hz}, one value transmitted every $0.1$ 
-\gls{s}. 
+integer payload of $11$ bits at $10$ \gls{Hz}, one value transmitted every 
+$0.1$\gls{s}. 
 This message is received by other agents if at least one of their proximity sensors 
 is visible by one of the emitter’s \glspl{led} and if they have enabled the proximity 
 communication.
@@ -171,25 +171,26 @@ V100-PCIE-16GB \gls{gpu}.
 For this purpose, we used different tools which we briefly mention below.
 
 \paragraph*{\texttt{PyTorch}} is an open source machine learning framework  for 
-tensor computation with strong GPU acceleration, uses also to build \glspl{dnn} 
-\footnote{\url{https://pytorch.org}}.
+tensor computation with strong GPU acceleration, uses also to build 
+\glspl{dnn}\footnote{\url{https://pytorch.org}}.
 
 \paragraph*{\texttt{NumPy}} is a package for scientific computing that provides 
-support for a range of utilities for linear algebra and matrix manipulation 
-\footnote{\url{https://numpy.org}}.
+support for a range of utilities for linear algebra and matrix 
+manipulation\footnote{\url{https://numpy.org}}.
 
 \paragraph*{\texttt{Pandas}} is an open source library providing 
-high-performance, easy-to-use data structures and data analysis tools 
-\footnote{\url{https://pandas.pydata.org}}. We used it in particular for building 
+high-performance, easy-to-use data structures and data analysis 
+tools\footnote{\url{https://pandas.pydata.org}}. We used it in particular for 
+building 
 and working on the datasets generated for training the models. 
 
 \paragraph*{\texttt{Matplotlib}} is a comprehensive package for creating 
-static, animated, and interactive visualisations in \texttt{Python} 
-\footnote{\url{https://matplotlib.org}}. 
+static, animated, and interactive visualisations in 
+\texttt{Python}\footnote{\url{https://matplotlib.org}}. 
 
 \paragraph*{\texttt{scikit-learn}} is a library that provides simple and efficient 
 tools for predictive data analysis, built on \texttt{NumPy}, \texttt{Scipy}, and 
-\texttt{Matplotlib} \footnote{\url{https://scikit-learn.org}}.
+\texttt{Matplotlib}\footnote{\url{https://scikit-learn.org}}.
 
 
 
