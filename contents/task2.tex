@@ -18,7 +18,7 @@ receive communication just from one side.
 
 \subsubsection{Experiment 1: variable number of agents}
 \label{subsubsec:task2-exp-comm-1}
-In this section we explore the experiments carried out using the communication 
+In this section, we explore the experiments carried out using the communication 
 approach, in particular, examining the behaviour of the control learned from 9 
 networks 
 \begin{figure}[!htb]
@@ -40,7 +40,7 @@ networks
 	\end{tabular}
 	\captionof{table}[Experiments with variable agents and gaps 
 	(communication).]{List of the experiments carried out using a variable number 
-		of agents and of gap.}
+		of agents and of gaps.}
 	\label{tab:modelcommt2}
 \end{figure}
 
@@ -53,8 +53,8 @@ The objective of this set of experiments, summarised in Table
 \ref{tab:modelcommt2}, is to verify the robustness of the communication 
 protocol and prove also the scalability of the network on the number of agents.
 
-First of all we start by showing in Figure \ref{fig:t2lossallt} an overview of the train 
-and validation losses obtained for these models.
+First of all, we show in Figure \ref{fig:t2lossallt} an overview of the train and 
+validation losses obtained for these models.
 \begin{figure}[!htb]
 	\centering
 	\includegraphics[width=.8\textwidth]{contents/images/task2/loss-communication-all@}%
@@ -67,7 +67,7 @@ and validation losses obtained for these models.
 \paragraph*{Results using 5 agents}
 
 We start our examination by inspecting the behaviour of the network trained on 
-simulations with variable average gap, i.e \texttt{net-v3}, \texttt{net-v6} and 
+simulations with variable average gap, i.e., \texttt{net-v3}, \texttt{net-v6} and 
 \begin{figure}[!htb]
 	\centering
 	\includegraphics[width=.45\textwidth]{contents/images/task2/loss-communication-N5}
@@ -78,7 +78,7 @@ simulations with variable average gap, i.e \texttt{net-v3}, \texttt{net-v6} and
 \end{figure}
 
 \noindent
-\texttt{net-v9} and we summarise in Figure \ref{fig:commlossn5t2} the losses of 
+\texttt{net-v9}, summarising, in Figure \ref{fig:commlossn5t2}, the losses of 
 these experiments in order to highlight the difference of performance using a gap 
 that is first small, then large and finally variable, respectively represented by the 
 blue, the orange and the green lines.
@@ -102,19 +102,19 @@ We assume that a model whose predictions are 100\% correct has an \gls{auc} of
 	\caption[Evaluation of the ROC of \texttt{net-v3}.]{Visualisation of the 
 		\gls{roc} curve of \texttt{net-v3}.}
 	\label{fig:net-v3auc}
-\end{figure}x
+\end{figure}
 
-Also for this task it is interesting to analyse the type of communication protocol 
+Also for this task, it is interesting to analyse the type of communication protocol 
 inferred by the network, also comparing it with the one implemented by the 
 manual controller. 
 In Figure \ref{fig:net-v3commcolour} are shown, for a simulation run, first the 
 messages transmitted by the agents over time, through a colour bar whose 
-spectrum is included in the range [0, 1], i.e. the maximum and minimum value of 
+spectrum is included in the range [0, 1], i.e.,the maximum and minimum value of 
 communication transmitted, and then the colour assumed by the robot in a 
 certain time step, for both the manual and the learned controllers.
 The extreme robots always transmit the same message using both controllers, 
 while using the learned one, the central robots seems to transmit the same value, 
-i.e. 1, but despite this they are able to achieve their goal in only two time steps, 
+i.e.,1, but despite this they are able to achieve their goal in only two time steps, 
 one less than with the manual. This behaviour cannot scale to a number of robot 
 higher then $5$. For instance, in case of $5$ agents, in the first time step, 
 \texttt{myt2} and \texttt{myt4} receive respectively the messages $(0, 1)$ and $(1, 
@@ -403,7 +403,7 @@ In Figure \ref{fig:errorcomm} is visualised, for 5 different experiments, the
 expected percentage of wrong colours over time, averaged for all the robots 
 among the simulation runs. 
 In all experiments, the number of errors in the simulation corresponds to 50\%, 
-i.e. half of the colours are wrong. This results are expected since the colours at the 
+i.e.,half of the colours are wrong. This results are expected since the colours at the 
 first time step are chosen randomly. As the time steps pass, the number of errors 
 decreases at a constant speed, about two robots per time step. In general, 
 $\frac{N}{2}$ time steps are required to achieve convergence, sometimes 

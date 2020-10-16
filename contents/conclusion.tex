@@ -30,7 +30,7 @@ an array containing the response values of the sensors for each robot and
 produces as output the speed of the agent, the other one that as input takes also 
 the messages received in the previous time step, communicated by the nearest 
 agents (on the left and on the right), and produces as output, in addition to the 
-control, the communication, i.e. the message transmitted by the robot to the two 
+control, the communication, i.e.,the message transmitted by the robot to the two 
 neighbours. 
 
 For the second task, we implement a single model, similar to the previous, but this 
@@ -38,7 +38,7 @@ time ignoring the sensors readings. Thus, the network, at each time step, takes 
 input for each robot only the message received in the previous time step, 
 communicated by the nearest agents, and returns as output an array of 2 floats, 
 the first one is the probability of the agent top LED to be blue and the second is 
-the communication, i.e. the message to be transmitted by the robot.
+the communication, i.e.,the message to be transmitted by the robot.
 
 Throughout the experiments, in addition to comparing the approach with or 
 without communication, we also analyse the effects of varying the inputs of the 

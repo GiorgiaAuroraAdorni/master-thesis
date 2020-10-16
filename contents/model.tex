@@ -14,7 +14,7 @@ We conclude Section \ref{sec:controllersmodel} with a detailed explanation of th
 controllers used and of the models implemented. 
 
 
-\section{Multi-agent system}
+\section{Multi-agent systems}
 \label{sec:MAS}
 
 In this work, we investigate collaborative scenarios in a homogeneous \gls{mas}.
@@ -277,7 +277,7 @@ controller, the key component of the system introduced in Section
 actions, draw inferences and finally solve tasks. 
 
 For the two scenarios that we consider in this study, the state of the agent is the 
-combination of four elements: its position on the $x$-axis, the observations, i.e. 
+combination of four elements: its position on the $x$-axis, the observations, i.e.,
 the distances from neighbours recorded in the sensor readings, communication 
 messages, one transmitted to the two nearest neighbours, one on the left and the 
 other on the right, and two received from peer robots, and finally its colour.
@@ -416,7 +416,7 @@ On the other hand, if an omniscient controller is not employed, it is impossible
 solve the problem without using communication, since it is the only way for the 
 agents to understand their ordering.
 
-Thus, by initially making all robots transmit the same value, i.e. $0$, we are able 
+Thus, by initially making all robots transmit the same value, i.e.,$0$, we are able 
 to establish which are the first and the last robots in the row, or those that do not 
 receive any communication respectively from back and front. 
 These two agents can at this point start the actual communication by transmitting 
@@ -523,8 +523,8 @@ configuration is randomly chosen between the two possible colours, red and blue.
 	colour = 0
 \end{python}
 
-\begin{lstlisting}[frame=none,caption=Protocol used from the manual controller 
-to decide for each robot the message to transmit and the colour., 
+\begin{lstlisting}[frame=none,caption={Protocol used by the manual controller 
+to decide, for each robot, the message to transmit and the colour.}, 
 label=lst:manualtask2]
 \end{lstlisting}
 
@@ -534,7 +534,7 @@ label=lst:manualtask2]
 
 Usually, to train a network that learns a controller, the states and the actions, 
 provided by an expert, need to be observable. For this study, we have decided to 
-use the observations of the robots instead of the state, i.e. the positions. 
+use the observations of the robots instead of the state, i.e.,the positions. 
 The reason behind this decision is that in most environments, agents are never 
 actually exposed to the full state of this system. Instead, they receive partial 
 observations, often local or incomplete. In addition, it is frequently too expensive 
@@ -632,7 +632,7 @@ step takes as input an array containing the response values of the sensors for e
 robot – \texttt{prox\_values}, \texttt{prox\_comm} or \texttt{all\_sensors} – and 
 the messages received in the previous time step, communicated by the nearest 
 agents (on the left and on the right), and produces 2 floats as output: the control, 
-which is the speed of the wheels as before, and the communication, i.e. the 
+which is the speed of the wheels as before, and the communication, i.e.,the 
 message transmitted by the robot to its two neighbouring agents.
 
 Even for this purpose, the model is independent of the number of agents in 
@@ -734,7 +734,7 @@ Thus, using the same data collected before we build a model that at each time
 step takes as input for each robot only the messages received in the previous time 
 step, communicated by the nearest agents (on the left and on the right), and 
 produces as output an array of 2 floats, the first one is the probability of the agent 
-top \gls{led} to be blue and the second is the communication, i.e. the message to 
+top \gls{led} to be blue and the second is the communication, i.e.,the message to 
 be transmitted by the robot.
 
 The communication network, whose structure is shown in Figure 
@@ -781,7 +781,7 @@ In order to decide the metric to evaluate the goodness of the prediction, it is
 necessary to analyse the output of the network. As we said, the model returns, in 
 addition to the communication, the colour that is actually the probability of the 
 agent top \gls{led} to be blue. This means that, when the network produces a 0, 
-the probability that the \gls{led} is blue is equal to 0, i.e. it is red; in the same way, 
+the probability that the \gls{led} is blue is equal to 0, i.e.,it is red; in the same way, 
 1 means that instead, this will be blue. In this way, we define a simple policy 
 function that returns the colour blue when the probability is between 0.5 and 1, 
 and red otherwise, or when the probability is less than 0.5.
