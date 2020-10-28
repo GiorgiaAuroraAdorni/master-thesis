@@ -35,8 +35,8 @@ variable gaps and robots.
 	\label{tab:modeln5comm}
 \end{figure}
 
-The first analysis, summarised in Table \ref{tab:modeln5comm}, concerns the 
-behaviour of the learned controllers in case of the three different inputs, 
+The first analysis, which we summarise in Table \ref{tab:modeln5comm}, concerns 
+the behaviour of the learned controllers in case of the three different inputs, 
 \texttt{prox\_values}, \texttt{prox\_comm} or \texttt{all\_sensors}, for a number 
 of robots $N$ and an \texttt{avg\_gap} both fixed respectively at $5$ and the 
 second chosen between $8$, $13$ and $24$.
@@ -81,12 +81,12 @@ experiments and those in Section \ref{para:1}.
 In Figure \ref{fig:commlossprox_values} is shown an overview of the performance, 
 in terms of loss, of the models trained using \texttt{prox\_values} and varying the 
 average gap: the blue, orange and green lines represent respectively gaps of $8$, 
-$13$ and $24$\gls{cm}.
+$13$ and $24$cm.
 The loss in case of the smaller gap is decreased from $40$ to $20$, meaning an 
 improvement over the previous approach.
 
 Focusing on the models that use the \texttt{prox\_values} readings as input and 
-the dataset generated using $8$\gls{cm} as average gap, in Figure 
+the dataset generated using $8$cm as average gap, in Figure 
 \ref{fig:net-c1r2} we observe the \gls{r2} of the manual and the learned 
 controllers, in both cases, i.e.,with and without communication, on the validation 
 sets.
@@ -254,7 +254,7 @@ On average, the distance from goal of the communication controller is far better
 than that obtained with the distributed and the manual. After about $5$ time 
 steps, the robots are in the final configuration, while using the distributed 
 alone, $25$ time steps are necessary to get closer to the target. Instead, the 
-manual controller does not reach the goal, remaining $1$\gls{cm} away. 
+manual controller does not reach the goal, remaining $1$cm away. 
 
 For this experiment, it seems that the addition of the communication allowed the 
 distributed controller to assume an efficient behaviour, for this reason it is 
@@ -291,7 +291,7 @@ Following are presented the results of the experiments performed using
 
 In Figure \ref{fig:commlossprox_comm}, are shown the losses by varying the 
 average gap, as before the blue, orange and green lines represent respectively 
-gaps of $8$, $13$ and $24$\gls{cm}. From a first observation, the network seems 
+gaps of $8$, $13$ and $24$cm. From a first observation, the network seems 
 to be able to work with all the gaps and the approach with communication 
 demonstrate lower loss values than the previous one.
 \begin{figure}[!htb]
@@ -314,7 +314,7 @@ demonstrate lower loss values than the previous one.
 	\label{fig:commlossprox_comm}
 \end{figure}
 
-Focusing on the models trained on the dataset with average gap $24$\gls{cm}, in 
+Focusing on the models trained on the dataset with average gap $24$cm, in 
 Figure \ref{fig:net-c6r2} we observe the \gls{r2} of the manual and the learned 
 controllers, both the one with
 \begin{figure}[H]
@@ -464,7 +464,7 @@ Finally, in Figure \ref{fig:net-c6distance} is presented a metric that measures 
 absolute distance of each robot from the target over time.
 Unlike the non-optimal performances obtained with the manual and distributed 
 controllers, in which in both cases the robots in the final configuration are 
-located on average at about $5$\gls{cm} from the target, the distance from goal 
+located on average at about $5$cm from the target, the distance from goal 
 of the communication controller is far better. In just $11$ time steps, $4$ more 
 than the expert, the agents reach the goal position.
 \begin{figure}[!htb]
@@ -502,7 +502,7 @@ behaviour.
 In Figure \ref{fig:commlossall_sensors} are summarised the performance, 
 in terms of loss, of the models trained using \texttt{all\_sensors} input and 
 different gaps: the blue, orange and green lines represent respectively average 
-gaps of $8$, $13$ and $24$\gls{cm}.
+gaps of $8$, $13$ and $24$cm.
 It is immediately evident that using the new approach the trend of the curves are 
 very similar to each other, and in general the loss is considerably decreased down 
 to $20$.
@@ -695,24 +695,24 @@ To sum up, we show in the figures below the losses of the trained models as the
 different inputs vary for each gap. In all the figures the blue line represents the 
 loss using \texttt{prox\_values} as input, in orange \texttt{prox\_comm} and 
 finally in green \texttt{all\_sensors}.
-In both approaches, with \texttt{avg\_gap} of $8$\gls{cm}, the model trained 
+In both approaches, with \texttt{avg\_gap} of $8$cm, the model trained 
 using \texttt{prox\_values} has a lower loss, followed, with a very close value, by 
 the network that employ \texttt{all\_sensors}.
 \begin{figure}[!htb]
 	\begin{center}
 		\begin{subfigure}[h]{0.32\textwidth}
 			\includegraphics[width=\textwidth]{contents/images/task1-comm/loss-distributed-gap_8@copy}
-			\caption{\texttt{avg\_gap} of $8$\gls{cm}.}
+			\caption{\texttt{avg\_gap} of $8$cm.}
 		\end{subfigure}
 		\hfill
 		\begin{subfigure}[h]{0.32\textwidth}
 			\includegraphics[width=\textwidth]{contents/images/task1-comm/loss-distributed-gap_13@copy}%
-			\caption{\texttt{avg\_gap} of $13$\gls{cm}.}
+			\caption{\texttt{avg\_gap} of $13$cm.}
 		\end{subfigure}
 		\hfill
 		\begin{subfigure}[h]{0.32\textwidth}
 			\includegraphics[width=\textwidth]{contents/images/task1-comm/loss-distributed-gap_24@copy}
-			\caption{\texttt{avg\_gap} of $24$\gls{cm}.}
+			\caption{\texttt{avg\_gap} of $24$cm.}
 		\end{subfigure}
 	\end{center}
 	\vspace{-0.5cm}
@@ -726,17 +726,17 @@ the network that employ \texttt{all\_sensors}.
 	\begin{center}
 		\begin{subfigure}[h]{0.32\textwidth}
 			\includegraphics[width=\textwidth]{contents/images/task1-comm/loss-communication-gap_8@copy}%
-			\caption{\texttt{avg\_gap} of $8$\gls{cm}.}
+			\caption{\texttt{avg\_gap} of $8$cm.}
 		\end{subfigure}
 		\hfill
 		\begin{subfigure}[h]{0.32\textwidth}
 			\includegraphics[width=\textwidth]{contents/images/task1-comm/loss-communication-gap_13@copy}%
-			\caption{\texttt{avg\_gap} of $13$\gls{cm}.}
+			\caption{\texttt{avg\_gap} of $13$cm.}
 		\end{subfigure}
 		\hfill
 		\begin{subfigure}[h]{0.32\textwidth}
 			\includegraphics[width=\textwidth]{contents/images/task1-comm/loss-communication-gap_24@copy}
-			\caption{\texttt{avg\_gap} of $24$\gls{cm}.}
+			\caption{\texttt{avg\_gap} of $24$cm.}
 		\end{subfigure}
 	\end{center}
 	\vspace{-0.5cm}
@@ -749,11 +749,11 @@ the network that employ \texttt{all\_sensors}.
 \noindent
 Next is the model that works with \texttt{prox\_comm}, that is not able to work 
 well with small gaps, even when using communication. 
-Similarly, by increasing the gap to $13$\gls{cm}, \texttt{prox\_values} is not able 
+Similarly, by increasing the gap to $13$cm, \texttt{prox\_values} is not able 
 to achieve satisfactory results in both approaches, while used together with 
 \texttt{prox\_comm}, \texttt{all\_sensors} reaches good performances, which can 
 even be improved by using communication.
-Finally, by increasing the gap even more, up to $24$\gls{cm}, 
+Finally, by increasing the gap even more, up to $24$cm, 
 \texttt{prox\_values} becomes completely unusable, while \texttt{prox\_comm} 
 and \texttt{all\_sensors} have excellent responses, in particular with the new 
 approach.
@@ -971,7 +971,7 @@ Finally, in Figure \ref{fig:net-c12distance} are presented the absolute distance
 each robot from the target, visualised on the y-axis, over time.
 On average, the distance from goal of the communication controller is a bit better 
 than that obtained with the distributed while similar to the manual, even if slower. 
-In the final configuration in all three cases the agents are $1$\gls{cm} away from 
+In the final configuration in all three cases the agents are $1$cm away from 
 the target. 
 
 \begin{figure}[!htb]
@@ -996,7 +996,7 @@ the target.
 Following are presented the results of the experiments performed using 
 $8$ agents. In Figure \ref{fig:commlossN8}, are shown the losses by varying the 
 average gap, as before the blue, orange and green lines represent respectively 
-gaps of $8$\gls{cm}, $20$\gls{cm} and variable. From a first observation we see 
+gaps of $8$cm, $20$cm and variable. From a first observation we see 
 that the networks perform better in case of small gaps and when using 
 communication.
 
@@ -1155,7 +1155,7 @@ Finally, in Figure \ref{fig:net-c15distance} is presented a metric that measures
 absolute distance of each robot from the target over time.
 Unlike the non-optimal performance obtained with the distributed controller, in 
 which the robots in the final configuration are located on average at about 
-$5$\gls{cm} from the target, the distance from goal of the communication 
+$5$cm from the target, the distance from goal of the communication 
 controller is far better but similar to that obtained with the manual. Even if the 
 new approach need more time to converge, at the end the robots are $2$ away 
 from the goal.
@@ -1173,7 +1173,7 @@ from the goal.
 We conclude the experiments on task 1 presenting the results obtained using 
 variable number of agents, in particular, in Figure \ref{fig:commlossNvar} are 
 summarised the performance in terms of loss, as before we used blue, orange and 
-green lines to represent respectively average gaps of $8$\gls{cm}, $13$\gls{cm} 
+green lines to represent respectively average gaps of $8$cm, $13$cm 
 and variable.
 Using the new approach we observe from the trend of the curves that in general 
 the losses are decreased and for the network it is easier to perform the task by 
@@ -1283,7 +1283,7 @@ To sum up, we finally show in the figures below the losses of the trained
 models as the number of agents vary for each gap. In all the figures are 
 represented the losses of the models that use $5$, $8$ and variable agents, 
 respectively in blue, orange and green.
-In case of an \texttt{avg\_gap} of $8$\gls{cm}, with or without communication, 
+In case of an \texttt{avg\_gap} of $8$cm, with or without communication, 
 the model trained using a minor number of agents, as expected, has a lower loss.
 Instead, very similar are the losses obtained in case of $8$ or variable agents, in 
 which the model with less robots is still the better.
@@ -1292,12 +1292,12 @@ In general, using the communication has improved the performance.
 	\begin{center}
 		\begin{subfigure}[h]{0.32\textwidth}
 			\includegraphics[width=\textwidth]{contents/images/task1-comm-extension/loss-distributed-gap_8@copy}
-			\caption{\texttt{avg\_gap} of $8$\gls{cm}.}
+			\caption{\texttt{avg\_gap} of $8$cm.}
 		\end{subfigure}
 		\hfill
 		\begin{subfigure}[h]{0.32\textwidth}
 			\includegraphics[width=\textwidth]{contents/images/task1-comm-extension/loss-distributed-gap_20@copy}%
-			\caption{\texttt{avg\_gap} of $20$\gls{cm}.}
+			\caption{\texttt{avg\_gap} of $20$cm.}
 		\end{subfigure}
 		\hfill
 		\begin{subfigure}[h]{0.32\textwidth}
@@ -1315,12 +1315,12 @@ In general, using the communication has improved the performance.
 	\begin{center}
 		\begin{subfigure}[h]{0.32\textwidth}
 			\includegraphics[width=\textwidth]{contents/images/task1-comm-extension/loss-communication-gap_8@copy}%
-			\caption{\texttt{avg\_gap} of $8$\gls{cm}.}
+			\caption{\texttt{avg\_gap} of $8$cm.}
 		\end{subfigure}
 		\hfill
 		\begin{subfigure}[h]{0.32\textwidth}
 			\includegraphics[width=\textwidth]{contents/images/task1-comm-extension/loss-communication-gap_20@copy}%
-			\caption{\texttt{avg\_gap} of $20$\gls{cm}.}
+			\caption{\texttt{avg\_gap} of $20$cm.}
 		\end{subfigure}
 		\hfill
 		\begin{subfigure}[h]{0.32\textwidth}

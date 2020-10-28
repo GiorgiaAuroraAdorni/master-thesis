@@ -245,7 +245,7 @@ On average, the distance from goal of the learned controller is lower than the o
 obtained with the manual controller, meaning that in the final configuration 
 the robots moved following the learned controller are closer to the target than 
 those moved with the manual one, which are on average at a distance of about 
-$1$\gls{cm} from the goal position. 
+$1$cm from the goal position. 
 \begin{figure}[!htb]
 	\centering
 	\includegraphics[width=.65\textwidth]{contents/images/net-d1/distances-from-goal-compressed-distributed}%
@@ -474,7 +474,7 @@ front and not behind.
 Finally, in Figure \ref{fig:net-d6distance}, is presented the average distance of the 
 robots from the target among all the simulations. The performance of the learned 
 and the manual controllers are similar: in the final configuration they both are at 
-about $5$\gls{cm} from the target. 
+about $5$cm from the target. 
 \begin{figure}[!htb]
 	\centering
 	\includegraphics[width=.65\textwidth]{contents/images/net-d6/distances-from-goal-compressed-distributed}%
@@ -663,7 +663,7 @@ As anticipated by the trajectories in Figure \ref{fig:net-d9traj}, the controlle
 learned from \texttt{net-d9} is slower to converge than the manual one. In fact, 
 this plot confirms that the agents moved following a manual controller in the final 
 configuration are closer to the target than those moved by the distributed 
-controller: they are on average $2$ or $7$\gls{cm} away from the goal position 
+controller: they are on average $2$ or $7$cm away from the goal position 
 respectively.
 
 \paragraph*{Summary}
@@ -676,26 +676,26 @@ and the green lines \texttt{prox\_values}, \texttt{prox\_comm} and
 	\begin{subfigure}[h]{0.3\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{contents/images/task1/loss-distributed-gap_8@copy}%
-		\caption{\texttt{avg\_gap} of $8$\gls{cm}.}
+		\caption{\texttt{avg\_gap} of $8$cm.}
 	\end{subfigure}
 	\hfill
 	\begin{subfigure}[h]{0.3\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{contents/images/task1/loss-distributed-gap_13@copy}%
-		\caption{\texttt{avg\_gap} of $13$\gls{cm}.}
+		\caption{\texttt{avg\_gap} of $13$cm.}
 	\end{subfigure}
 	\hfill
 	\begin{subfigure}[h]{0.3\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{contents/images/task1/loss-distributed-gap_24@copy}
-		\caption{\texttt{avg\_gap} of $24$\gls{cm}.}
+		\caption{\texttt{avg\_gap} of $24$cm.}
 	\end{subfigure}
 	\caption[Losses summary of the first set of experiments.]{Comparison 
 		of the losses by varying the input of the networks for the three gaps.}
 	\label{fig:distloss81324}
 \end{figure}
 
-In case of an \texttt{avg\_gap} of $8$\gls{cm}, the model trained using 
+In case of an \texttt{avg\_gap} of $8$cm, the model trained using 
 \texttt{prox\_values} has a lower loss, following is the network that employ 
 \texttt{all\_sensors}, with similar results, and finally the model that works with 
 \texttt{prox\_comm}.
@@ -703,12 +703,12 @@ This performance is expected, as well as the fact that \texttt{all\_sensors} can
 perform better than \texttt{prox\_values} with small gaps, since in this case the 
 data coming from \texttt{prox\_comm} contains only zeros in the the second half 
 of the array, making it unusable.
-In a complementary way, by increasing the gap to $13$\gls{cm},  
+In a complementary way, by increasing the gap to $13$cm,  
 \texttt{prox\_values} alone is not able to achieve satisfactory results, while used 
 together with \texttt{prox\_comm}, \texttt{all\_sensors} reaches good 
 performances that on the validation set are comparable to those obtained using 
 \texttt{prox\_comm} alone.
-Finally, by increasing the gap even more, up to $24$\gls{cm}, 
+Finally, by increasing the gap even more, up to $24$cm, 
 \texttt{prox\_values} becomes completely unusable, while \texttt{prox\_comm} 
 and \texttt{all\_sensors} still have excellent performances similar to each other.
 
@@ -917,7 +917,7 @@ over time.
 Despite we expected performances similar to those presented in the Figure 
 \ref{fig:net-d9distance}, in this circumstance the agents moved following the 
 distributed controller are closer to the target, in particular in the final 
-configuration they are on average $2$\gls{cm} away from the goal position. 
+configuration they are on average $2$cm away from the goal position. 
 Furthermore, it is shown that there are far fewer cases away from the average 
 behaviour.
 \begin{figure}[!htb]
@@ -1084,10 +1084,10 @@ learned and the manual controllers are different from before: \texttt{net-d15} i
 slower to converge. In fact, this plot 
 confirms that the agents moved following a manual controller in the final 
 configuration are closer to the target than those moved by the distributed 
-controller, respectively, they are on average $2$ or $3.5$\gls{cm} away from the 
+controller, respectively, they are on average $2$ or $3.5$cm away from the 
 goal position. Moreover, observing the coloured bands we see that there is a lot of 
 variance in the distributed controller final positions, in fact there are runs in which 
-some agents can be even $10$\gls{cm} far from the target.
+some agents can be even $10$cm far from the target.
 \begin{figure}[!htb]
 	\centering
 	\includegraphics[width=.65\textwidth]{contents/images/net-d15/distances-from-goal-compressed-distributed}%
@@ -1287,7 +1287,7 @@ than those moved with the learned one.
 \paragraph*{Summary}
 To summarise the performance, as the number of agents vary for each gap, we 
 show once again in the figures below the losses of the trained models.
-In case of an \texttt{avg\_gap} of $8$\gls{cm}, the model trained using 
+In case of an \texttt{avg\_gap} of $8$cm, the model trained using 
 a minor number of agents, as expected has a lower loss, following, with very 
 similar values the model that employs 8 robots and that with a variable number of 
 agents.
@@ -1299,13 +1299,13 @@ the results obtained using fewer agents are the best.
 	\begin{subfigure}[h]{0.3\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{contents/images/task1-extension/loss-distributed-gap_8@copy}%
-		\caption{\texttt{avg\_gap} of $8$\gls{cm}.}
+		\caption{\texttt{avg\_gap} of $8$cm.}
 	\end{subfigure}
 	\hfill
 	\begin{subfigure}[h]{0.3\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{contents/images/task1-extension/loss-distributed-gap_20@copy}%
-		\caption{\texttt{avg\_gap} of $20$\gls{cm}.}
+		\caption{\texttt{avg\_gap} of $20$cm.}
 	\end{subfigure}
 	\hfill
 	\begin{subfigure}[h]{0.3\textwidth}

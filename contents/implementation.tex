@@ -33,7 +33,7 @@ The robot is equipped with two motors, each connected to one of the two
 wheels, which allow the robot to move forward, backwards but also turn by 
 setting the velocity of the wheels at different speeds. The maximum speed 
 allowed 
-to the agent is $16.6$\gls{cm/s}.
+to the agent is $16.6$cm/s.
 
 \subsection{Sensors}
 \label{subsec:thysensors}
@@ -56,10 +56,10 @@ of  \gls{ir}, addressed in Section \ref{subsec:sensors}.
 \label{subsec:thymiocomm}
 
 Thymio II can employ its horizontal \gls{ir} sensors to communicate a value 
-to robots within a range of about $48$\gls{cm}. 
+to robots within a range of about $48$cm. 
 In particular, the robot can enable the proximity communication and send an 
-integer payload of $11$ bits at $10$ \gls{Hz}, one value transmitted every 
-$0.1$\gls{s}. 
+integer payload of $11$ bits at $10$Hz, one value transmitted every 
+$0.1$s. 
 This message is received by other agents if at least one of their proximity sensors 
 is visible by one of the emitter’s \glspl{led} and if they have enabled the proximity 
 communication.
@@ -109,13 +109,13 @@ use in the simulator.
 As for the motors, they are used to establish the speed of the wheels. The target 
 wheels' speed can be set by writing the variables 
 \texttt{motor\_\{left,right\}\_target}. The velocity is a float value specified in 
-centimetres per second (\gls{cm/s}).
+centimetres per second (cm/s).
 The wheels at maximum maximum allowed speed can provide a velocity of 
-$16.6$\gls{cm/s}.
+$16.6$cm/s.
 
 Another important element used for the construction of the model constraints is 
 the distances between the left and right driving wheels, that is fixed to $9.4$ 
-\gls{cm}.
+cm.
 
 Finally, a little amount of relative noise, about $0.027$, is added to the target 
 wheel speed at each control step.
@@ -132,9 +132,9 @@ by using \texttt{prox\_values} and \texttt{prox\_comm\_events}.
  \texttt{br} (back right)]. 
 These values can vary from $0$ — when the robot does not see anything — up to 
 $4505$ — when the robot is very close to an obstacle. 
-Thymio II updates this array at a frequency of $10$ \gls{Hz}, generating the 
+Thymio II updates this array at a frequency of $10$Hz, generating the 
 \texttt{prox event} after every update. 
-The maximum range of these sensors is $14$\gls{cm}.
+The maximum range of these sensors is $14$cm.
 
 \paragraph*{\texttt{prox\_comm\_events}}
 
@@ -142,7 +142,7 @@ a list of events, one for every received message collected during the last contr
 step of the simulation. 
 After enabling the proximity communication, using \texttt{prox\_comm\_enable} 
 command, the robot can use the horizontal \gls{ir} distance sensors to 
-communicate a value to peer robots within a range of about $48$\gls{cm}. 
+communicate a value to peer robots within a range of about $48$cm. 
 The integer payload to be sent is contained in the variable 
 \texttt{prox\_comm\_tx}, while the value received is contained in the variable 
 \texttt{prox\_comm\_events.rx} of the fired event.

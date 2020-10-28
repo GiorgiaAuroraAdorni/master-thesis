@@ -152,7 +152,7 @@ Of great importance is also the moment in which transmit a message. In fact, if 
 communication is delayed, it can become useless or even cause unwanted 
 behaviour \cite[][]{stone2000multiagent}.
 As we have already said in Section \ref{subsec:thymiocomm}, each robot transmits 
-a message every $0.1$\gls{s} and likewise receives one for each of the sensors. In 
+a message every $0.1$s and likewise receives one for each of the sensors. In 
 our case, we expect each agent to receive two communications, one from each of 
 its respective neighbours. With real robots, but also in simulation, what we want to 
 attain is a synchronous communication update protocol. Formally, each robot 
@@ -180,7 +180,7 @@ in the row that behave like walls.
 
 Each robot can be considered as a point on the plane, formally described by a 
 homogeneous vector with respect to the world coordinate frame $W$, obtained 
-multiplying the homogeneous vector of the point \gls{wrt} the robot coordinate 
+multiplying the homogeneous vector of the point w.r.t. the robot coordinate 
 frame $A$, by a homogeneous transformation. The relative pose $A$ of each 
 agent is identified by a $3 \times 3$ matrix $\mathbf{T}$, with respect to the 
 world reference frame $W$. 
@@ -223,7 +223,7 @@ In particular, once established the number of agents to spawn and the average
 gap between them, a vector containing samples, each representing a random 
 gap in $\mathbb{R}$, is drawn from a uniform distribution in the interval $[0, 
 2*\mathtt{avg\_gap})$. 
-The length of the Thymio, that is $10.9$ \gls{cm}, is added to each gap, then the 
+The length of the Thymio, that is $10.9$cm, is added to each gap, then the 
 final positions are obtained by returning the cumulative sum of the elements in 
 the generated vector. 
 
@@ -252,7 +252,7 @@ within the range $[5, 10]$, and the \texttt{avg\_gap}, that is the average dista
 among the robot in the final configuration of the run, that can be in the range 
 $[5, 24]$.
 A simulation run is stopped either immediately after all the robots reach the 
-target pose, with a certain tolerance, or after $4$\gls{s} ($40$ time steps).
+target pose, with a certain tolerance, or after $4$s ($40$ time steps).
 At each time step, all the useful information regarding the agents is stored in 
 the dataset, such as the sensor readings, the pose of the robot, the motors target, 
 the communication transmitted and received and its colour.
@@ -339,7 +339,7 @@ is computed as follow:
 \noindent
 To obtain the final velocity of the agent, this quantity is multiplied by a constant, 
 we choose $10$ to keep the controller as fast as possible, and then clipped to the 
-maximum value supported by Thymio II, $16.6$\gls{cm/s}.
+maximum value supported by Thymio II, $16.6$cm/s.
 
 This controller can be considered as a variant of a Bang Bang controller, 
 introduced in Section \ref{subsubsec:bangbang}, since the optimal controller 
@@ -577,11 +577,10 @@ dimension of the input in such a way that all the tensors have the same length,
 fixed at the maximum possible value of $N$, padding those tensors with a lower 
 number of agents.
 
-The architecture of the network, displayed in Figure 
-\ref{fig:singlenetdistributed1}, is straightforward: there are three linear layers of 
-size $\langle\mathtt{input\_size}, 10\rangle$,  $\langle 10, 
-10\rangle$ and $\langle 10, 1\rangle$, where \texttt{input\_size} is the 
-shape of the sensing that can be either $7$ or $14$.
+The architecture of the network, in Figure \ref{fig:singlenetdistributed1}, is 
+straightforward: there are three linear layers of size $\langle\mathtt{input\_size}, 
+10\rangle$,  $\langle 10, 10\rangle$ and $\langle 10, 1\rangle$, where 
+\texttt{input\_size} is the shape of the sensing that can be either $7$ or $14$.
 \begin{figure}[htb]
 	\centering
 	\begin{subfigure}[h]{0.495\textwidth}
